@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Czas trwania: 20 minut -->
+    <title>Języki HTML i CSS</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h3>Projekt i implementacja systemów webowych</h3>
+            <h1>Języki HTML i CSS</h1>
+        </section>
+
+        <section>
+            <h2>HTML</h2>
+            <p><strong>HTML</strong> to język bazujący na znacznikach służący to tworzenia stron sieci Web.</p>
+            <p>Przykład <strong>dokumentu HTML</strong>:</p>
+            <pre><code class="html" data-trim>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Sample page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Sample page&lt;/h1&gt;
+    &lt;p&gt;This is a &lt;a href="demo.html"&gt;simple&lt;/a&gt; sample.&lt;/p&gt;
+    &lt;!-- this is a comment --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+        </section>
+
+        <section>
+            <h2>Struktura dokumentu HTML</h2>
+            <ul>
+                <li>Dokument <strong>HTML</strong> składa się ze elementów oraz z tekstu.</li>
+                <li class="fragment">Każdy element zbudowany jest ze <strong>znaczników</strong> (ang. <em>tags</em>), w
+                    szczególności ze znacznika <strong>otwierającego</strong> i <strong>zamykającego</strong>.
+                </li>
+                <li class="fragment">Struktura znaczników musi tworzyć <strong>drzewo</strong>.</li>
+                <li class="fragment">W szczególnych przypadkach znacznik zamykający może być pominięty (<code>&lt;img&gt;</code>,
+                    <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, itp).
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Atrybuty elementów HTML</h2>
+            <ul>
+                <li>Atrybuty dostarczają dodatkowej informacji dla elementu.</li>
+                <li class="fragment">Atrybuty muszą być umieszczone w znaczniku otwierającym.</li>
+            </ul>
+            <pre class="fragment"><code class="javascript">
+&ltinput type="number" min="0" max="999" required&gt;
+            </code></pre>
+            <aside class="notes">
+                <ul>
+                    <li>Wartość atrybutu może być ujęta w cudzysłowy (<code>"</code>) lub apostrofy (<code>'</code>).
+                    </li>
+                    <li>Jeśli wartość atrybutu nie zawiera spacji (białego znaku), cudzysłowy (apostrofy) nie są
+                        wymagane.
+                    </li>
+                    <li>Jeśli wartością atrybutu jest pusty ciąg znaków, można pominąć przypisanie i wymienić jedynie
+                        nazwę (jak np w <code>&lt;input required&gt;</code></li>
+                </ul>
+            </aside>
+        </section>
+
+        <section>
+            <h2>Live coding example</h2>
+            <div class="livecode stretch">
+                <pre><code class="javascript" title="script.js">
+function init() {
+	console.log("hello world");
+}
+
+init();
+                </code></pre>
+                <pre><code class="css" title="styles.css">
+h1 {
+	color: blue;
+}
+                </code></pre>
+                <pre><code class="html" title="index.html">
+&lt;html&gt;&lt;body&gt;
+&lt;h1&gt;Hello&lt;/h1&gt;
+&lt;/body&gt;&lt;/html&gt;
+</code></pre>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        slideNumber: 'c/t',
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true},
+            {src: 'plugin/livecode/livecode.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            }
+        ]
+    });
+</script>
+</body>
+</html>
