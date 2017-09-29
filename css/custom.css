@@ -32,3 +32,7 @@ div.more-text {
 p.more-text {
     font-size: 80%;
 }
+section img.no-border {
+    border-width: 0px;
+    border-color: blue;
+}
