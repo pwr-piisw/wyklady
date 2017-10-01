@@ -44,45 +44,193 @@
         </section>
 
         <section>
-            <h2>Deklaracja zmiennych i stałych</h2>
-            <pre><code class="javascript">let price = 100.99;</code></pre>
-            <p class="more-text ">podobnie jak <code>var</code>, ale zasięg blokowy zamiast funkcyjnego</p>
-            <div class="fragment">
-                <pre><code class="javascript">const multiplier = 3;</code></pre>
-                <p class="more-text">podobnie jak <code>let</code>, lecz raz przypisanej wartości nie można zmienić</p>
-            </div>
-            <blockquote>Te metody deklaracji występują także w wersji ECMAScript 6.</blockquote>
+            <h2>Deklaracja zmiennych i stałych*</h2>
+            <section>
+                <pre><code data-trim class="javascript">let price = 100.99;</code></pre>
+                <p class="more-text ">podobnie jak <code>var</code>, ale zasięg blokowy zamiast funkcyjnego</p>
+                <div class="fragment">
+                    <pre><code data-trim class="javascript">const multiplier = 3;</code></pre>
+                    <p class="more-text">podobnie jak <code>let</code>, lecz raz przypisanej wartości nie można zmienić
+                    </p>
+                </div>
+                <p class="more-text fragment">* Te metody deklaracji występują także w wersji ECMAScript 6.</p>
+            </section>
+            <section>
+                <h3>Dobre praktyki:</h3>
+                <ul>
+                    <li class="fragment">nie używać <code>var</code></li>
+                    <li class="fragment">stosować <code>let</code> jeśli istotnie chcemy zmieniać wartość danej zmiennej
+                    </li>
+                    <li class="fragment">w pozostałych przypadkach stosować <code>const</code></li>
+                </ul>
+            </section>
         </section>
 
         <section>
-            <h2>Specyfikacja typów</h2>
-            <pre><code class="javascript">let price: number = 99; // ok
-let price: number = 'foo'; // błąd kompilacji</code></pre>
+            <h2>Typy danych</h2>
+            <section>
+                <h3>Specyfikacja typów</h3>
+                <pre><code data-trim class="javascript">const price: number = 99; // ok
+const price: number = 'foo'; // błąd kompilacji</code></pre>
+            </section>
+            <section>
+                <h3>Podstawowe typy</h3>
+                <ul>
+                    <li><code>boolean</code></li>
+                    <li><code>number</code></li>
+                    <li><code>string</code></li>
+                    <li><code>number[]</code>, <code>string[]</code> - typ tablicowy</li>
+                    <li><code>[string, number, number, boolean]</code> - krotka</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Enumeracje</h3>
+                <pre><code class="javascript" data-trim>enum Color {Red, Green, Blue};
+let color: Color = Color.Green;
+console.log(Color[1]);       // -> "Green"
+console.log(Color["Green"]); // -> 1
+                </code></pre>
+                <p class="fragment">Typ enumeracyjny jest kompilowany do tablicy zawierającej mapowanie liczb na nazwy i
+                    na odwrót.</p>
+                <pre><code class="javascript" data-trim>enum Color {Red, Green, Blue};
+console.log(Color); // -> {"0": "Red", "1": "Green", "2": "Blue", Red: 0, Green: 1, Blue: 2} </code></pre>
+            </section>
+            <section>
+                <h3>Wnioskowanie</h3>
+                <p class="align-left">W wielu miejscach stosowanie specyfikatorów typów nie jest konieczne. TypeScript
+                    zawiera mechanizm
+                    wioskowania (ang. <em>type inference</em>).</p>
+                <pre><class data-trim class="javascript">let price = 0; // wnioskowanie -> number
+price = 'foo'; // błąd kompilacji
+                </class></pre>
+            </section>
+        </section>
+
+        <section>
+            <h2>Fat arrow*</h2>
+            <p>Funkcje można obecnie specyfikować zwięźlej stosująć notację "strzałkową" (<em>fat arrow</em>).</p>
+            <pre class="fragment"><code class="javascript" data-trim>const add = function(left, right) {
+  return left + right;
+};
+const add2 = (left, right) => { return left + right; };
+// lub zwięźlej
+const add3 = (left, right) => left + right;
+</code></pre>
+            <p class="fragment">Znacząco zwiększa to czytelność kodu funkcyjnego:</p>
+            <pre class="fragment"><code class="javascript" data-trim>
+[1,2,3,4,5].map((value) => 2 * value);    // [2,4,6,8,10]
+[1,2,3,4,5].filter((value) => value < 4); // [1,2,3]
+            </code></pre>
+            <p class="fragment">Notacja fat arrow zmienia sposób wyliczania zmiennej <code>this</code>!</p>
+            <p class="fragment more-text align-left">*Notacja fat arrow jest częścią ECMAScript 6.</p>
         </section>
 
         <section>
             <h2>Specyfikacja sygnatury funkcji</h2>
-            <pre><code class="javascript">function()</code></pre>
+            <p>Parametry oraz rezultat mogą być typizowane.</p>
+            <pre><code class="javascript" data-trim>const add = function(left: number, right: number): number {
+  return left + right;
+};
+const add2 = (left: number, right: number): number => {
+  return left + right;
+};
+// lub zwięźlej
+const add3 = (left: number, right: number) => left + right;
+</code></pre>
+            <p class="fragment">Zmienne typu funkcyjnego mogą być dokładnie wyspecyfikowane:</p>
+            <pre class="fragment"><code class="javascript" data-trim>const addFn: (left: number, right: number) => number;
+addFn = (left: number, right: number) => left + right; // OK
+addFn = () => "Foo"; // błąd kompilacji
+</code></pre>
         </section>
 
         <section>
-            <h2>Fat arrow</h2>
+            <h2>Interfejsy i typy obiektów</h2>
+            <pre><code class="javascript" data-trim>
+const totalPrice = (items: {price: number}[]) => {
+  let sum = 0;
+  items.forEach((item) => sum += item.price);
+  return sum;
+};
+totalPrice([{price: 4.99, name: 'Bread'},
+  {price: 12.99, name: 'Butter'}]); // -> 17.98
+totalPrice([{name: 'Apple'}, {name: 'Orange'}]); // -> błąd kompilacji
+</code></pre>
+            <p class="fragment">Interfejs m.in. pozwala unikać redundantnych deklaracji:</p>
+            <pre class="fragment"><code class="javascript" data-trim>
+interface Priceable {
+  price: number; // pole obowiązkowe
+  name?: string; // pole opcjonalne
+};
+const totalPrice = (items: Priceable[]) => ...
+            </code></pre>
         </section>
 
         <section>
             <h2>Klasy</h2>
-        </section>
-
-        <section>
-            <h2>Interfejsy</h2>
+            <p>Brak klas w JavaScript jest uciążliwy. ECMAScript 6 i TypeScript wprowadzają pojęcie klasy.</p>
+            <pre class="fragment"><code class="javascript" data-trim>
+class Product {
+  constructor(name: string, price: number) {
+  }
+  getPriceTag() {
+    return name + ' [' + price.toString() + ']';
+  }
+};
+</code></pre>
         </section>
 
         <section>
             <h2>Modyfikatory dostępu</h2>
+            <p>Dostępne są następujące modyfikatory dostępu stosowane zarówno do metod jak i pól:</p>
+            <ul>
+                <li><code>public</code></li>
+                <li><code>protected</code></li>
+                <li><code>private</code></li>
+                <li>(brak) - przyjmuje się dostęp jak w <code>public</code></li>
+            </ul>
+            <pre class="fragment"><code class="javascript" data-trim>
+class Product {
+  constructor(private name: string, private price: number) {
+  }
+  public getPriceTag() {
+    return name + ' [' + price.toString() + ']';
+  }
+};
+</code></pre>
         </section>
 
         <section>
-            <h2>Annotacje</h2>
+            <h2>Dziedziczenie</h2>
+            <pre><code class="javascript" data-trim>class Animal {
+    name: string;
+    constructor(theName: string) { this.name = theName; }
+    move(distanceInMeters: number = 0) {
+        console.log(`${this.name} moved ${distanceInMeters}m.`);
+    }
+}
+class Snake extends Animal {
+    constructor(name: string) { super(name); }
+    move(distanceInMeters = 5) {
+        console.log("Slithering...");
+        super.move(distanceInMeters);
+    }
+}
+class Horse extends Animal {
+    constructor(name: string) { super(name); }
+    move(distanceInMeters = 45) {
+        console.log("Galloping...");
+        super.move(distanceInMeters);
+    }
+}
+let sam = new Snake("Sammy the Python");
+let tom: Animal = new Horse("Tommy the Palomino");
+sam.move();
+tom.move(34);</code></pre>
+        </section>
+
+        <section>
+            <a href="https://www.typescriptlang.org/docs/handbook">https://www.typescriptlang.org/docs/handbook</a>
         </section>
     </div>
 </div>
