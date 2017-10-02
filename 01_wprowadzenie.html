@@ -112,7 +112,8 @@
 
         <section>
             <p>A gdyby każda aplikacja webowa składała się z jednego dokumentu HTML*?</p>
-            <p class="fragment more-text align-left">*Dokument ten byłby modyfikowany przez skrypty JavaScript w zależności od interakcji z
+            <p class="fragment more-text align-left">*Dokument ten byłby modyfikowany przez skrypty JavaScript w
+                zależności od interakcji z
                 użytkownikiem</p>
             </p>
         </section>
@@ -120,7 +121,59 @@
         <section>
             <h3>Architektura aplikacji Rich Web Application</h3>
             <section>
-                <img src="diagrams/basic-workflow.png" alt="Basic Workflow" width="500">
+                <div>
+                    <div class="col left">
+                        <img src="diagrams/basic-workflow.png" alt="Basic Workflow" width="500">
+                    </div>
+                    <div class="col right fragment">
+                        <img src="diagrams/basic-sequence.png" alt="Basic Sequence">
+                    </div>
+                </div>
+                <aside class="notes">
+                    <ul>
+                        <li>Każdy widok aplikacji posiada kontroler, który zarządza jego stanem.</li>
+                        <li>Każdy kontroler odpowiada za:</li>
+                        <ul>
+                            <li>Obsługę akcji (żądań) zainicjowanych przez użytkownika (np naciśnięcie przycisku).</li>
+                            <li>Wczytanie danych do zaprezentowania na widoku.</li>
+                        </ul>
+                        <li>Przejście między widokami realizowane jest przez managera stanów.</li>
+                        <li>Manager stanów odpowiada za:</li>
+                        <ul>
+                            <li>Przekierowanie do odpowiedniego widoku.</li>
+                            <li>Przepisanie ścieżki URL w pasku adresu przeglądaki (tak aby możliwe było wysłanie linku
+                                lub dodanie linku do zakładek).
+                            </li>
+                        </ul>
+                        <li>Kontroler komunikuje się z serwerem najczęściej wykorzystując w tym celu protokół
+                            HTTP/REST.
+                        </li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <div class="more-text">
+                    <h3>Odpowiedzialności</h3>
+                    <div class="left col">
+                        <h4>Klient (przeglądarka WWW)</h4>
+                        <ul>
+                            <li>Komunikacja z serwerem.</li>
+                            <li>Prezentacja danych otrzymanych z serwera.</li>
+                            <li>Obsługa żądań użytkownika.</li>
+                            <li>Wysyłanie danych na serwer.</li>
+                            <li>Warunkowe wyświetlanie elementów HTML.</li>
+                        </ul>
+                    </div>
+                    <div class="right col">
+                        <h4>Serwer (Java, ...)</h4>
+                        <ul>
+                            <li>Zapis danych.</li>
+                            <li>Wczytywanie danych.</li>
+                            <li>Komunikacja z innymi systemami.</li>
+                            <li class="fragment">...</li>
+                        </ul>
+                    </div>
+                </div>
             </section>
         </section>
     </div>
