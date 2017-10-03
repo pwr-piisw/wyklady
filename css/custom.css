@@ -34,5 +34,6 @@ p.more-text {
 }
 section img.no-border {
     border-width: 0px;
-    border-color: blue;
+    border-style: none;
+    box-shadow: none;
 }
