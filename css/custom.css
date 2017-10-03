@@ -37,3 +37,12 @@ section img.no-border {
     border-style: none;
     box-shadow: none;
 }
+.reveal .footer {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    right: 1em;
+    text-align: center;
+    font-size: medium;
+    z-index: 100;
+}
