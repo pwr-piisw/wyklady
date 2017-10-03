@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Wykłady</title>
+    <!-- Czas trwania: 10 minut -->
+    <title>Typescript</title>
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/beige.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/github.css">
-
     <!-- Custom -->
     <link rel="stylesheet" href="css/custom.css">
 
@@ -29,15 +29,9 @@
     <div class="slides">
         <section>
             <h3>Projekt i implementacja systemów webowych</h3>
-            <h4>Prezentacje - frontend</h4>
-            <a href="https://pwr-piisw.github.io/wyklady/#/">https://pwr-piisw.github.io/wyklady/#/</a>
-            <ul>
-                <li><a href="01_wprowadzenie.html">Wykład 1 - wprowadzenie</a></li>
-                <li><a href="04_html.html">Wykład 1 - HTML oraz CSS</a></li>
-                <li><a href="06_javascript.html">Wykład 1 - JavaScript</a></li>
-                <li><a href="07_typescript.html">Wykład 2 - TypeScript</a></li>
-            </ul>
+            <h1>Platforma OASP</h1>
         </section>
+
     </div>
 </div>
 
@@ -50,9 +44,11 @@
     // - https://github.com/hakimel/reveal.js#dependencies
     Reveal.initialize({
         history: true,
+        slideNumber: 'c/t',
         dependencies: [
             {src: 'plugin/markdown/marked.js'},
             {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js', async: true},
             {src: 'plugin/notes/notes.js', async: true},
             {src: 'plugin/livecode/livecode.js', async: true},
             {
