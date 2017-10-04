@@ -69,25 +69,26 @@
 
         <section>
             <h2>Historia aplikacji webowych</h2>
-            <section>
-                <div class="more-text">
-                    <ul>
-                        <li><em>wczesne lata 90-te:</em> <span class="fragment">statyczne strony HTML</span></li>
-                        <li class="fragment"><em>od ok. roku 1993:</em> <span class="fragment">pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
-                            <ul class="fragment">
-                                <li>CGI</li>
-                                <li>PHP (1995)</li>
-                                <li>ASP (1996)</li>
-                                <li>Java Servlets (1997)</li>
-                                <li>JSP (1999)</li>
-                            </ul>
-                        </li>
-                        <li class="fragment"><em>wczesne lata 2000:</em> nowoczesne technologie komponentowe: JSF,
-                            ASP.NET
-                        </li>
-                    </ul>
-                </div>
-            </section>
+            <div class="more-text">
+                <ul>
+                    <li><em>wczesne lata 90-te:</em> <span class="fragment">statyczne strony HTML</span></li>
+                    <li class="fragment"><em>od ok. roku 1993:</em> <span class="fragment">pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
+                        <ul class="fragment">
+                            <li>CGI</li>
+                            <li>PHP (1995)</li>
+                            <li>ASP (1996)</li>
+                            <li>Java Servlets (1997)</li>
+                            <li>JSP (1999)</li>
+                        </ul>
+                    </li>
+                    <li class="fragment"><em>wczesne lata 2000:</em> technologie komponentowe: JSF,
+                        ASP.NET
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <h2>AJAX</h2>
             <section>
                 <ul>
                     <li><em>ok 1995 roku:</em> AJAX - Asynchronous JavaScript and XML
@@ -107,6 +108,30 @@
                 <p>Aplikacje webowe stały się bardziej "responsywne" i zaczęły przypominać
                     aplikacje desktopowe.</p>
                 <p>AJAX został zaadaptowany przez niektóre technologie Server-Side, np JSF.</p>
+            </section>
+            <section>
+                <pre class="stretch"><code class="html" data-trim>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;div id=&quot;demo&quot;&gt;
+&lt;h2&gt;The XMLHttpRequest Object&lt;/h2&gt;
+&lt;button type=&quot;button&quot; onclick=&quot;loadDoc()&quot;&gt;Change Content&lt;/button&gt;
+&lt;/div&gt;
+&lt;script&gt;
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &amp;&amp; this.status == 200) {
+      document.getElementById(&quot;demo&quot;).innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open(&quot;GET&quot;, &quot;ajax_info.txt&quot;, true);
+  xhttp.send();
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
             </section>
         </section>
 
