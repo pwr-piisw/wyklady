@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Wyklad 4</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+	
+<div id="cgLogo" style="background: url(img/cg_small.png);
+                        position: absolute;
+                        top: 90px;
+                        left: 50px;
+                        width: 250px;
+                        height: 44px;"></div>
+
+	
+	
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Wyklad 4</h1>
+					<h3>Mapowanie obiektowo - relacyjne</h3>
+					<aside class="notes">
+						Press: 's' for presenter window<p>
+						'ESC' for a global overview	
+					</aside>
+				</section>
+				
+				<section>
+					<ul>
+						<li><a href="#/jdbc">JDBC</a></li>
+						<li><a href="#/orm">ORM</a></li>
+						<li><a href="#/Hibernate">Hibernate a JPA</a></li>
+						<li><a href="#/SpringData">Spring Data</a></li>
+						<li><a href="#/Tranzakcje">Tranzakcje</a></li>
+						<li><a href="#/Testowanie">Testowanie</a></li>
+
+						
+					</ul>
+				</section>
+				
+				<!-- ------ -->
+				<!-- ------ -->
+				<!--  jdbc   -->
+				<!-- ------ -->
+				<!-- ------ -->
+				<section>
+					<!-- Start -->
+					<section id="jdbc" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>JDBC</h1>
+					</section>
+					
+					<section>
+						asdf
+					</section>
+				</section>
+				
+				
+				<!-- ------ -->
+				<!-- ------ -->
+				<!--  orm   -->
+				<!-- ------ -->
+				<!-- ------ -->
+				<section>
+					<!-- Start -->
+					<section id="orm" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>ORM</h1>
+					</section>
+					
+					<!-- TODO -->
+					
+					<section>
+						asdf
+					</section>
+				</section>
+
+				
+				
+				<!-- ------ -->
+				<!-- ------ -->
+				<!--  Hibernate   -->
+				<!-- ------ -->
+				<!-- ------ -->
+				<section>
+					<!-- Start -->
+					<section id="Hibernate" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>Hibernate a JPA</h1>
+					</section>
+					
+					<!-- TODO -->
+					
+					<section>
+						asdf
+					</section>
+				</section>
+				
+				
+				<!-- ------ -->
+				<!-- ------ -->
+				<!--  SpringData   -->
+				<!-- ------ -->
+				<!-- ------ -->
+				<section>
+					<!-- Start -->
+					<section id="SpringData" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>Spring Data</h1>
+					</section>
+					
+					<!-- TODO -->
+					
+					<section>
+						asdf
+					</section>
+				</section>
+
+				
+				<!-- ------ -->
+				<!-- ------ -->
+				<!--  Tranzakcje   -->
+				<!-- ------ -->
+				<!-- ------ -->
+				<section>
+					<!-- Start -->
+					<section id="Tranzakcje" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>Tranzakcje</h1>
+					</section>
+					
+					<!-- TODO -->
+					
+					<section>
+						asdf
+					</section>
+				</section>
+
+				
+				
+				
+				<!-- ------ -->
+				<!-- ------ -->
+				<!--  Testowanie   -->
+				<!-- ------ -->
+				<!-- ------ -->
+				<section>
+					<!-- Start -->
+					<section id="Testowanie" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>Testowanie</h1>
+					</section>
+					
+					<!-- TODO -->
+					
+					<section>
+						asdf
+					</section>
+				</section>				
+				
+			
+				<section id="ex" style="text-align: left;" data-transition="slide" data-background="lime" data-background-transition="zoom">
+					<h1>?</h1>
+					<h4>Questions</h4>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+			slideNumber: true,
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
