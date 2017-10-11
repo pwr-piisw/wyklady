@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/beige.css">
-
+    <link rel="stylesheet" href="css/w3.css">
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/github.css">
     <!-- Custom -->
@@ -56,10 +56,17 @@
 
         <section>
             <h3>Zasady zaliczeń</h3>
-            <p class="align-left">Podstawą zaliczenia wykładu jest kolokwium, które odbędzie się na <strong>przedostatnich</strong>
-                zajęciach.</p>
-            <p class="align-left">Zasady zaliczenia zajęć laboratoryjnych omówione będą na pierwszych zajęciach
-                laboratoryjnych.</p>
+            <div class="more-text"><p class="align-left">Podstawą zaliczenia wykładu jest kolokwium, które odbędzie się
+                na <strong>przedostatnich</strong>
+                zajęciach (2017-12-16).</p>
+                <p class="align-left">Zasady zaliczenia zajęć laboratoryjnych omówione będą na pierwszych zajęciach
+                    laboratoryjnych.</p>
+                <p class="align-left">Konsultacje:
+                <ul>
+                    <li>mgr inż. Adam Puchalski - sobota zjazdowa 11:00 - 12:00 302a/D2</li>
+                    <li>mgr inż. Maciej Małecki - sobota zjazdowa 10:00 - 11:00 302a/D2</li>
+                </ul>
+                </p></div>
         </section>
 
         <section>
@@ -73,11 +80,45 @@
         </section>
 
         <section>
-            <h2>Historia aplikacji webowych</h2>
+            <h3>Historia aplikacji webowych</h3>
             <div class="more-text">
                 <ul>
-                    <li><em>wczesne lata 90-te:</em> <span class="fragment">statyczne strony HTML</span></li>
-                    <li class="fragment"><em>od ok. roku 1993:</em> <span class="fragment">pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
+                    <li><em>wczesne lata 90-te:</em> <span>statyczne strony HTML</span></li>
+                </ul>
+            </div>
+            <section>
+                <img src="img/msn_webpage.jpg" alt="MSN" class="no-border fragment" height="400">
+            </section>
+            <section>
+                <img src="img/Old-Apple-Website.jpg" alt="Old Apple Website" class="no-border">
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <p>Statyczna zawartość nie zawsze wystarczy...</p>
+            </section>
+            <section>
+                <img src="img/google-empty.png" alt="Google leer" class="no-border">
+            </section>
+            <section>
+                <img src="img/google-search.png" alt="Google Search" class="no-border">
+            </section>
+            <section>
+                <img src="img/google-search-results.png" alt="Google search results" class="no-border" height="600">
+            </section>
+            <section>
+                <img src="img/google-search-query.png" alt="Google search query" class="no-border">
+            </section>
+            <section>
+                <img src="img/google-search-images.png" alt="Google search images" class="no-border">
+            </section>
+        </section>
+
+        <section>
+            <div>
+                <ul>
+                    <li><em>od ok. roku 1993:</em> <span class="fragment">pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
                         <ul class="fragment">
                             <li>CGI</li>
                             <li>PHP (1995)</li>
@@ -92,8 +133,72 @@
                 </ul>
             </div>
         </section>
+
         <section>
-            <h2>AJAX</h2>
+            <section>
+                <div class="w3-cell-row">
+                    <div class="most-text w3-container w3-cell w3 white-paper">
+                        <h4>HTTP GET</h4>
+                        <p>www.google.pl/search?q=unicorn</p>
+                    </div>
+                    <div class="fragment w3-container w3-cell w3" data-fragment-index="1">
+                        <img src="img/road-runner.png" alt="Road runner" class="no-border" height="150">
+                    </div>
+                    <div class="fragment w3-container w3-cell w3" data-fragment-index="2">
+                        <img src="img/cogs.png" alt="Cogs" class="no-border" height="100">
+                    </div>
+                </div>
+                <div class="w3-cell-row">
+                    <div class="fragment w3-container w3 w3-cell" data-fragment-index="5">
+                        <img src="img/google-search-results.png" alt="google" height="200" class="">
+                    </div>
+                    <div class="fragment w3-container w3 w3-cell" data-fragment-index="4">
+                        <img src="img/road-runner-left.png" alt="Road runner" class="no-border" height="150">
+                    </div>
+                    <div class="fragment w3-container w3 w3-cell white-paper" data-fragment-index="3">
+                        <h4>HTTP Response</h4>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <p>Wysłanie formularza</p>
+                <div class="w3-cell-row">
+                    <div class="most-text w3-container w3-cell w3 white-paper">
+                        <h4>HTTP POST</h4>
+                    </div>
+                    <div class="fragment w3-container w3-cell w3" data-fragment-index="1">
+                        <img src="img/road-runner.png" alt="Road runner" class="no-border" height="150">
+                    </div>
+                    <div class="fragment w3-container w3-cell w3" data-fragment-index="2">
+                        <img src="img/cogs.png" alt="Cogs" class="no-border" height="100">
+                    </div>
+                </div>
+                <p class="fragment" data-fragment-index="3">... błąd walidacji ...</p>
+                <div class="w3-cell-row">
+                    <div class="fragment w3-container w3 w3-cell" data-fragment-index="6">
+                        <img src="img/google-search-results.png" alt="google" height="200" class="">
+                    </div>
+                    <div class="fragment w3-container w3 w3-cell" data-fragment-index="5">
+                        <img src="img/road-runner-left.png" alt="Road runner" class="no-border" height="150">
+                    </div>
+                    <div class="fragment w3-container w3 w3-cell white-paper" data-fragment-index="4">
+                        <h4>HTTP Response</h4>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <p>Każda akcja użytkownika wiąże się z komunikacją z serwerem i przeładowaniem strony.</p>
+                <img src="img/road-runner.png" alt="RR" height="300">
+                <p class="fragment more-text">Protokół HTTP oraz język HTML nie był pierwotnie przeznaczony do tworzenia
+                    aplikacji.</p>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2>AJAX</h2>
+                <img src="img/spinner.gif" alt="Spinner" class="no-border">
+            </section>
             <section>
                 <ul>
                     <li><em>ok 1995 roku:</em> AJAX - Asynchronous JavaScript and XML
@@ -109,12 +214,14 @@
                 </ul>
             </section>
             <section>
-                <p>Metoda AJAX w znaczący sposób poprawiła odczucia użytkowników.</p>
+                <h2>AJAX</h2>
+                <p>Technika AJAX w znaczący sposób poprawiła odczucia użytkowników.</p>
                 <p>Aplikacje webowe stały się bardziej "responsywne" i zaczęły przypominać
                     aplikacje desktopowe.</p>
                 <p>AJAX został zaadaptowany przez niektóre technologie Server-Side, np JSF.</p>
             </section>
             <section>
+                <h3>AJAX - przykład</h3>
                 <pre class="stretch"><code class="html" data-trim>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
@@ -141,25 +248,17 @@ function loadDoc() {
         </section>
 
         <section>
-            <p>A gdyby każda aplikacja webowa składała się z jednego dokumentu HTML*?</p>
-            <p class="fragment more-text align-left">*Dokument ten byłby modyfikowany przez skrypty JavaScript w
-                zależności od interakcji z
-                użytkownikiem</p>
+            <p>A gdyby każda aplikacja webowa składała się z jednego dokumentu HTML,</p>
+            <p class="fragment more-text">a komunikacja z serwerem odbywała się wyłącznie z użyciem
+                podejściem AJAX?
             </p>
         </section>
 
         <section>
-            <h3>Architektura aplikacji Rich Web Application</h3>
+            <h3>Architektura aplikacji Rich Web Application*</h3>
             <section>
-                <div>
-                    <div class="col left">
-                        <img src="diagrams/basic-workflow.png" alt="Basic Workflow" width="500">
-                    </div>
-                    <div class="col right fragment">
-                        <img src="diagrams/basic-sequence.png" alt="Basic Sequence">
-                        <p class="fragment more-text align-left"></p>
-                    </div>
-                </div>
+                <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="no-border">
+                <p class="most-text">* architektura typowa dla Angular</p>
                 <aside class="notes">
                     <ul>
                         <li>Każdy widok aplikacji posiada kontroler, który zarządza jego stanem.</li>
@@ -168,7 +267,7 @@ function loadDoc() {
                             <li>Obsługę akcji (żądań) zainicjowanych przez użytkownika (np naciśnięcie przycisku).</li>
                             <li>Wczytanie danych do zaprezentowania na widoku.</li>
                         </ul>
-                        <li>Przejście między widokami realizowane jest przez managera stanów.</li>
+                        <li>Przejście między widokami realizowane jest przez managera stanów (Router).</li>
                         <li>Manager stanów odpowiada za:</li>
                         <ul>
                             <li>Przekierowanie do odpowiedniego widoku.</li>
@@ -208,6 +307,12 @@ function loadDoc() {
             </section>
         </section>
     </div>
+    <div id="cgLogo" style="background: url(img/cg_small.png);
+                        position: absolute;
+                        bottom: 20px;
+                        left: 20px;
+                        width: 250px;
+                        height: 44px;"></div>
     <div class="footer"><a href="index.html">Indeks</a></div>
 </div>
 
@@ -223,6 +328,7 @@ function loadDoc() {
         dependencies: [
             {src: 'plugin/markdown/marked.js'},
             {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js'},
             {src: 'plugin/notes/notes.js', async: true},
             {src: 'plugin/livecode/livecode.js', async: true},
             {
