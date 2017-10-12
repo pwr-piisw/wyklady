@@ -63,10 +63,10 @@
 						<li><a href="#/Maven">Maven</a></li>
 						<li><a href="#/mvsm">Monolyth vs Microservice *</a></li>
 						<li><a href="#/Spring">Spring Framework (DI / AOP)</a></li>
-						<li><a href="#/SpringMvc">Spring MVC / REST*</a></li>
+						<li><a href="#/SpringMvc">Spring MVC / REST *</a></li>
 						<li><a href="#/SpringBoot">Spring Boot</a></li>
-						<li><a href="#/SpringCloud">Spring Cloud*</a></li>
-						<li><a href="#/CI">CI*</a></li>
+						<li><a href="#/SpringCloud">Spring Cloud *</a></li>
+						<li><a href="#/CI">CI *</a></li>
 
 						
 					</ul>
@@ -84,7 +84,7 @@
 					</section>
 					
 					<section>
-						asdf
+						TODO Unclebob article 
 					</section>
 				</section>
 				
@@ -371,11 +371,83 @@ public class BooksRestService {
 						<h1>Spring MVC / REST</h1>
 					</section>
 					
-					<!-- TODO -->
+					<!-- TODO Spring MVC-->
 					
 					<section>
-						asdf
+						Spring MVC
 					</section>
+					
+					<section>
+					<h3>RESTful Services</h3>
+					<p><b>REST</b> - REpresentation State Transfer. Roy Fielding 2000.</p>
+					<p>REST to nie jest architektura, tylko pewien zespół ograniczeń, który jeśli jest zastosowany do architektury to nadaje konkretne role danym, komponentom, hyperlinkom, ...</p>
+				</section>
+				<section>
+					<h3>RESTful Services</h3>
+					Wymagania stawiane przez definicję REST:
+					<ol>
+						<li>system klient - server
+						<li>system bezstanowy
+						<li>system udostępniający cache*
+						<li>system jednolicie dostępny*
+						<li>system wielowarstwowy
+					</ol>
+					<p>RESTful - spełniający wszystkie punkty powyższych założeń.</p>
+				</section>
+				<section>
+					W świecie aplikacji internetowych definicja przekłada się na następujących kilka elementów:
+					<ul>
+						<li>Dane przesyłane między klientem a serwerem są pewną reprezentacją bytów biznesowych: XML, JSON
+						<li>Dane przemieszczają się do konkretnego adresata URI (Uniform Resource Identifier)
+						<li>Dane dodatkowo posiadają pewien kwalifikator akcji, mający odpowiednik w świecie protokołu HTTP
+					</ul>
+					<table>
+						<thead>
+							<tr>
+								<th>Akcja</th>
+								<th>Metoda HTTP</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><b>C</b>REATE</td>
+								<td>POST</td>
+							</tr>
+							<tr>
+								<td><b>R</b>ETRIEVE</td>
+								<td>GET</td>
+							</tr>
+							<tr>
+								<td><b>U</b>PDATE</td>
+								<td>PUT</td>
+							</tr>
+							<tr>
+								<td><b>D</b>ELETE</td>
+								<td>DELETE</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section>
+					<h3>RESTful API</h3>					
+				<pre><code class="Java" data-trim contenteditable>
+@RequestMapping(path = "/cars", method = RequestMethod.GET)
+public List&lt;CarTo&gt; findAllCars() { ... }
+
+@RequestMapping(path = "/car", method = RequestMethod.POST)
+public CarTo addCar(@RequestBody CarTo car) { ... }
+
+@RequestMapping(path = "/car", method = RequestMethod.PUT)
+public CarTo updateCar(@RequestBody CarTo car) { ... }
+
+@RequestMapping(path = "/car/{id}", method = RequestMethod.DELETE)
+public boolean deleteCar(@PathVariable("id") Long id) { ... }
+					</code></pre>
+					<ul>
+						<li><a href="http://www.thomas-bayer.com/sqlrest/CUSTOMER/1">Przykład GET 1</a>
+						<li><a href="http://jsonplaceholder.typicode.com/posts/1/comments">Przykład GET 2</a>
+					</ul>
+				</section>
 				</section>
 
 				

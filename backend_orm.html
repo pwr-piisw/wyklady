@@ -65,7 +65,7 @@
 						<li><a href="#/SpringData">Spring Data</a></li>
 						<li><a href="#/Tranzakcje">Tranzakcje</a></li>
 						<li><a href="#/Testowanie">Testowanie</a></li>
-						<li><a href="#/liveCoding">Baza danych - live coding</a></li>
+						<li><a href="#/liveCoding">Baza danych - live coding *</a></li>
 
 						
 					</ul>
@@ -83,8 +83,91 @@
 					</section>
 					
 					<section>
-						asdf
-					</section>
+				<h4>Relacyjne bazy danych a świat obiektowy</h4>
+					<ul>
+						<li>Aplikacje tworzą, zarządzają i przechowują informacje strukturalne
+						<li>Programiści wybierają języki obiektowe
+						<li>Zapisywanie i pobieranie danych wymaga znajomości SQL	
+					</ul>
+					
+					<img src="img/server/objectVSsql.PNG" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				
+				<section>
+				<h3>Dostęp do danych za pomocą JDBC</h3>
+					<ul>
+						<li>Bardzo dobrze znane API
+						<li>Wymaga dobrej znajomości SQL
+						<li>Łącze do baz danych dla języka Java	
+					</ul>
+					
+					<img src="img/server/jdbc.png" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				<section>
+				<h3>JDBC - jak to działa</h3>
+				
+					<pre><code class="Java" data-trim>
+@Service public class CustomerServiceImpl {
+
+   private static final String FIND_ALL_LIBRARIES_IN_CITY_SQL =
+      "SELECT l.id, l.name, l.address_id FROM Library l, Address a 
+       WHERE l.address_id = a.id AND a.city = :city";
+   
+   @Autowired private NamedParameterJdbcOperations jdbcTemplate;
+   @Autowired private LibraryRowMapper mapper;
+   
+   public List&lt;LibraryTO&gt; findAllLibrariesInCity (String cityName) {
+      SqlParameterSource params = new MapSqlParameterSource("city", cityName);
+      return jdbcTemplate.query(FIND_ALL_LIBRARIES_IN_CITY_SQL, params, mapper);
+   }
+					</code></pre>				
+				
+					<ul>
+						<li>Konieczność definiowania zapytań SQL
+						<li>Spring NamedParameterJdbcOperations do wykonywania instrukcji SQL
+						<li>Spring RowMapper do mapowania wyniku zapytania na obiekt	
+					</ul>
+				</section>
+				
+				
+				<section>
+				<h3>JDBC - spring RowMapper</h3>
+				Implementacja interfejsu RowMapper
+					<pre><code class="Java" data-trim>
+@Component
+public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
+
+   @Override
+   public LibraryTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+      LibraryTO library = new LibraryTO();
+      library.setId(rs.getLong(1));
+      library.setName(rs.getString(2));
+      library.setAddress(mapAddressById(rs.getLong(3)));
+      return library;
+   }
+   
+   private AddressTO mapAddressById(Long addressId) {
+      if (addressId != null && Long.compare(0, addressId) != 0)
+        return new AddressTO(addressId));
+      return null;
+   }
+					</code></pre>				
+				</section>
+				
+				<section>
+				<h3>JDBC - wady</h3>
+					<ul>
+						<li>Wymaga pisania dużej ilości dodatkowego kodu
+						<li>Trudne mapowanie wyniku SQL na obiekty biznesowe
+						<li>Kod związany z trwałością danych narażony na błędy programistów
+						<li>Brak przenośności kodu, implementacja zależna od bazy danych
+						<li>Implementacja bardzo trudna w utrzymaniu
+						<li>Ewentualne błędy w zapytaniach SQL widoczne dopiero w trakcie działania programu
+						<li>Kod nietestowalny
+					</ul>
+				</section>		
 				</section>
 				
 				
@@ -99,13 +182,58 @@
 						<h1>ORM</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+				<h3>Odwzorowanie obiektowo-relacyjne</h3>
+					<ul>
+						<li>Przekształcenie obiektów w encje bazy danych i odwrotnie
+ 						<li>Przekształcenie połączeń między obiektami na relacje bazy danych
+ 						<li>Przekształcenie obiektowego języka zapytań na SQL
+ 						<li>Spójny sposób obsługi różnych baz danych - przenośność
+ 						<li>Zapewnienie trwałości obiektów
+ 						<li>Ochrona programisty przed czasochłonnym SQL-em
+ 						<li>Pozwala skupić się na implementacji logiki biznesowej
+ 						<li>Zapewnienie stałych technik optymalizacyjnych
+ 						<li>Oddzielenie warstwy dostępu do danych od biznesu
+					</ul>
+				</section>
+				
+				<section>
+				<h4>Odwzorowanie obiektowo-relacyjne</h4>
+				Niedopasowanie paradygmatów relacyjno-obiektowych	
+					<table>
+						<thead>
+							<tr>
+								<th>Podobieństwa</th>
+								<th>Różnice</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Klasy i tabele</td>
+								<td>Szczegółowość</td> 
+							</tr>
+							<tr>
+								<td>Właściwości i kolumny</td>
+								<td>Dziedziczenie (java)</td> 
+							</tr>
+							<tr>
+								<td>Instancje i wiersze</td>
+								<td>Kolekcje (java)</td> 
+							</tr>
+							<tr>
+								<td></td>
+								<td>Identyczność (==, equals vs PK)</td> 
+							</tr>
+							<tr>
+								<td></td>
+								<td>Nawigacja po grafie obiektów</td> 
+							</tr>
+						</tbody>
+					</table>
+					<p class="fragment">Podstawowym zadaniem ORM jest rozwiązanie wrodzonych niezgodności pomiędzy obiektami i bazami danych</p>
 				</section>
 
+				</section>
 				
 				
 				<!-- ------ -->
@@ -119,11 +247,676 @@
 						<h1>Hibernate a JPA</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+				<h3>Hibernate</h3>
+					<ul>
+						<li>Gavin King rozpoczął prace nad biblioteką pod koniec 2001 roku
+						<li>Zespół na bieżąco realizował prośby użytkowników
+						<li>Zgodny ze standardem JPA**
+						<ul>
+							<li>Możliwość traktowania Hibernate jako dostawcy trwałości
+							<li>Możliwość używania bibliotek JPA, takich jak np. Spring-Data-Jpa
+						</ul>
+						<li>Oddziela kod biznesowy od warstwy dostepu do danych
+					</ul>
+				</section>		
+				
+				<section>
+				<h3>Hibernate a development</h3>
+					<img src="img/server/hibernate_development_tooling.jpg" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				<section>
+				<h3>Hibernate a JPA</h3>
+				<ul>
+					<li>JPA - Java Persistence API
+					<li>Hibernate jest implementacją JPA
+					<li>Tak długo jak w projekcie używa się Hibernate można z jego adnotacji korzystać zamiennie z adnotacjami JPA
+					<li>Jeśli planujemy kiedyś zmienić ORM, to warto ograniczyć się do adnotacji JPA
+				</section>
+				</ul>
+				
+				<section>
+				<h3>Encja a <b>POJO</b></h3>
+				
+									<pre><code class="Java" data-trim>
+public class LibraryEntity {
+	private String name;
+	private String domain;
+
+	public LibraryEntity () {
+	}
+
+	public String getName() { return name; }
+
+	public void setName(String name) { this.name = name; }
+	
+	public String getDomain() { return domain; }
+
+	public void setDomain(String domain) { this. domain = domain; }
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3><b>Encja</b> a POJO</h3>
+				
+									<pre><code class="Java" data-trim>
+@Entity
+public class LibraryEntity {
+
+	@Id
+	private Long id;
+	
+	@Column(name = "name", length = 30, nullable = false)
+	private String name;
+	
+	@Column(name = "domain", length = 5, nullable = true)
+	private String domain;
+	
+	public LibraryEntity () {
+	}
+	
+	// getters and setters
+}
+
+					</code></pre>
+				</section>
+				
+				<section>
+				<h4>Adnotacje dla Encji</h4>
+				
+									<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "LIBRARY", schema = "public")
+@Access(AccessType.FIELD)
+public class LibraryEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column(name = "name", length = 30, nullable = false)
+	private String name;
+	
+	@Lob
+	@Column(nullable = false)
+	private String description;
+	
+	private String city;
+	
+	@Access(AccessType.PROPERTY)
+	public String getCity ()  { ... }
+	
+	public LibraryEntity ()  { }
+	
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h4>Adnotacje dla Encji</h4>
+					<ul>
+						<li><b>@Entity</b> - oznacza klasę, odzwierciedla tabelę BD
+						<li><b>@Entity(name="…")</b> - nigdy nie używać
+						<li><b>@Access</b> - decyduje gdzie umieszczać adnotacje
+						<li><b>@Table</b> - zmienia domyślną nazwę tabeli BD
+						<li><b>@Id</b> - oznacza atrybut jako klucz główny
+						<li><b>@GeneratedValue</b> - auto generacja wartości PK
+						<li><b>@Column</b> - pozwala ustawić wartości kolumny
+						<li><b>@Lob</b> - typ dla dużych danych tekstowych
+						<li><b>@Enumerated(EnumType.STRING)</b> - enumy
+						<li><b>@Transient</b> - wyłączenie pola z persystencji
+						<li><b>@MappedSuperclas</b> - zwykłe dziedziczenie
+					</ul>
+				</section>
+				
+				<section>
+				<h4>Typy Embedded</h4>
+					<pre><code class="Java" data-trim>
+@Embeddable
+public class PersonalData  {
+
+ private String firstName;
+ 
+ private String lastName;
+ 
+ @Column (columnDefinition=" DATE", nullable = false)
+ private Date birthDate;
+
+ public PersonalData()  {
+ }
+ 
+ // getters & setters     
+ 
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h4>Typy Embedded</h4>
+					<pre><code class="Java" data-trim>
+@Entity
+public class AuthorEntity  {
+
+  @Embedded
+  @AttributeOverrides({
+       @AttributeOverride(
+           name = "firstName", 
+           column = @Column(
+              name = "FIRST_NAME", 
+              nullable = false)),
+       @AttributeOverride(
+           name = "lastName",
+           column = @Column(
+       	      name = "LAST_NAME", 
+       	      nullable = false))})
+  vate PersonalData personalData;
+  
+  ...
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Generowanie kluczy głównych - Strategie</h3>
+					<pre><code class="Java" data-trim>
+					
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   private Long id;
+					</code></pre>
+					<pre><code class="Java" data-trim>
+					
+   @Id
+   @SequenceGenerator(name = "bookGen", sequenceName = "BOOK_SEQ")
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, 
+					generator = "bookGen")
+   private Long id;
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Generowanie kluczy głównych - Strategie</h3>
+					<pre><code class="Java" data-trim>
+					
+    @Id
+    @TableGenerator(
+         name="bookGen",
+         table="ID_GEN", // opcjonalnie
+         pkColumnName="GEN_KEY", // opcjonalnie
+         valueColumnName="GEN_VALUE", // opcjonalnie
+         pkColumnValue="BOOK_ID_GEN") // opcjonalnie
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "bookGen")
+    private Long id;
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Cykl życia encji</h3>
+					<ul>
+						<li>Adnotacje jako metadane opisujące mapowanie pomiędzy obiektem a bazą
+						<li>Cykle życia encji:
+						<ul>
+							<li><b>nowy</b> (new) - brak identyfikatora i powiązania z kontekstem persystencji
+							<li><b>zarządzany</b> (managed) – encja posiada ID i jest powiązana z kontekstem persystencji
+							<li><b>odłączony</b> (detached) – encja posiada ID ale nie jest powiązana z kontekstem persystencji
+							<li><b>usunięty</b> (removed) – tak jak zarządzany, ale oznaczona jako „do usunięcia”
+						</ul>
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Listenery</h3>
+					<ul>
+						<li><b>@PrePersist</b>
+						<li><b>@PostPersist    </b>
+						<li><b>@PreUpdate      </b>
+						<li><b>@PostUpdate     </b>
+						<li><b>@PostLoad       </b>
+						<li><b>@PreRemove      </b>
+						<li><b>@PostRemove     </b>
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Listenery wewnątrz encji</h3>
+					<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "CUSTOMER_CARD")
+public class CustomerCardEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+	
+    @Column(nullable = false)
+    private String serialNumber;
+
+    @PrePersist
+    public void generateDefaultSerialNumber() {
+        serialNumber = new SerialNumberGenerator().generate();
+    }
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Listenery stand alone</h3>
+					<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "CUSTOMER_CARD")
+@EntityListeners(CustomerCardListener.class)
+public class CustomerCardEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+	
+    @Column(nullable = false)
+    private String serialNumber;
+
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Listenery stand alone</h3>
+					<pre><code class="Java" data-trim>
+public class CustomerCardListener  {
+
+    @PrePersist
+    public void generateDefaultSerialNumber
+			(CustomerCardEntity customerCardEntity) {
+        String serialNumber = new SerialNumberGenerator().generate();
+        customerCardEntity.setSerialNumber(serialNumber);
+    }
+	
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h4>Entity Manager</h4>
+					<ul>
+						<li>Podstawowy element całej warstwy persystencji
+						<li>Zarządza transakcjami i encjami
+					</ul>
+				
+				
+									<pre><code class="Java" data-trim>
+String unitName = "MyPersistenceUnit";
+
+// utwórz
+EntityManagerFactory emf = Persistence.createEntityManagerFactory(unitName);
+EntityManager em = emf.createEntityManager();
+
+// zrób co masz do zrobienia
+zrobCos(em);
+
+// zamknij
+em.close();
+emf.close();
+					</code></pre>
+				</section>
+				
+				<section>
+				<h4>Entity Manager - dostęp do danych</h4>
+					<ul>
+						<li>Podstawowy element całej warstwy persystencji
+						<li>Zarządza transakcjami i encjami
+					</ul>
+									<pre><code class="Java" data-trim>
+// zapis
+Product banan = new Product(1, "banan", "owoce");
+em.persist(banan);
+
+// odczyt
+Product bananFromDB = em.find(Product.class, 1);
+
+// usunięcie
+Product bananFromDB = em.find(Product.class, 1);
+em.remove(bananFromDB);
+
+// zapytanie
+Product product = em.createQuery(
+"SELECT p FROM Product p WHERE p.category = :cat_param", Product.class)
+	.setParameter("cat_param", "owoce")
+	.getSingleResult();
+
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Relacje</h3>
+					<ul>
+						<li><b>@OneToOne</b> – encja A może mieć relację do dokładnie jednej encji B
+						<li><b>@OneToMany</b> – encja A może mieć relację do kilku encji B
+						<li><b>@ManyToOne</b> – wiele encji A może mieć relację do dokładnie jednej encji B
+						<li><b>@ManyToMany</b> – wiele encji A może mieć relację do wielu encji B
+						<ul><li>Tworzy tabelę asocjacyjną</ul>
+					</ul>
+				</section>	
+				
+				<section>
+				<h3>Relacje</h3>
+					<ul>
+						<li>Wyróżniamy relacje:
+						<ul>
+							<li>jednokierunkowe
+							<li> dwukierunkowe
+						</ul>
+					</ul>
+				</section>
+				
+				<section>
+				<h3>@OneToOne - jednokierunkowa</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+public class User {
+
+	@OneToOne(
+		cascade = CascadeType.ALL, // default: empty
+		fetch = FetchType.LAZY, // default: EAGER
+		optional = false) // default: true
+	private Address address;
+}
+					</code></pre>
+				<pre><code class="Java" data-trim>
+@Entity
+public class Address {
+}
+
+					</code></pre>
+				</section>
+								
+				<section>
+				<h3>@OneToOne - dwukierunkowa</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+public class User {
+
+	@OneToOne
+	@JoinColumn(name = "ADDRESS_FK")
+	private Address address;
+}
+
+					</code></pre>
+				<pre><code class="Java" data-trim>
+@Entity
+public class Address {
+
+	@OneToOne(mappedBy = „address”)
+	private User user;
+}
+					</code></pre>
+					<ul>
+						<li><b>mappedBy</b> określa właściciela relacji
+						<li>użytkownik ma klucz obcy do adresu
+						<li>bez mappedBy klucz obcy po obu stronach
+					</ul>
+				</section>
+				
+				<section>
+				<h3>@OneToMany / @ManyToOne - jednokierunkowa</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+public class User {
+
+	@OneToMany(
+	cascade = CascadeType.ALL, // default: empty
+	fetch = FetchType. EAGER) // default: LAZY
+	@JoinColumn(name = "user_id")
+	private Collection&lt;Address&gt; addresses;
+}
+
+					</code></pre>
+				<pre><code class="Java" data-trim>
+@Entity
+public class Address {
+}
+					</code></pre>
+					<ul>
+						<li>bez <b>@JoinColumn</b> utworzona zostanie tabela asocjacyjna
+					</ul>
+				</section>
+				
+				
+				
+				<section>
+				<h3>@OneToMany / @ManyToOne - dwukierunkowa</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+public class User {
+
+	@OneToMany(mappedBy = "user")
+	private Collection&lt;Address&gt; addresses;
+}
+
+					</code></pre>
+				<pre><code class="Java" data-trim>
+@Entity
+public class Address {
+
+	@ManyToOne
+	@JoinColumn(name = "ADDRESS_FK", nullable = false)
+	private User user;
+}
+					</code></pre>
+					<ul>
+						<li>mappedBy tak samo jak <b>@JoinColumn</b> usuwa tabelę asocjacyjną
+					</ul>
+				</section>
+				
+				<section>
+				<h3>@ManyToMany - jednokierunkowa</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+public class User {
+
+	@ManyToMany(
+		cascade = CascadeType.ALL, // default: empty
+		fetch = FetchType. LAZY) // default: EAGER    
+	@JoinTable(name = "USER_ADDRESS",
+		joinColumns = {@JoinColumn(
+			name = "USER_ID", 
+			nullable = false, 
+			updatable = false)},
+		inverseJoinColumns = {@JoinColumn(
+			name = "ADDRESS_ID", 
+			nullable = false, 
+			updatable = false)})
+	private Collection&lt;Address&gt; addresses;
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>@ManyToMany - dwukierunkowa</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+public class Address {
+
+    @ManyToMany(mappedBy = "user")
+    private Collection&lt;User&gt; users;
+}
+					</code></pre>
+
+					<ul>
+						<li>bez mappedBy dwie tabele asocjacyjne zostaną stworzone
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Kaskady</h3>
+					<ul>
+						<li>Entity Manager dokonuje zmian na danej encji, np. persist
+						<li>Kaskady umożliwiają operację na encji połączonej relacją
+						<ul>
+							<li><b>PERSIST      </b>
+							<li><b>MERGE        </b>
+							<li><b>REMOVE       </b>
+							<li><b>ALL          </b>
+						</ul>
+					</ul>				
+				</section>
+				
+				<section>
+				<h3>Kaskady</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "BOOK")
+public class BookEntity  {
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
+    private BookSpoilerEntity bookSpoiler;
+	
+}
+					</code></pre>			
+				</section>
+				
+				<section>
+				<h3>Dziedziczenie</h3>
+					<ul>
+						<li>Naturalna właściwość obiektów
+						<li>Nie ma zastosowania w relacyjnych bazach danych
+						<li>Rozwiązaniem Hibernate są trzy strategie:
+						<ul>
+							<li><b>SINGLE_TABLE        </b>
+							<li><b>TABLE_PER_CLASS       </b>
+							<li><b>JOINED          </b>
+						</ul>
+						<li>Możliwość wykonywania zapytań polimorficznych
+					</ul>	
+				</section>
+				
+				<section>
+				<h3>Strategie: Single Table</h3>
+					<ul>
+						<li>Podobne obiekty przechowywane są w jednej tabeli
+						<li>Rekordy rozróżniane są przez tzw. Dyskryminator
+						<li>Wydajne wyszukiwanie – brak złączeń
+						<li>Puste kolumny (różnice między obiektami)
+						<li>Problem z warunkiem Not-Null. 
+					</ul>	
+				</section>
+				
+				<section>
+				<h3>Strategie: Single Table</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "AUTHOR")
+@DiscriminatorColumn(name = "TYPE", length = 6, 
+		discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class AuthorEntity  {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+	
+    @Column(nullable = true, length = 30)
+    protected String nickName;
+
+}
+					</code></pre>			
+				</section>
+				
+				<section>
+				<h3>Strategie: Single Table</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+@DiscriminatorValue("WRITER")
+public class WriterEntity extends AuthorEntity  {
+
+    @Enumerated(EnumType.STRING)
+    private LiteraryGenre literaryGenre;
+	
+}
+					</code></pre>	
+				</section>
+				
+				<section>
+				<h3>Strategie: Single Table</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+@DiscriminatorValue("PROFES")
+public class ProfessorEntity extends AuthorEntity  {
+
+    @Column(nullable = true)
+    private String university;
+
+}
+					</code></pre>	
+				</section>
+				
+				<section>
+					<h3>Strategie: Single Table</h3>
+					<img src="img/server/inheritance_single_table_db.png" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				<section>
+				<h3>Strategie: Table per class</h3>
+					<ul>
+						<li>Oddzielna tabela bazy danych na jedną encję
+						<li>Brak porblemów z warunkami Not-Null
+						<li>Redundancja wspólnych atrybótów
+						<li>Niewydajne zapytania SQL przy zapytaniach polimorficznych 
+
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Strategie: Joined</h3>
+					<ul>
+						<li>Bazowe obiekty zapisane są w jednej tabeli
+						<li>Różnice między obiektami zapisywane są w oddzielnych tabelach
+						<li>Znormalizowana baza danych
+						<li>Brak redundancji
+						<li>Wymagane złączenie tabel przy zapytaniach polimorficznych
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Strategie: Joined</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "BOOK_EXEMPLAR")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class BookExemplarEntity  {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+	
+    @Column(nullable = false, length = 15, unique = true)
+    protected String serialNumber;
+}
+					</code></pre>	
+				<img src="img/server/inheritance_joined_db_1.png" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				<section>
+				<h3>Strategie: Joined</h3>
+				<pre><code class="Java" data-trim>
+@Entity
+@Table(name = "PAPER_BOOK")
+@PrimaryKeyJoinColumn(name = "book_ex_id", referencedColumnName = "id")
+public class PaperBookExemplarEntity extends BookExemplarEntity  {
+
+    private int pagesCount;
+	
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PaperSize paperSize;
+	
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BookCover bookCover;
+}
+					</code></pre>	
+				<img src="img/server/inheritance_joined_db_2.png" style="background:none; border:none; box-shadow:none;">
+				</section>
 				</section>
 				
 				
@@ -138,11 +931,210 @@
 						<h1>Spring Data</h1>
 					</section>
 					
-					<!-- TODO -->
+					<section>
+						<h3>Czym jest Spring Data JPA</h3>
+							<ul>
+								<li>kolejna warstwa abstrakcji
+								<li>która pozwala pisać mniej kodu!
+							</ul>
+							
+							<img src="img/server/spring_data.JPG" style="background:none; border:none; box-shadow:none;">
+<a href="http://simplej2eetutorials.blogspot.de/2014/12/spring-data-jpa-tutorial.html"> LINK </a>
+					</section>
+					
 					
 					<section>
-						asdf
+						<h3>Bez Spring Data</h3>
+					<pre><code class="Java" data-trim contenteditable>
+@Repository
+@Transactional(readOnly = true)
+class AccountDaoJpaImpl implements AccountDao {
+
+  @PersistenceContext
+  private EntityManager em;
+
+  @Override
+  @Transactional
+  public Account save(Account account) {
+
+    if (account.getId() == null) {
+      em.persist(account);
+      return account;
+    } else {
+      return em.merge(account);
+    }
+  }
+
+  @Override
+  public List&lt;Account&gt; findByCustomer(Customer customer) {
+
+    TypedQuery query = em.createQuery("select a from Account a where a.customer = ?1", Account.class);
+
+    query.setParameter(1, customer);
+    return query.getResultList();
+  }
+}
+</code></pre>
 					</section>
+					
+					<section>
+						<h3>Z Spring Data!</h3>
+					<pre><code class="Java" data-trim contenteditable>
+public interface AccountRepository extends 
+	JpaRepository&lt;Account, Long&gt; {
+
+    List&lt;Account&gt; findByCustomer(Customer customer); 
+}
+</code></pre>
+					</section>
+					
+					<section>
+						<h3>Query by Convention</h3>
+					<pre><code class="Java" data-trim contenteditable>
+public interface CustomerRepository extends CrudRepository&lt;Customer, Long&gt; {
+
+    List&lt;Customer&gt; findByLastName(String lastName);
+    List&lt;User&gt; findByEmailAddressAndLastname(String emailAddress, String lastname);
+
+}
+</code></pre>
+					</section>
+					
+					<section>
+						<h3>@Query</h3>
+					<pre><code class="Java" data-trim contenteditable>
+public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+
+@Query("select u from User u where u.firstname = :firstname or u.lastname = :lastname")
+User findByLastnameOrFirstname(@Param("lastname") String lastname, @Param("firstname") String firstname);
+
+
+@Modifying
+@Query("update User u set u.firstname = ?1 where u.lastname = ?2")
+int setFixedFirstnameFor(String firstname, String lastname);
+
+}
+</code></pre>
+					</section>
+					
+				<section>
+						<h3>Podsumowanie</h3>
+					<ul>
+						<li>Dziedziczenie z CrudRepository daje CustomerRepository dostęp do metod, które operują na encji Customer takich jak: save, delete, findAll, findOne
+						<li>Spring Data JPA pozwala na definiowanie innych zapytań poprzez zwykłą deklarację sygnatury metody: fingByLastName.
+						<li>Brak implementacji interfejsu
+						<li>Wszystkie metody są wykonywane w transakcji
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Query DSL</h3>
+					<ul>
+						<li>Powstał z potrzeby utrzymywania zapytań HQL w formie bezpiecznej z perspektywy typizacji
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Query DSL</h3>
+<pre><code class="Java" data-trim contenteditable>
+@PersistenceContext
+	private EntityManager em;
+
+JPAQueryFactory queryFactory = new JPAQueryFactory(this.em);
+
+// Metoda
+
+QCustomer customer = QCustomer.customer;
+Customer result = queryFactory.selectFrom(customer)
+    .where(customer.firstName.eq("Bob"), 
+	customer.lastName.eq("Wilson"))
+    .fetchOne();
+</code></pre>
+				</section>
+				
+				<section>
+					<h3>Query DSL - sortowanie</h3>
+<pre><code class="Java" data-trim contenteditable>
+QCustomer customer = QCustomer.customer;
+List&lt;Customer&gt; results = queryFactory.selectFrom(customer)
+    .orderBy(customer.lastName.asc(), customer.firstName.desc())
+    .fetch();
+
+</code></pre>
+				</section>
+				
+				<section>
+					<h3>Query DSL - grupowanie</h3>
+<pre><code class="Java" data-trim contenteditable>
+List&lt;Customer&gt; results = queryFactory.select(customer.lastName).from(customer)
+    .groupBy(customer.lastName)
+    .fetch();
+
+</code></pre>
+				</section>
+				
+				
+				
+				<section>
+					<h3>Query DSL - usuwanie</h3>
+<pre><code class="Java" data-trim contenteditable>
+QCustomer customer = QCustomer.customer;
+
+// delete all customers
+queryFactory.delete(customer).execute();
+
+// delete all customers with a level less than 3
+queryFactory.delete(customer).where(customer.level.lt(3)).execute();
+
+</code></pre>
+				</section>
+				
+								<section>
+					<h3>Query DSL - Klauzula Where</h3>
+
+					<ul>
+						<li>przyjmuje predykat bądź listę predykatów
+						<li>Predykat to Typ i interfejs, jego implementacje są poniżej
+					</ul>
+					
+					<img src="img/server/predicate.PNG" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				<section>
+					<h3>Query DSL - BooleanExpression</h3>
+
+					<pre><code class="Java" data-trim contenteditable>
+QLegoSet legoSet = QLegoSet.legoSet;
+
+BooleanExpression ex = legoSet.legoName.eq("");
+
+ex = ex.and(legoSet.legoName.contains("asdf"));
+
+ex = ex.and(legoSet.legoVersion.isNull());
+					</code></pre>
+					
+				</section>
+				
+				<section>
+					<h3>Query DSL - BooleanBuilder</h3>
+
+					<pre><code class="Java" data-trim contenteditable>
+QLegoSet legoSet = QLegoSet.legoSet;
+
+BooleanBuilder builder = new BooleanBuilder();
+
+if (status != null) {
+	builder.and(legoSet.legoStatus.eq(status));
+}
+
+if (StringUtils.isNotBlank(externallId)) {
+	builder.and(legoSet.legoName.eq(externallId));
+}
+
+Predicate p = builder.getValue();
+					</code></pre>
+					
+				</section>
 				</section>
 
 				
@@ -157,11 +1149,73 @@
 						<h1>Tranzakcje</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+				<h3>Transakcje</h3>
+					<ul>
+						<li>Zbiór operacji na bazie danych stanowiących jedną całość
+ 						<li>Zmieniają spójny stan bazy danych w inny spójny stan
+ 						<li>Cechy transakcji:
+						<ul>
+							<li>Atomowość (<b>A</b>tomicity)
+							<li>Spójność (<b>C</b>onsistency)
+							<li>Izolacja (<b>I</b>soation)
+							<li>Trwałość (<b>D</b>urability)	
+						</ul>
+					</ul>
+				</section>
+				
+				<section>
+				<h4>Transakcje - Entity Manager</h4>
+				
+									<pre><code class="Java" data-trim>
+// rozpoczyna transakcję
+em.getTransaction().begin();
+
+// wykonanie operacji
+Product prodFromDb = em.find(Product.class, 1);
+prodFromDb.setCategory("newCategory");
+
+// zatwierdzenie transakcji
+em.getTransaction().commit();
+
+// ewentualne wycofanie transakcji
+em.getTransaction().rollback();
+					</code></pre>
+				</section>
+				
+				<section>
+				Transakcje Spring <b>@Transactional</b>
+				
+					<ul>
+						<li>Najlepszy sposób budowania transakcyjnych aplikacji Spring 
+ 						<li>Brak powielonego kodu
+						<li>Bardzo łatwa konfiguracja
+						<li>Propagacja, izolacja, timeout, readOnly, rollbackFor itp.
+						<li>Możliwość zdefiniowania na całej klasie i metodzie
+					</ul>
+				</section>	
+
+				<section>
+				<h4>@Transactional</h4>
+									<pre><code class="Java" data-trim>
+@Service
+@Transactional(readOnly = true)
+public class LibraryServiceImpl implements LibraryService {
+
+	@Autowired
+	private LibraryRepository libraryRepository;
+	
+	@Autowired
+	private MapperFacade mapper;
+	
+	@Override
+	public List&lt;LibraryTO&gt; findAllLibraries () {
+		List&lt;LibraryEntity&gt; libraries = libraryRepository.findAll();
+		return mapper.mapAsList(libraries, LibraryTO.class);
+	}
+}
+					</code></pre>
+				</section>	
 				</section>
 
 				
@@ -178,11 +1232,112 @@
 						<h1>Testowanie</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+				<h3>Po co testy?</h3>
+				
+				</section>
+				
+				<section>		
+				
+				<img src="img/server/sc.jpg" style="background:none; border:none; box-shadow:none;">
+				
+				</section>
+				
+				<section>
+				<h3>Jakie testy warto tworzyć</h3>
+					<ol>
+						<li>Jednostkowe
+						<li>Integracyjne	
+						<li>Komponentowe
+						<li>E2E
+						<li>Akceptacyjne
+					</ol>
+					<p>
+					<small><a href="https://en.wikipedia.org/wiki/Software_testing">Wikipedia</a></small>
+					</p>
+				</section>
+				
+				<section>
+				<h3>Jakie narzędzia wykorzystywać przy tworzeniu testów</h3>
+					<ol>
+						<li>Mockowanie zależności
+						<li>Asercje
+						<li>given-when-then
+						<li>Continuous Integration
+						<li>Argument Captors
+						<li>...
+					</ol>
+				</section>
+				
+						<!-- TODO -->
+					<!-- troche wiecej contentu  ... -->
+					
+						<!-- TODO -->
+					<!-- mockowanie / mockito -->
+					
+						<!-- TODO -->
+					<!-- FAKE OBJEKTY -->
+					
+						<!-- TODO -->
+					<!-- GIVEN WHEN THEN -->
+				
+				<section>
+				<h3>Test Jednostkowy z wykorzystaniem MockMVC</h3>
+				<pre><code class="Java" data-trim>		
+@EnableWebMvc
+@ComponentScan("org.itsurvival.books.rest")
+public static class BooksRestServiceTestConfiguration {
+
+    @Bean
+    public BookService bookService() {
+        return Mockito.mock(BookService.class);
+    }
+}
+
+private MockMvc mockMvc;
+
+@Autowired
+private WebApplicationContext webApplicationContext;
+
+@Autowired
+private BookService bookService;
+
+@Captor
+private ArgumentCaptor&lt;BookSearchCriteria&gt; bookSearchCriteriaCaptor;
+
+@Captor
+private ArgumentCaptor&lt;BookTo&gt; bookCaptor;
+				
+@Test
+public void shouldAddNewBook() throws Exception {
+
+    // given
+    byte[] content = readFileToBytes(
+		"classpath:org/itsurvival/books/rest/newBook.json");
+
+    when(bookService.addBook(any(BookTo.class)))
+		.thenAnswer(args -> args.getArguments()[0]);
+
+    // when
+    mockMvc.perform(post("/services/book")
+			.content(content)
+			.contentType(MediaType.APPLICATION_JSON))
+            // then
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.title", is("Test title")));
+
+
+    verify(bookService).addBook(bookCaptor.capture());
+    BookTo book = bookCaptor.getValue();
+    assertThat(book.getTitle()).isEqualTo("Test title");
+    assertThat(book.getAuthor()).isEqualTo("Test author");
+    assertThat(book.getYear()).isEqualTo(2008);
+    assertThat(book.getGenre()).isEqualTo(Genre.IT);
+    assertThat(book.getVersion()).isEqualTo(0L);
+    assertThat(book.getId()).isNull();
+}
+				</code></pre>
+				</section>
 				</section>				
 				
 				
