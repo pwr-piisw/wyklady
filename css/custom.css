@@ -26,11 +26,11 @@ p.align-left {
 p.align-right {
     text-align: right;
 }
-div.more-text {
+div.more-text,p.more-text {
     font-size: 80%;
 }
-p.more-text {
-    font-size: 80%;
+div.most-text,p.most-text {
+    font-size: 65%;
 }
 section img.no-border {
     border-width: 0px;
@@ -45,4 +45,55 @@ section img.no-border {
     text-align: center;
     font-size: medium;
     z-index: 100;
+}
+
+div.white-paper {
+    background-color: white;
+    padding: 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    box-shadow: 10px 10px 5px grey;
+}
+
+div.side-by-side {
+    float: left;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+div.white-paper p {
+    text-align: left;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+div.white-paper h1 {
+    text-transform: none;
+    text-shadow: none;
+    font-size: 1.5em;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
+div.white-paper img {
+    border-width: 0px;
+    border-style: none;
+    box-shadow: none;
+}
+
+div.white-paper ul,ol {
+    display: block;
+}
+
+div.w3 {
+    width: 30%;
+}
+
+div.w2 {
+    width: 42%;
+}
+
+div.w4 {
+    width: 22%;
 }

@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Projekt systemu</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/github.css">
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h2>Projekt i implementacja systemów webowych</h2>
+        </section>
+
+        <section>
+            <h3>Zawartość dokumentu projektowego</h3>
+            <ol>
+                <li>Cel projektu</li>
+                <li>Model przypadków użycia</li>
+                <li>Model danych</li>
+                <li>Model architektury</li>
+                <li>Definicja interfejsów zewnętrznych</li>
+                <li>Projekt interfejsu użytkownika</li>
+            </ol>
+        </section>
+
+        <section>
+            <h3>Cel projektu</h3>
+            <p class="justified">Tytuł projektu oraz opis korzyści dla potencjalnego
+                klienta z tytułu korzystania ze stworzonej aplikacji.
+            </p>
+            <div class="fragment more-text white-paper">
+                <h1>Projekt</h1>
+                <p>
+                    System rezerwacji biletów dla sieci kin XYZ.
+                </p>
+                <h1>Cele projektu</h1>
+                <ol>
+                    <li>Zastąpienie i integracja aktualnych systemów.</li>
+                    <li>Obniżenie kosztów funkcjonowania dzięki unifikacji systemów.</li>
+                    <li>Wprowadzenie możliwości rezerwacji przez internet oraz za pośrednictwem urządzeń mobilnych.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h3>Model przypadków użycia</h3>
+            <ul>
+                <li>Identyfikacja aktorów.</li>
+                <li>Identyfikacja przypadków użycia.</li>
+                <li>Prezentacja - diagram UML.</li>
+                <li>Opis scenariuszy.</li>
+            </ul>
+        </section>
+
+        <section>
+            <p>Aktorzy są bytami zewnętrznymi dla projektowanego systemu.</p>
+            <div class="more-text">
+                <ul>
+                    <li>Kto używa systemu?</li>
+                    <li>Kto instaluje system?</li>
+                    <li>Kto uruchamia system?</li>
+                    <li>Kto utrzymuje system w ruchu?</li>
+                    <li>Kto zatrzymuje system?</li>
+                    <li>Jakie inne systemy używają naszego systemu?</li>
+                    <li>Kto pobiera informacje z systemu?</li>
+                    <li>Kto wprowadza informacje do systemu?</li>
+                    <li>Czy cokolwiek dzieje się automatycznie w określonych momentach lub odstępach czasowych?</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <div class="side-by-side white-paper">
+                <img src="img/actor.png" alt="Actor" height="100">
+                <p>Administrator</p>
+            </div>
+            <div class="side-by-side white-paper">
+                <img src="img/actor.png" alt="Actor" height="100">
+                <p>User</p>
+            </div>
+            <div class="side-by-side white-paper">
+                <img src="img/actor.png" alt="Actor" height="100">
+                <p>Payroll system</p>
+            </div>
+        </section>
+
+        <section>
+            <h3>Przypadki użycia</h3>
+            <div class="side-by-side w2">
+                <div class="white-paper most-text">
+                    <h1>Administrator</h1>
+                    <ul>
+                        <li>Tworzy konta użytkowników.</li>
+                        <li>Blokuje konta użytkowników.</li>
+                        <li>Usuwa konta użytkowników.</li>
+                        <li>Resetuje hasła.</li>
+                    </ul>
+                    <h1>Pracownik kina</h1>
+                    <ul>
+                        <li>Definiuje nowy seans.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="side-by-side w2">
+                <div class="white-paper most-text">
+                    <h1>Widz</h1>
+                    <ul>
+                        <li>Rezerwuje bilet.</li>
+                        <li>Anuluje rezerwację.</li>
+                    </ul>
+                    <h1>Czytnik kodów</h1>
+                    <ul>
+                        <li>Weryfikuje bilet elektroniczny.</li>
+                    </ul>
+                    <h1>Harmonogram zadań</h1>
+                    <ul>
+                        <li>Archiwizuje seans.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p>Wymagania możemy opisać w postaci <em>przypadków użycia</em> bądź <em>user stories</em>.</p>
+            <div class="side-by-side w2">
+                <div class="white-paper most-text">
+                    <h1>Przypadek użycia</h1>
+                    <ul>
+                        <li>Opisuje kompletną interakcję aktora z systemem.</li>
+                        <li>Wymaga szczegółowego opisu w postaci scenariuszy
+                            <ul>
+                                <li>ścieżka podstawowa</li>
+                                <li>ścieżki alternatywna</li>
+                            </ul>
+                        </li>
+                        <li>Wymaga podziału na podzadania w celu realizacji.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="side-by-side w2 fragment">
+                <div class="white-paper most-text">
+                    <h1>User story</h1>
+                    <ul>
+                        <li>Opisuje czynność jaką aktor dokonuje w systemie.</li>
+                        <li>Opisuje cel czynności.</li>
+                        <li>Z reguły opisują jedną ścieżkę (podstawową lub alternatywną).</li>
+                        <li>Mogą być dalej dzielone na mniejsze historie.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3>Model danych</h3>
+            <img src="img/data-model.svg" alt="Data model" class="no-border">
+        </section>
+
+        <section>
+            <h3>Model architektury</h3>
+            <p class="more-text">Podział systemu na moduły (mikroserwisy).</p>
+            <img src="img/data-model-boundaries.svg" alt="Data model with boundaries" class="no-border" height="500">
+        </section>
+
+        <section>
+            <h3>Model architektury</h3>
+            <p class="more-text">Zależności między modułami:</p>
+            <img src="img/component-diagram.svg" alt="Component diagram" class="no-border">
+            <p class="fragment more-text">Moduły mogą być częścią jednego systemu, wtedy z reguły modelujemy je jako
+                osobne pakiety.</p>
+            <p class="fragment more-text">Często sensowne jest rozbicie dużego systemu na mniejsze systemy (architektura
+                mikroserwisowa).</p>
+        </section>
+
+        <section>
+            <h3>Wzorce architektoniczne</h3>
+            <p class="more-text">Najczęściej stosowana architektura (czy słusznie?)</p>
+            <img src="img/multitier-architecture.svg" alt="Multitier architecture" class="no-border fragment">
+        </section>
+
+        <section>
+            <p class="more-text">Inny przykład: architektura heksagonalna</p>
+            <img src="img/CleanArchitecture.jpg" alt="Clean Architecture" height="400" class="no-border">
+            <p class="most-text">Źródło: <a href="https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html">https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html</a></p>
+        </section>
+
+        <section>
+            <h3>Definicja interfejsów zewnętrznych</h3>
+            <ul>
+                <li>Protokół</li>
+                <li>Czasowniki <span class="fragment">(odczytaj, zapisz, opublikuj, usuń)</span></li>
+                <li>Rzeczowniki <span class="fragment">(model danych)</span></li>
+            </ul>
+            <p class="fragment">Przykład w dokumencie "Organizacja zajęć".</p>
+        </section>
+
+        <section>
+            <h3>Projekt interfejsu użytkownika</h3>
+            <img src="img/gui-prototype.png" alt="GUI Prototype" class="no-border">
+        </section>
+    </div>
+    <div class="footer"><a href="index.html">Indeks</a></div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        //width: '90%',
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
