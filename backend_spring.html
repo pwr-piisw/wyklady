@@ -59,14 +59,14 @@
 				
 				<section>
 					<ul>
-						<li><a href="#/arc">Architektura - Big Picture</a></li>
+						<li><a href="#/arc">Architektura - Big Picture *</a></li>
 						<li><a href="#/Maven">Maven</a></li>
-						<li><a href="#/mvsm">Monolyth vs Microservice</a></li>
+						<li><a href="#/mvsm">Monolyth vs Microservice *</a></li>
 						<li><a href="#/Spring">Spring Framework (DI / AOP)</a></li>
-						<li><a href="#/SpringMvc">Spring MVC / REST</a></li>
+						<li><a href="#/SpringMvc">Spring MVC / REST*</a></li>
 						<li><a href="#/SpringBoot">Spring Boot</a></li>
-						<li><a href="#/SpringCloud">Spring Cloud</a></li>
-						<li><a href="#/CI">CI</a></li>
+						<li><a href="#/SpringCloud">Spring Cloud*</a></li>
+						<li><a href="#/CI">CI*</a></li>
 
 						
 					</ul>
@@ -100,11 +100,55 @@
 						<h1>Maven</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+				<h3>Maven</h3>
+                    <ul>
+                      <li>Cel - Automatyzacja i standaryzacja procesu budowania</li>
+                      <li>Umożliwia opis procesu budowania oprogramowania</li>
+                      <li>Pozwala na zdefiniowanie zależności oraz zarządzanie nimi</li>
+                      <li>Podział na centralne repozytorium artefaktów - search.maven.org</li>
+                      <li>oraz lokalnie dostępne repozytorium deweloperskie</li>
+                    </ul>
+				</section>
+				
+                <section>
+                  <h3>Struktura projektu - convention over configuration</h3>
+                  <img src="img/server/mvn.PNG" style="background:none; border:none; box-shadow:none;">
+                </section>
+              
+                <section>
+                  <h3>Konfiguracja projektu - POM (Project Object Model)</h3>
+                  <img src="img/server/pom.png" style="background:none; border:none; box-shadow:none;">
+                </section>
+              
+                <section>
+                  <h3>Maven build lifecycle</h3>
+                  <ul>
+                      <li>Zadania wykonywane kaskadowo - wykonanie konkretnego kroku powoduje również wykonanie wszystkich poprzedzających</li>
+                      <li>mvn compile</li>
+                    <li>Deweloper najczęściej używa <b>mvn clean install</b></li>
+                    <li>Poszczególne pluginy korzystają ze zdefiniownaych faz w celu wykonania własnej akcji, np. <b>mvn surefire:test</b></li>
+                  </ul>
+                </section>
+              
+                <section>
+                  <img src="img/server/mvn_build.png" style="background:none; border:none; box-shadow:none;">
+                </section>
+				
+			    <section>
+                  <h3>Zarządzanie zależnościami - dependency management</h3>
+                  <ul>
+                      <li>Każda biblioteka posiada unikalny identyfikator - groupId, artifactId, version</li>
+                      <li>Plik pom.xml zawiera sekcję dependencyManagement z listą zależności</li>
+                      <li>Zależności są aktualizowane w procesie budowania</li>
+                      <li>Centralne repozytorium artefaktów - search.maven.org</li>
+                      <li>Lokalne repozytorium - lokalizacja definiowana dla użytkownika</li>
+                    </ul>
+                </section>
+              
+                <section>
+                  <img src="img/server/mvn_dependencies.png" style="background:none; border:none; box-shadow:none;">
+                </section>
 				</section>
 
 				
@@ -139,11 +183,180 @@
 						<h1>Spring Framework (DI / AOP)</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+					<h2>Spring Framework</h2>
+					<ul>
+						<li>Powstał w 2003 roku</li>						
+						<li>Szkielet tworzenia aplikacji dla języka Java</li>
+						<li>Alternatywa dla programowania w EJB</li>
+						<li>Oferuje dużą swobodę wytwarzania oprogramowania</li>
+						<li>Bardzo dobra dokumentacja</li>
+						<li>Gotowa implementacja wielu zagadnień</li>
+						<li>Ogromne wsparcie dla Java EE</li>
+						<li>Propaguje poprawny styl programowania</li>
+						<li>Jest dostępny na zasadach open source</li>
+					</ul>
+					</section>	
+				
+				<section>
+					<h3>Spring Framework - moduły</h3>
+					<ul>
+						<li>Składa się z kilku niezależnych od siebie modułów</li>
+						<li>Moduły można ze sobą łączyć w celu uzyskania większej funkcjonalności</li>
+					</ul>
+					<img src="img/server/spring_modules.png" style="background:none; border:none; box-shadow:none;">
+				</section>
+				
+				<section>
+					<h3>Spring Framework – podstawowy kontener</h3>
+					<ul>
+						<li>Core</li>
+							<ul> <li>podstawowa część frameworka, zawiera IoC i wstrzykiwanie zależności</li> </ul>
+						<li>Beans</li>
+							<ul> 	
+								<li>eliminuje potrzebę programowego tworzenia singletonów</li>
+								<li>oddziela zależność pomiędzy konfiguracją, specyfikacją a logiką programu</li> 
+							</ul>
+					</ul>
+				</section>	
+
+				<section>
+					<h3>Spring Framework – podstawowy kontener</h3>
+					<ul>							
+						<li>Context</li>
+							<ul> 	
+								<li>umożliwia dostęp do obiektów zarządzanych przez framework</li>
+								<li>pozwala na wydzielenie konfiguracji do plików *.properties</li>
+								<li>udostępnia interface ApplicationContext</li> 
+							</ul>
+						<li>EL - Spring Expression Language</li>
+					</ul>
+					<pre><code class="Java" data-trim contenteditable>
+@Value("#{applicationProperties['jakas.zmienna.z.pliku.properties']}")
+private String zmienna;
+					</code></pre>
+				</section>
+				
+				<section>
+					<h3>Inversion of Control, Dependency Injection</h3>
+					<ul>
+						<li>Paradygmat programowania, wzorzec projektowy, wzorzec architektoniczny.
+						<li>Zastosowanie 
+							<ul>
+								<li>w pojedynczych komponentach,
+								<li>w architekturze całego systemu (Spring Framework)
+							</ul>
+						<li>W klasycznym podejściu obiekty są budowane statycznie, brak wpływu na ich postać.
+						<li>Odwracamy kontrolę – budowaniem obiektów zajmuje się framework
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Słyszałem / wygooglowałem że Spring to głównie konfiguracje XMLowe</h3>
+					<ul> 	
+						<li>Tak było kiedyś, teraz większość podstawowych konstrukcji może bez problemu być konfigurować za pomocą adnotacji</li>
+						<li>Konfiguracje poprzez XML cały czas działają</li>
+					</ul>
+					<p class="fragment">
+					Ale adnotacje w tej prezentacji nie są Interfejsami tylko Springowymi, ale też należącymi do JPA i Hibernate.
+					</p>
+				</section>
+				
+				<section>
+					<h3>Inversion of Control, Dependency Injection</h3>
+					<b>Wstrzykiwanie zależności</b> – dla danego obiektu definiujemy, z jakich innych komponentów będzie korzystał, ale nie musimy się martwić o tworzenie instancji tych obiektów – zrobi to za nas framework, wykorzystywane w Springu.
+					
+										<pre><code class="Java" data-trim contenteditable>
+@Service
+public class CustomerServiceImpl {
+
+	private final CustomerMapper customerMapper;
+	private final CustomerDao customerDao;
+	
+	@Autowired
+	public CustomerServiceImpl (CustomerMapper mapper, CustomerDao dao) {
+		this.customerMapper = mapper;
+		this.customerDao = dao;
+	}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Jak zacząć ze springiem?</h3>
+				
+				<ol> 	
+					<li> Podłączyć jary sciągnięte z internetu
+					<li> <p class="fragment">W internecie poszukać dependency do POMa i podłączyć     </p>
+					<li> <p class="fragment">Sciągnąć kompletny STS (Spring Tool Suite)               </p>
+					<li> <p class="fragment">start.spring.io                                          </p>
+				</ol>
+				</section>
+				
+				<section>
+				<h3>Spring framework - podstawy</h3>
+				<pre><code class="Java" data-trim contenteditable>
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@SpringBootApplication
+public class BooksServerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BooksServerApplication.class, args);
+	}
+}
+					</code></pre>
+				</section>
+				
+				<section>
+				<h3>Spring framework - adnotacje</h3>
+					<ul>
+						<li><b>@Component</b> - podstawowa adnotacja, określa że klasa jest zarządzana przez Spring
+						<li><b>@Service</b> - określa klasę zawierającą logikę biznesową
+						<li><b>@Repository</b> - klasy DAO (Data Access Object), bezpośrednia komunikacja z DB
+					</ul>
+					
+						<p class="fragment">Wszystkie działają i robią to samo</p>
+							<p class="fragment">Wyjątkiem jest @Repository, która dodatkowo konwertuje wyjątki dostawców bazy danych</p>
+						<p class="fragment">Adnotacje pozwalają oddzielić od siebie różne warstwy aplikacji</p>
+						<p class="fragment">Ułatwiają czytanie i analizowanie kodu</p>
+				</section>
+				
+				<section>
+				<h3>Spring framework - adnotacje</h3>
+					<ul>
+						<li><b>@Controller</b> - przetwarza żądania HTTP
+						<li><b>@Scope</b> - umożliwia zmianę domyślnego czasu życia bean’a
+						<li><b>@PostConstruct</b> - umożliwia wywołanie części kodu zaraz po utworzeniu obiektu
+						<li><b>@RequestMapping</b> - używana w kontrolerze, mapuje adres URL na metodę
+					</ul>
+				</section>
+				
+				<section>
+				<h3>Adnotacje - przykład</h3>
+				<pre><code class="Java" data-trim contenteditable>
+@RequestMapping("/services")
+@RestController
+public class BooksRestService {
+
+    private final BookService bookService;
+
+    @Autowired
+    public BooksRestService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    @RequestMapping(path = "/books", method = RequestMethod.GET)
+    public List&lt;BookTo&gt; findBooks(BookSearchCriteria bookSearchCriteria) {
+        return bookService.findBooks(bookSearchCriteria);
+    }
+}
+					</code></pre>
+				</section>
+					
+					
+					
 				</section>
 
 				
@@ -179,11 +392,48 @@
 						<h1>Spring Boot</h1>
 					</section>
 					
-					<!-- TODO -->
-					
 					<section>
-						asdf
-					</section>
+				<h3>Dlaczego Spring Boot?</h3>                    
+                  <img src="img/server/spring_summary.PNG" style="background:none; border:none; box-shadow:none;" >
+                  <h5>+ Konfiguracja = Aplikacja startowa</h5>
+				</section>				
+                <section>
+				<h3>Spring Boot</h3>                    
+                  <ul>
+                      <li>Convention over configuration</li>                      
+                      <li>Przy zerowej konfiguracji działająca aplikacja</li>
+                      <li>Prekonfiguracja możliwa dzięki adnotacjom @Conditional...</li>
+                      <li>Generator projektu - start.spring.io</li>
+                  </ul>
+				</section>				
+								
+				<section>
+				<h3>Spring boot / Startery</h3>
+                  <ul>
+                      <li>Zestawy zależności udostępniające prekonfigurowane funkcje Springa</li>                      
+                      <li>Np. dla aplikacji bazodanowej: <pre><code>spring-boot-starter-data-jpa</code></pre></li>
+                      <li>Lista starterów -> <a href='https://github.com/spring-projects/spring-boot/tree/master/spring-boot-starters'>spring-boot-starters</a></li>                    
+                      <li>Jak użyc? -> pom.xml</li>                      
+    <pre><code class="Xml">    &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;</code></pre>
+                  </ul>
+				</section>				
+								
+				<section>
+				<h3>Deployment aplikacji Spring Boot</h3>
+                  <ul>
+                      <li>Embedded Server</li>                      
+                    <ol><li>Przy użyciu np. startera <pre><code class="Xml">spring-boot-starter-web</code></pre>
+                      jar wynikowy (mvn clean install) zawiera jary Tomcata</li>
+                    <li>Start klasy aplikacji uruchamia wbudowanego Tomcata (możliwe jest również użycie Jetty)</li>
+                    </ol>  
+                      <li>Klasyczny serwer J2EE lub zewnętrzny Tomcat</li>
+                      Zmiana pliku docelowego na war, niewielkie zmiany w pom.xml
+                  </ul>
+				</section>
 				</section>				
 				
 				
