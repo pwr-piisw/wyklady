@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- Czas: 25 minut -->
+    <!--
+    Czas: 20 minut
+    Ilość slajdów: (powinno: 10)
+    -->
     <title>Wprowadzenie do języka Javascript</title>
 
     <link rel="stylesheet" href="css/reveal.css">
@@ -52,60 +55,43 @@
             </aside>
         </section>
         <section>
-            <p>Javascript łączy w sobie trzy koncepcje:</p>
-            <ul>
-                <li class="fragment">Funkcyjność wzorowana na języku <em>Scheme</em></li>
-                <li class="fragment">Obiektowość wzorowana na języku <em>Smalltalk</em></li>
-                <li class="fragment">Składnię języka <em>Java</em></li>
-            </ul>
-            <p class="fragment"><strong>Język Javascript nie jest wariantem języka Java!!!</strong></p>
-        </section>
-        <section>
-            <h3>Cechy języka</h3>
-            <ul>
-                <li class="fragment"><em>Przenośność</em> - identyczne działanie niezależnie od platformy
-                    sprzętowej.
-                </li>
-                <li class="fragment"><em>Dynamiczna typizacja</em> - typ nie jest ściśle przypisany do konkretnej
-                    zmiennej lub wyrażenia.
-                </li>
-                <li class="fragment"><em>Jednowątkowość</em></li>
-            </ul>
-        </section>
-        <section>
-            <h3>Dlaczego Javascript jest ważny?</h3>
-            <p class="fragment">
-                Javascript jest językiem dostępnym w każdej nowoczesnej przeglądarce internetowej.
-            </p>
-            <p class="fragment">
-                Użytkownik nie musi instalować niczego poza przeglądarką.
-            </p>
-            <p class="fragment">
-                Użytkownik nie musi akceptować aktualizacji ani instalacji żadnych dodatkowych pluginów.
-            </p>
-            <p class="fragment">
-                Język Javascript jest aktualizowany wraz z przeglądarką, co z reguły, w dzisiejszych czasach,
-                dokonuje się automatycznie.
-            </p>
-        </section>
-        <section>
-            <h3>Javascript dzisiaj...</h3>
-            <p class="fragment">
-                ...jest pełnoprawnym językiem programowania.
-            </p>
-            <p class="fragment">
-                Dostępne środowiska programistycznie nie ustępują niczym tym dostępnym dla Javy lub
-                .NET
-            </p>
-            <aside class="notes">
+            <section>
+                <p>Javascript łączy w sobie trzy koncepcje:</p>
                 <ul>
-                    <li>Biblioteki i zarządzanie zależnościami (np NPM).</li>
-                    <li>Systemy budowania (np gulp, AngularCLI).</li>
-                    <li>Kompletne frameworki do budowania aplikacji (Angular, ReactJS, Polymer).</li>
-                    <li>IDE (Webstorm, IntelliJ, Atom, Netbeans).</li>
-                    <li>Debug - Chrome Developer Tools, Mozilla Firebug.</li>
+                    <li class="fragment">Funkcyjność wzorowana na języku <em>Scheme</em></li>
+                    <li class="fragment">Obiektowość wzorowana na języku <em>Smalltalk</em></li>
+                    <li class="fragment">Składnię języka <em>Java</em></li>
                 </ul>
-            </aside>
+                <p class="fragment"><strong>Język Javascript nie jest wariantem języka Java!!!</strong></p>
+            </section>
+            <section>
+                <h3>Cechy języka</h3>
+                <ul>
+                    <li class="fragment"><em>Przenośność</em> - identyczne działanie niezależnie od platformy
+                        sprzętowej.
+                    </li>
+                    <li class="fragment"><em>Dynamiczna typizacja</em> - typ nie jest ściśle przypisany do konkretnej
+                        zmiennej lub wyrażenia.
+                    </li>
+                    <li class="fragment"><em>Jednowątkowość</em></li>
+                </ul>
+            </section>
+            <section>
+                <h3>Dlaczego Javascript jest ważny?</h3>
+                <p class="fragment">
+                    Javascript jest językiem dostępnym w każdej nowoczesnej przeglądarce internetowej.
+                </p>
+                <p class="fragment">
+                    Użytkownik nie musi instalować niczego poza przeglądarką.
+                </p>
+                <p class="fragment">
+                    Użytkownik nie musi akceptować aktualizacji ani instalacji żadnych dodatkowych pluginów.
+                </p>
+                <p class="fragment">
+                    Język Javascript jest aktualizowany wraz z przeglądarką, co z reguły, w dzisiejszych czasach,
+                    dokonuje się automatycznie.
+                </p>
+            </section>
         </section>
         <section>
             <h2>Najprostszy "przypadek użycia"</h2>
@@ -164,7 +150,7 @@ var c = null;    // c -> null
             </section>
             <section>
                 <h2>Typy danych</h2>
-                <div class="centered"><p class="justified"><strong>JavaScript jest językiem dynamicznie
+                <div class="centered more-text"><p class="justified"><strong>JavaScript jest językiem dynamicznie
                     typizowanym.</strong> Oznacza to,
                     że typ zmiennej lub wyrażenia nie może być określony podczas kompilacji.</p>
                     <p class="justified fragment">Jednakże podczas wykonywania kodu typ wartości przechowywanej w
@@ -291,7 +277,7 @@ var createMultiplier = function(amount) {
 };
 createMultiplier(5)(2); // -> 10
                 </code></pre>
-                    <p class="fragment">Na szczęście funkcja map jest standardowo zdefiniowana dla typu tablicowego:</p>
+                    <p class="fragment more-text">Na szczęście funkcja map jest standardowo zdefiniowana dla typu tablicowego:</p>
                     <pre class="fragment"><code class="javascript" data-trim>
 [1,2,3,4,5].map(createMultiplier(2));
 // -> [2,4,5,8,10];
@@ -881,33 +867,33 @@ var myModule = function() {
 </div>
 
 
-        <script src="lib/js/head.min.js"></script>
-        <script src="js/reveal.js"></script>
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
 
-        <script>
-            // More info about config & dependencies:
-            // - https://github.com/hakimel/reveal.js#configuration
-            // - https://github.com/hakimel/reveal.js#dependencies
-            Reveal.initialize({
-                history: true,
-                width: '100%',
-                height: '100%',
-                margin: 0,
-                minScale: 1,
-                maxScale: 1,
-                slideNumber: 'c/t',
-                dependencies: [
-                    {src: 'plugin/markdown/marked.js'},
-                    {src: 'plugin/markdown/markdown.js'},
-                    {src: 'plugin/zoom-js/zoom.js', async: true},
-                    {src: 'plugin/notes/notes.js', async: true},
-                    {
-                        src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                        hljs.initHighlightingOnLoad();
-                    }
-                    }
-                ]
-            });
-        </script>
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        width: '90%',
+//        height: '100%',
+        margin: 0,
+        minScale: 1,
+        maxScale: 1,
+        slideNumber: 'c/t',
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            }
+        ]
+    });
+</script>
 </body>
 </html>
