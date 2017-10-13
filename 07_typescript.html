@@ -95,7 +95,7 @@ console.log(Color["Green"]); // -> 1
                 </code></pre>
                 <p class="fragment">Typ enumeracyjny jest kompilowany do tablicy zawierającej mapowanie liczb na nazwy i
                     na odwrót.</p>
-                <pre><code class="typescript" data-trim>enum Color {Red, Green, Blue};
+                <pre class="fragment"><code class="typescript"data-trim>enum Color {Red, Green, Blue};
 console.log(Color); // -> {"0": "Red", "1": "Green", "2": "Blue", Red: 0, Green: 1, Blue: 2} </code></pre>
             </section>
             <section>
@@ -110,8 +110,8 @@ price = 'foo'; // błąd kompilacji
         </section>
 
         <section>
-            <h2>Fat arrow*</h2>
-            <p>Funkcje można obecnie specyfikować zwięźlej stosująć notację "strzałkową" (<em>fat arrow</em>).</p>
+            <h3>Fat arrow*</h3>
+            <p class="more-text">Funkcje można obecnie specyfikować zwięźlej stosująć notację "strzałkową" (<em>fat arrow</em>).</p>
             <pre class="fragment"><code class="typescript" data-trim>const add = function(left, right) {
   return left + right;
 };
@@ -119,13 +119,13 @@ const add2 = (left, right) => { return left + right; };
 // lub zwięźlej
 const add3 = (left, right) => left + right;
 </code></pre>
-            <p class="fragment">Znacząco zwiększa to czytelność kodu funkcyjnego:</p>
+            <p class="fragment more-text">Znacząco zwiększa to czytelność kodu funkcyjnego:</p>
             <pre class="fragment"><code class="typescript" data-trim>
 [1,2,3,4,5].map((value) => 2 * value);    // [2,4,6,8,10]
 [1,2,3,4,5].filter((value) => value < 4); // [1,2,3]
             </code></pre>
-            <p class="fragment">Notacja fat arrow zmienia sposób wyliczania zmiennej <code>this</code>!</p>
-            <p class="fragment more-text align-left">*Notacja fat arrow jest częścią ECMAScript 6.</p>
+            <p class="fragment more-text">Notacja fat arrow zmienia sposób wyliczania zmiennej <code>this</code>!</p>
+            <p class="fragment most-text align-left">*Notacja fat arrow jest częścią ECMAScript 6.</p>
         </section>
 
         <section>
