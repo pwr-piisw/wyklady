@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!--
-    Czas trwania: 10 minut
-    Ilość slajdów: 10
+    Czas trwania: 20 minut
+    Ilość slajdów: 23
     -->
 
     <title>Wykład wprowadzający</title>
@@ -77,6 +77,10 @@
             </p>
             <p>Aby mieć lokalny dostęp do slajdów z wykładów, wystarczy sklonować repozytorium: <a
                     href="https://github.com/pwr-piisw/wyklady.git">https://github.com/pwr-piisw/wyklady.git</a></p>
+        </section>
+
+        <section>
+            <p>Czy są jakieś pytania?</p>
         </section>
 
         <section>
@@ -157,6 +161,11 @@
                     </div>
                     <div class="fragment w3-container w3 w3-cell white-paper" data-fragment-index="3">
                         <h4>HTTP Response</h4>
+                        <ol>
+                            <li>unicorn</li>
+                            <li>unicorn</li>
+                            <li>unicorn</li>
+                        </ol>
                     </div>
                 </div>
             </section>
@@ -176,20 +185,21 @@
                 <p class="fragment" data-fragment-index="3">... błąd walidacji ...</p>
                 <div class="w3-cell-row">
                     <div class="fragment w3-container w3 w3-cell" data-fragment-index="6">
-                        <img src="img/google-search-results.png" alt="google" height="200" class="">
+                        <img src="img/error-icon-15.png" alt="google" height="200" class="no-border">
                     </div>
                     <div class="fragment w3-container w3 w3-cell" data-fragment-index="5">
                         <img src="img/road-runner-left.png" alt="Road runner" class="no-border" height="150">
                     </div>
                     <div class="fragment w3-container w3 w3-cell white-paper" data-fragment-index="4">
                         <h4>HTTP Response</h4>
+                        <img src="img/error-icon-15.png" alt="err" height="100">
                     </div>
                 </div>
             </section>
             <section>
                 <p>Każda akcja użytkownika wiąże się z komunikacją z serwerem i przeładowaniem strony.</p>
                 <img src="img/road-runner.png" alt="RR" height="300">
-                <p class="fragment more-text">Protokół HTTP oraz język HTML nie był pierwotnie przeznaczony do tworzenia
+                <p class="fragment more-text">Protokół HTTP oraz język HTML nie były pierwotnie przeznaczone do tworzenia
                     aplikacji.</p>
             </section>
         </section>
@@ -248,9 +258,9 @@ function loadDoc() {
         </section>
 
         <section>
-            <p>A gdyby każda aplikacja webowa składała się z jednego dokumentu HTML,</p>
+            <p>A gdyby tak każda aplikacja webowa składała się z jednego dokumentu HTML,</p>
             <p class="fragment more-text">a komunikacja z serwerem odbywała się wyłącznie z użyciem
-                podejściem AJAX?
+                podejścia AJAX?
             </p>
         </section>
 
@@ -287,7 +297,6 @@ function loadDoc() {
                     <div class="left col">
                         <h4>Klient (przeglądarka WWW)</h4>
                         <ul>
-                            <li>Komunikacja z serwerem.</li>
                             <li>Prezentacja danych otrzymanych z serwera.</li>
                             <li>Obsługa żądań użytkownika.</li>
                             <li>Wysyłanie danych na serwer.</li>

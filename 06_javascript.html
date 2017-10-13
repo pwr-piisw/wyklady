@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!--
-    Czas: 20 minut
+    Czas: 30 minut
     Ilość slajdów: (powinno: 10)
     -->
     <title>Wprowadzenie do języka Javascript</title>
@@ -840,11 +840,12 @@ fibb.forEach(function(val, i) {
         <!-- /TABLICE -->
         <!-- MODUłY -->
         <section>
-            <h2>Moduły</h2>
-            <p>JavaScript zasadniczo nie udostępnia żadnych składniowych mechanizmów do modularyzacji kodu (takich jak
+            <h3>Moduły</h3>
+            <div class="most-text"><p>JavaScript zasadniczo nie udostępnia żadnych składniowych mechanizmów do
+                modularyzacji kodu (takich jak
                 przestrzenie nazw). Standardowo wszystkie zmienne poza funkcjami stają się zmiennymi globalnymi.</p>
-            <p class="fragment">Wykorzystujemy podejście funkcyjne oraz domknięcia do tworzenia modularnego kodu.</p>
-            <pre class="fragment"><code class="javascript" data-trim>
+                <p class="fragment">Wykorzystujemy podejście funkcyjne oraz domknięcia do tworzenia modularnego
+                    kodu.</p></div>            <pre class="fragment"><code class="javascript" data-trim>
 var myModule = function() {
   var counter = 0,                // prywatne pole modułu
       privateFn = function(v) {   // prywatna funkcja modułu
