@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!--
-    Czas: 30 minut
-    Ilość slajdów: (powinno: 10)
+    Czas: 33 minut
+    Ilość slajdów:
     -->
     <title>Wprowadzenie do języka Javascript</title>
 
@@ -132,14 +132,17 @@ console.log('Hello world');
         <section>
             <section>
                 <h2>Zmienne</h2>
-                <p>Zmienne deklarujemy przy użyciu słowa kluczowego <em>var</em>.</p>
+                <p class="fragment" data-fragment-index="1">Zmienne deklarujemy przy użyciu słowa kluczowego
+                    <em>var</em>*.</p>
                 </p>
-                <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
+                <pre class="fragment" data-fragment-index="2"><code class="javascript" data-trim>
 var a = 10, b;   // a -> 10, b -> undefined
 var c = null;    // c -> null
                 </code></pre>
-                <p class="fragment" data-fragment-index="1">Niezainicjowania zmienna przyjmuje wartość
+                <p class="fragment" data-fragment-index="2">Niezainicjowania zmienna przyjmuje wartość
                     <em>undefined</em>.</p>
+                <p class="fragment align-left most-text" data-fragment-index="1">* chwilowo ignorujemy istnienie
+                    ECMAScript 6</p>
                 <aside class="notes">
                     <p>Zmienna zadeklarowana poza zasięgiem jakiejkolwiek funkcji staje się automatycznie zmienną
                         globalną.</p>
@@ -277,7 +280,8 @@ var createMultiplier = function(amount) {
 };
 createMultiplier(5)(2); // -> 10
                 </code></pre>
-                    <p class="fragment more-text">Na szczęście funkcja map jest standardowo zdefiniowana dla typu tablicowego:</p>
+                    <p class="fragment more-text">Na szczęście funkcja map jest standardowo zdefiniowana dla typu
+                        tablicowego:</p>
                     <pre class="fragment"><code class="javascript" data-trim>
 [1,2,3,4,5].map(createMultiplier(2));
 // -> [2,4,5,8,10];
@@ -534,7 +538,7 @@ console.log(nextValue()); // -> 2
 
         <!-- INSTRUKCJE KONTROLNE -->
         <section>
-            <h2>Instrukcje kontrolne</h2>
+            <section><h2>Instrukcje kontrolne</h2></section>
             <section>
                 <h3>Instrukcja warunkowa</h3>
                 <pre><code class="javascript" data-trim>
@@ -680,7 +684,7 @@ var account = {
                 inne mechanizmy wzorców.</p>
         </section>
         <section>
-            <h2>Tworzenie obiektów</h2>
+            <section><h2>Tworzenie obiektów</h2></section>
             <section>
                 <h3>Sposób 1: literał obiektowy</h3>
                 <pre><code class="javascript" data-trim>
@@ -838,31 +842,6 @@ fibb.forEach(function(val, i) {
             </section>
         </section>
         <!-- /TABLICE -->
-        <!-- MODUłY -->
-        <section>
-            <h3>Moduły</h3>
-            <div class="most-text"><p>JavaScript zasadniczo nie udostępnia żadnych składniowych mechanizmów do
-                modularyzacji kodu (takich jak
-                przestrzenie nazw). Standardowo wszystkie zmienne poza funkcjami stają się zmiennymi globalnymi.</p>
-                <p class="fragment">Wykorzystujemy podejście funkcyjne oraz domknięcia do tworzenia modularnego
-                    kodu.</p></div>            <pre class="fragment"><code class="javascript" data-trim>
-var myModule = function() {
-  var counter = 0,                // prywatne pole modułu
-      privateFn = function(v) {   // prywatna funkcja modułu
-        counter = v*2;
-      };
-  return {                        // oficjalny publiczny interfejs modułu
-    nextValue: function() {
-      counter = privateFn(counter + 1);
-      return counter;
-    }
-  }
-}(); // funkcja jest od razu wywołana przez co realizowane jest domknięcie a myModule
-     // zawiera obiekt - interfejs modułu
-            </code></pre>
-
-        </section>
-        <!-- /MODUłY -->
     </div>
     <div class="footer"><a href="index.html">Indeks</a></div>
 </div>
