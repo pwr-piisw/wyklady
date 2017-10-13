@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!--
-    Czas trwania: 20 minut
+    Czas trwania: 20 minut +5 minut
     Ilość slajdów: 12
+    dorobić: elementy blokowe, elementy inline
     -->
     <title>Języki HTML i CSS</title>
 
@@ -154,7 +155,33 @@
 &lt;/body&gt;&lt;/html&gt;
 </code></pre>
                 <pre><code class="css" title="style.css">
-
+/*
+header {
+  font-size: large;
+  font-weight: bold;
+  font-family: courier;
+  text-align: center;
+  background-color: lightgreen;
+}
+*/
+/*
+h1 {
+  font-family: tahoma;
+  font-style: italic;
+}
+*/
+/*
+p {
+  text-align: justify;
+}
+*/
+/*
+footer {
+  text-align: right;
+  color: darkblue;
+  font-weight: bold;
+}
+*/
                 </code></pre>
             </div>
             <aside class="notes">
@@ -190,6 +217,23 @@ footer {
                 <h2>Selektory CSS</h2>
                 <div class="livecode stretch no-console horizontal">
                     <pre><code class="css" title="styles.css">
+
+/*
+article p {
+  font-family: Arial;
+}
+*/
+/*
+article#first p {
+  font-size: small;
+}
+*/
+/*
+p.citation {
+  font-size: xx-small;
+  margin-left: 30px;
+}
+*/
 </code></pre>
                     <pre><code class="html" title="index.html">
 &lt;h1&gt;Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna.&lt;/h1&gt;
@@ -277,6 +321,25 @@ p.citation {
             <h2>Model pudełkowy</h2>
             <div class="livecode stretch no-console horizontal">
             <pre><code class="css" title="styles.css">
+/*
+p {
+    padding: 10px 15px 20px 25px;
+    border-width: 7px 5px 3px 1px;
+    border-style: solid;
+    border-color: navy;
+    border-radius: 5px 10px 20px 30px;
+    background-color: #f0f0f0;
+    margin: 10px 20px
+}
+*/
+/*
+span {
+  border-width: 2px;
+  border-style: dotted;
+  border-color: brown;
+}
+*/
+
                 </code></pre>
                 <pre><code class="html" title="index.html">
 &lt;p&gt;
@@ -325,6 +388,21 @@ div#first {
 div#second {
   background-color: green;
 }
+/*
+div.col {
+  width: 40%;
+}
+*/
+/*
+div.left {
+  float: left;
+}
+*/
+/*
+div.right {
+  float: right
+}
+*/
                 </code></pre>
                 <pre><code class="html" title="index.html">
 &lt;div id=&quot;first&quot;&gt;
