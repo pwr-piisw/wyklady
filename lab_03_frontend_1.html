@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Frontend 1</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/github.css">
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/custom.css">
+
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h2>Projekt i implementacja systemów webowych</h2>
+            <h3>Frontend</h3>
+        </section>
+
+        <section>
+            <h3>Wprowadzenie do języka Typescript</h3>
+            <p><a href="07_typescript.html">Typescript</a></p>
+        </section>
+
+        <section>
+            <h3>Poprawki w zalążku projektu</h3>
+            <p class="more-text">
+                W pliku <code>src/main/client/run.bat</code> zmieniamy:
+            </p>
+            <p class="more-text"><code>%1%</code> na <code>%*%</code>.</p>
+            <p class="more-text">
+                Proszę o utworzenie następującego pliku: <code>console.bat</code> w katalogu główny projektu
+            </p>
+            <pre><code class="bat">set "NODE_PATH=%CD%\src\main\client\node"
+set "YARN_PATH=%NODE_PATH%\yarn\dist\bin"
+set "PATH=%NODE_PATH%;%YARN_PATH%;%PATH%"
+cmd
+</code></pre>
+            <p class="more-text">
+                Po uruchomieniu <code>console.bat</code> z linii poleceń dostępny jest lokalny yarn (meneżer pakietów
+                dla JavaScript).
+            </p>
+        </section>
+        <section>
+            <h3>package.json</h3>
+        </section>
+        <section>
+            <h3>Zarządzanie zależnościami</h3>
+            <h4>Yarn</h4>
+            <p><a href="https://yarnpkg.com/en/">https://yarnpkg.com/en/</a></p>
+            <h4>NPM</h4>
+            <p><a href="https://www.npmjs.com/">https://www.npmjs.com/</a></p>
+        </section>
+        <section>
+            <h3>AngularCLI</h3>
+            <p><a href="https://github.com/angular/angular-cli/wiki">https://github.com/angular/angular-cli/wiki</a></p>
+            <h3>SASS</h3>
+            <p><a href="http://sass-lang.com/">http://sass-lang.com/</a></p>
+            <h3>Bootstrap</h3>
+            <p><a href="http://getbootstrap.com/">http://getbootstrap.com/</a></p>
+        </section>
+    </div>
+    <div class="footer"><a href="index.html">Indeks</a></div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        slideNumber: 'c/t',
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js'},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
