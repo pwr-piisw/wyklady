@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!--
+    Czas trwania: x
+    Ilość slajdów: x
+    -->
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/github.css">
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h3>Projekt i implementacja systemów webowych</h3>
+            <h1>Angular</h1>
+        </section>
+        <section>
+            <h3>Architektura aplikacji Rich Web Application</h3>
+            <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="no-border">
+        </section>
+        <section>
+            <h3>Angular</h3>
+            <img src="img/angular-architecture.png" alt="Angular Architecture" class="no-border">
+        </section>
+        <section>
+            <h3>Angular a AngularJS</h3>
+            <div class="more-text">
+                <ul>
+                    <li>AngularJS (wcześniej znany jako Angular 1.x) - pierwsza implementacja od Google.</li>
+                    <li class="fragment">Stworzona "na szybko", nie pozbawiona wad.</li>
+                    <li class="fragment">Odniosła duży sukces, dlatego była rozwijana.</li>
+                    <li class="fragment">Angular (2.x +) opiera się na podobnych założeniach ale nie jest
+                        kompatybilny.
+                    </li>
+                    <li class="fragment">Stąd dwie różne nazwy - należy uważać przeglądając zasoby sieciowe!</li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <h3>NgModule</h3>
+            <section>
+                <div class="align-left">
+                    <p>Moduł funkcjonalny aplikacji - sposób organizacji kodu oraz zależności.</p>
+                    <p class="fragment">Jest to mechanizm komplementarny do mechanizmu modułów w JavaScript.</p>
+                    <p class="fragment more-text">Niestety, użyto tej samej nazwy. Dla modułów Angulara używajmy zatem
+                        nazwy <strong>NgModule</strong>.</p>
+                </div>
+            </section>
+            <section>
+                <div class="left col">
+                        <pre><code class="typescript" data-trim>
+@NgModule({
+  imports: [],
+  providers: [],
+  declarations: [],
+  exports: []
+})
+export class MyModule {}
+                </code></pre>
+                </div>
+                <div class="right col most-text">
+                    <ul>
+                        <li class="fragment"><code>declarations</code> - komponenty składowe.
+                        </li>
+                        <li class="fragment"><code>exports</code> - podzbiór komponentów składowych widoczny na
+                            "zewnątrz" modułu.
+                        </li>
+                        <li class="fragment"><code>imports</code> - lista modułów, których używamy.</li>
+                        <li class="fragment"><code>providers</code> - lista providerów serwisów, które mają być dostępne
+                            w aplikacji.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <p>Budowa modułu powinna być odzwierciedlona poprzez strukturę katalogów z plikami źródłowymi.</p>
+                <!-- TODO: ekran z przykładową strukturą - z live demo przykładu np. -->
+            </section>
+        </section>
+        <section>
+            <h3>Component</h3>
+        </section>
+        <section>
+            <h3>Data binding</h3>
+        </section>
+        <section>
+            <h3>Template</h3>
+        </section>
+        <section>
+            <h3>Directive</h3>
+        </section>
+        <section>
+            <h3>Service</h3>
+        </section>
+        <section>
+            <h3>Routing</h3>
+        </section>
+        <section>
+            <h3>HttpClient</h3>
+        </section>
+        <section>
+            <h3>Forms</h3>
+        </section>
+
+
+        <div id="cgLogo" style="background: url(img/cg_small.png);
+                        position: absolute;
+                        bottom: 20px;
+                        left: 20px;
+                        width: 250px;
+                        height: 44px;"></div>
+        <div class="footer"><a href="index.html">Indeks</a></div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            history: true,
+            slideNumber: 'c/t',
+            dependencies: [
+                {src: 'plugin/markdown/marked.js'},
+                {src: 'plugin/markdown/markdown.js'},
+                {src: 'plugin/zoom-js/zoom.js', async: true},
+                {src: 'plugin/notes/notes.js', async: true},
+                {src: 'plugin/livecode/livecode.js', async: true},
+                {
+                    src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+                }
+            ]
+        });
+    </script>
+</body>
+</html>

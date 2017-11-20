@@ -19,11 +19,11 @@ p.justified {
     text-align: justify;
 }
 
-p.align-left {
+div.align-left,p.align-left {
     text-align: left;
 }
 
-p.align-right {
+div.align-right,p.align-right {
     text-align: right;
 }
 div.more-text,p.more-text {
