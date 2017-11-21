@@ -70,10 +70,9 @@
                 <div class="left col">
                         <pre><code class="typescript" data-trim>
 @NgModule({
-  imports: [],
-  providers: [],
-  declarations: [],
-  exports: []
+  imports: [CommonModule],
+  declarations: [MyComponent1, MyComponent2, MyExternalComponent3],
+  exports: [MyExternalComponent3]
 })
 export class MyModule {}
                 </code></pre>
@@ -86,28 +85,34 @@ export class MyModule {}
                             "zewnątrz" modułu.
                         </li>
                         <li class="fragment"><code>imports</code> - lista modułów, których używamy.</li>
-                        <li class="fragment"><code>providers</code> - lista providerów serwisów, które mają być dostępne
-                            w aplikacji.
-                        </li>
                     </ul>
                 </div>
             </section>
             <section>
                 <div class="left col">
-                    <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE" height="420">
+                    <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE"
+                         height="420">
                 </div>
                 <div class="right col">
-                    <p class="most-text">Budowa modułu powinna być odzwierciedlona poprzez strukturę katalogów z plikami źródłowymi.</p>
-                    <img src="img/angular-app-composition.svg" alt="Angular Application Composition" height="300" class="no-border fragment">
+                    <p class="most-text">Budowa modułu powinna być odzwierciedlona poprzez strukturę katalogów z plikami
+                        źródłowymi.</p>
+                    <img src="img/angular-app-composition.svg" alt="Angular Application Composition" height="300"
+                         class="no-border fragment">
                 </div>
             </section>
             <section>
-                <p>Przykład modułu funkcjonalnego.</p>
-                <!-- TODO: ekran -->
-            </section>
-            <section>
-                <p>Moduły grupujące.</p>
-                <!-- TODO: przykład dla Angular Material -->
+                <p class="more-text">Przykład modułu funkcjonalnego:</p>
+                <div class="left col">
+                    <img src="img/functional-modules.svg" alt="Functional modules" class="no-border">
+                    <pre class="fragment"><code class="bash" data-trim>
+ng generate module user-mgmt
+ng generate module library-mgmt
+                    </code></pre>
+                </div>
+                <div class="right col">
+                    <img src="img/import-modules-in-app.png" alt="Import modules" class="fragment" height="280">
+                    <img src="img/import-modules-in-module.png" alt="Import modules in module" class="fragment" height="150">
+                </div>
             </section>
         </section>
         <section>
