@@ -68,10 +68,13 @@
             </section>
             <section>
                 <div class="left col">
-                        <pre><code class="typescript" data-trim>
+                        <pre><code class="javascript" data-trim>
 @NgModule({
   imports: [CommonModule],
-  declarations: [MyComponent1, MyComponent2, MyExternalComponent3],
+  declarations: [
+    MyComponent1,
+    MyComponent2,
+    MyExternalComponent3],
   exports: [MyExternalComponent3]
 })
 export class MyModule {}
@@ -111,7 +114,8 @@ ng generate module library-mgmt
                 </div>
                 <div class="right col">
                     <img src="img/import-modules-in-app.png" alt="Import modules" class="fragment" height="280">
-                    <img src="img/import-modules-in-module.png" alt="Import modules in module" class="fragment" height="150">
+                    <img src="img/import-modules-in-module.png" alt="Import modules in module" class="fragment"
+                         height="150">
                 </div>
             </section>
         </section>
@@ -125,8 +129,38 @@ ng generate module library-mgmt
                 </ul>
             </section>
             <section>
-                <p>Podstawowe elementy składowe</p>
-                <!-- 1) klasa komponentu (kontroler), 2) szablon HTML (widok) -->
+                <pre><code class="bash" data-trim>
+ng generate component user-mgmt/user-list
+                </code></pre>
+                <div class="left col">
+                    <img src="img/new-user-list-component.png" alt="User list component" class="fragment">
+                    <img src="img/new-user-list-component-declared.png" alt="User list component declaration" class="fragment">
+                </div>
+                <div class="col right more-text">
+                        <ul>
+                            <li class="fragment"><em>template (html)</em> - część wizualna komponentu</li>
+                            <li class="fragment"><em>scss</em> - prywatny arkusz styli (opcja)</li>
+                            <li class="fragment"><em>component.ts</em> - kod komponentu pełniący funkcję kontrolera</li>
+                            <li class="fragment"><em>spec.ts</em> - testy jednostkowe komponentu</li>
+                        </ul>
+                </div>
+            </section>
+            <section>
+                <pre><code class="javascript" data-trim>
+export const APP_ROUTES: Routes = [{
+    path: 'app',
+    children: [
+      { path: 'books',
+        component: BookOverviewComponent },
+      { path: 'book',
+        component: BookDetailsComponent },
+      { path: 'book/:bookId',
+        component: BookDetailsComponent },
+      { path: 'users',
+        component: UserListComponent } ] },
+  { path: '',
+    redirectTo: '/app/books',
+    pathMatch: 'full' }];</code></pre>
             </section>
         </section>
         <section>
