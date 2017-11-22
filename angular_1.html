@@ -194,7 +194,8 @@ export const APP_ROUTES: Routes = [{
                             (singleton, <code>forRoot</code>).
                         </li>
                         <li class="fragment">Router inicjujemy tzw. tablicą przejść (ang. <em>routes</em>).</li>
-                        <li class="fragment">Wygodnie jest umieścić tablicę przejść (<code>import {APP_ROUTES}</code>) w osobnym
+                        <li class="fragment">Wygodnie jest umieścić tablicę przejść (<code>import {APP_ROUTES}</code>) w
+                            osobnym
                             pliku źródłowym.
                         </li>
                     </ul>
@@ -205,7 +206,8 @@ export const APP_ROUTES: Routes = [{
                     <img src="img/routing-reorganized.png" alt="Routing reorganized">
                 </div>
                 <div class="col right">
-                    <p class="most-text fragment"><code>router-outlet</code> określa miejsce, w którym Router będzie "wklejał" nasz komponent.</p>
+                    <p class="most-text fragment"><code>router-outlet</code> określa miejsce, w którym Router będzie
+                        "wklejał" nasz komponent.</p>
                     <img src="img/router-outlet-src.png" alt="Router outlet source" class="fragment">
                     <img src="img/router-outlet.png" alt="Router outlet" class="fragment">
                 </div>
@@ -216,13 +218,72 @@ export const APP_ROUTES: Routes = [{
             </section>
         </section>
         <section>
-            <h3>Data binding</h3>
+            <h3>Template</h3>
+            <section>
+                <p class="most-text">Szablon (ang. <em>template</em>) jest wycinkiem HTML, który definiuje wygląd
+                    komponentu.</p>
+                <pre class="fragment"><code class="javascript" data-trim>
+@Component({
+  selector: 'app-user-list',
+  template: `&lt;p&gt;Some fancy component...&lt;/p&gt;`,
+  styleUrls: ['./user-list.component.scss']
+})
+export class UserListComponent implements OnInit {
+            </code></pre>
+                <pre class="fragment"><code class="javascript" data-trim>
+@Component({
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
+})
+export class UserListComponent implements OnInit {
+            </code></pre>
+            </section>
+            <section>
+                <pre><code class="javascript" data-trim>
+&lt;section class=&quot;container-fluid&quot;&gt;
+  &lt;table class=&quot;table table-striped&quot;&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Name&lt;/th&gt;
+      &lt;th&gt;Email&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    &lt;tr *ngFor=&quot;let user of users&quot;&gt;
+      &lt;td&gt;{{user.name}}&lt;/td&gt;
+      &lt;td&gt;{{user.email}}&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/section&gt;
+                </code></pre>
+            </section>
         </section>
         <section>
-            <h3>Template</h3>
+            <h3>Data binding</h3>
+            <!--
+            {{interpolation}}
+            [property binding] one way
+            (event binding)
+            [(two way binding)]
+            -->
         </section>
         <section>
             <h3>Directive</h3>
+            <!--
+            attribute directives
+            ngClass
+            ngStyle
+            ngModel
+            structural directives
+            ngIf
+            ngFor of
+            ngSwitch
+            -->
+        </section>
+        <section>
+            <h3>Komunikacja międzykomponentowa</h3>
         </section>
         <section>
             <h3>Service</h3>
