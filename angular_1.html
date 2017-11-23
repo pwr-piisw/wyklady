@@ -261,13 +261,56 @@ export class UserListComponent implements OnInit {
             </section>
         </section>
         <section>
-            <h3>Data binding</h3>
-            <!--
-            {{interpolation}}
-            [property binding] one way
-            (event binding)
-            [(two way binding)]
-            -->
+            <h3>DOM model</h3>
+            <section>
+                <p>DOM (<em>Document Object Model</em>) jest to model obiektowy reprezentujący dokument HTML
+                    wyświetlany przez przeglądarkę.</p>
+                <p class="fragment">Przeglądarka buduje DOM w pamięci za każdym razem, gdy wyświetla HTML.</p>
+                <p class="fragment">Każdy skrypt JavaScript (a więc także i każda aplikacja Angular) wchodzi w
+                    interakcję z DOM.</p>
+            </section>
+            <section>
+                <p>Postawowe API elementów DOM:</p>
+                <div class="more-text">
+                    <ul>
+                        <li class="fragment"><strong>atrybut</strong> - dodatkowa wartość definiująca tag (w dokumencie
+                            HTML).
+                        </li>
+                        <li class="fragment"><strong>właściwość</strong> (<em>property</em>) - właściwość obiektu DOM
+                            (zwykła właściwość obiektu w JS).
+                        </li>
+                        <li class="fragment"><strong>metoda</strong> - funkcja obiektu DOM, którą można wywołać.</li>
+                        <li class="fragment"><strong>zdarzenie</strong> (<em>event</em>) - informacja o zaistnieniu
+                            pewnego faktu, np <em>click</em>, <em>focus</em>, <em>blur</em>.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </section>
+        <section>
+            <h3>Data binding - wiązanie danych</h3>
+            <p class="more-text"><em>Data binding</em> są to mechanizmy pozwalające na integrację modelu z widokiem.</p>
+            <div class="most-text">
+                <p>
+                    Podstawowe rodzaje wiązań:
+                <ul>
+                    <li class="fragment"><code>{{interpolation}}</code> - wyliczy wyrażenie wewnątrz
+                        <code>{{}}</code> oraz wstawi wartość.
+                    </li>
+                    <li class="fragment"><code>[property_binding]</code> - Angular będzie aktualizował wartość
+                        właściwości na podstawie wyrażenia.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="fragment"><code>(event_binding)</code> - wywołana zostanie funkcja w reakcji na
+                        zaistnienie zdarzenia.
+                    </li>
+                    <li class="fragment"><code>[(two_way_binding)]</code> - synchronizuje model z widokiem "w obie
+                        strony".
+                    </li>
+                </ul>
+                </p>
+            </div>
         </section>
         <section>
             <h3>Directive</h3>
