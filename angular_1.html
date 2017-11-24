@@ -57,7 +57,17 @@
             </div>
         </section>
         <section>
-            <!-- TODO Node, NPM i Yarn, package.json -->
+            <h3>Infrastruktura developerska</h3>
+            <p class="align-left"><strong>Node</strong> - środowisko uruchomieniowe dla JavaScript, może być także
+                wykorzystywane po stronie serwera.</p>
+            <p class="align-left fragment"><strong>NPM</strong> (<em>Node Package Manager</em>) - narzędzie do
+                zarządzania zależnościami bibliotek JS. Współpracuje z repozytorium bibliotek (<em>npm
+                    registry</em>).</p>
+            <p class="align-left fragment"><strong>Yarn</strong> - alternatywny klient to repozytorium npm.</p>
+        </section>
+        <section>
+            <h3>Live coding - przykładowa aplikacja</h3>
+            <a href="https://github.com/pwr-piisw/angular-wyklad">https://github.com/pwr-piisw/angular-wyklad</a>
         </section>
         <section>
             <h3>NgModule</h3>
@@ -375,9 +385,49 @@ this.divClasses: {
         </section>
         <section>
             <h3>Komunikacja międzykomponentowa</h3>
+            <section>
+                <div class="more-text">
+                    <p class="align-left">Angular pozwala na stosowanie <em>data bindings</em> we
+                        własnych komponentach.</p>
+                    <p class="fragment" data-fragment-index="1">Dla danych wejściowych:</p></div>
+                <pre class="fragment" data-fragment-index="1"><code class="html">&lt;app-user-details [user]=&quot;user&quot;&gt;&lt;/app-user-details&gt;</code></pre>
+                <pre class="fragment" data-fragment-index="2"><code class="javascript">
+export class UserDetailsComponent
+{
+   ...
+   @Input() user: User;
+   ...
+}</code></pre>
+            </section>
+            <section>
+                <div class="more-text">
+                    <p>Dla danych wyjściowych:</p>
+                    <pre><code class="html">&lt;app-user-details (onChanged)=&quot;onChanged($event)&quot;&gt;&lt;/app-user-details&gt;</code></pre>
+                    <pre><code class="javascript">
+export class UserDetailsComponent
+{
+   ...
+   @Output() onChanged = new EventEmitter&lt;User&gt;();
+   ...
+   this.onChanged.emit(user);
+   ...
+}
+                    </code></pre>
+                </div>
+            </section>
+            <section>
+                <p><strong>Przykład</strong>: edytor użytkowników</p>
+                <img src="img/component-interaction-example.png" alt="Component interaction example">
+                <p class="fragment most-text"><a href="https://github.com/pwr-piisw/angular-wyklad/releases/tag/step12">https://github.com/pwr-piisw/angular-wyklad/releases/tag/step12</a>
+                </p>
+            </section>
         </section>
         <section>
             <h3>Service</h3>
+            <p>Serwis jest funkcjonalnością aplikacji, która może być reużyta przez inne serwisy lub komponenty.</p>
+            <p class="fragment more-text">Serwisy, po zaimplementowaniu, są dostępne dzięki mechanizmowi DI (<em>Dependency
+                Injection</em>) Angulara.</p>
+            <img src="img/service-data-provision-bad.png" alt="Service data provision" class="fragment">
         </section>
         <section>
             <h3>HttpClient</h3>
