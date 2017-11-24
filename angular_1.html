@@ -300,8 +300,6 @@ export class UserListComponent implements OnInit {
                     <li class="fragment"><code>[property_binding]</code> - Angular będzie aktualizował wartość
                         właściwości na podstawie wyrażenia.
                     </li>
-                </ul>
-                <ul>
                     <li class="fragment"><code>(event_binding)</code> - wywołana zostanie funkcja w reakcji na
                         zaistnienie zdarzenia.
                     </li>
@@ -314,16 +312,66 @@ export class UserListComponent implements OnInit {
         </section>
         <section>
             <h3>Directive</h3>
-            <!--
-            attribute directives
-            ngClass
-            ngStyle
-            ngModel
-            structural directives
-            ngIf
-            ngFor of
-            ngSwitch
-            -->
+            <section><p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za
+                pomocą Angular.</p>
+                <p class="fragment">Istnieją trzy rodzaje dyrektyw:
+                <ul>
+                    <li class="fragment">Komponenty (już je znamy)</li>
+                    <li class="fragment">Dyrektywy atrybutowe</li>
+                    <li class="fragment">Dyrektywy strukturalne</li>
+                </ul>
+                </p>
+            </section>
+            <section>
+                <p>Dyrektywy atrybutowe</p>
+                <div class="more-text">
+                    <ul>
+                        <li class="fragment"><code>ngModel</code> - wiążą pola edycyjne z modelem</li>
+                        <li class="fragment"><code>ngClass</code> - pozwalają dynamicznie modyfikować klasy CSS</li>
+                        <li class="fragment"><code>ngStyle</code> - pozwalają dynamicznie modyfikować style CSS</li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <pre><code class="javascript">
+divClasses = {};
+...
+this.divClasses: {
+  'valid': this.isValid(),
+  'highlighted': this.isHighlighted()
+}
+                </code></pre>
+                <pre><code class="html">
+&lt;div [ngClass]=&quot;divClasses&quot;&gt;...&lt;/div&gt;
+                </code></pre>
+                <p class="fragment">W prostszych przypadkach...</p>
+                <pre class="fragment"><code class="html">
+&lt;div [class.valid]=&quot;isValid()&quot;&gt;...&lt;/div&gt;
+            </code></pre>
+            </section>
+            <section>
+                <p>Dyrektywy strukturalne</p>
+                <div class="most-text">
+                    <p class="fragment align-left" data-fragment-index="1"><code>*ngIf</code> - dodaje/usuwa element z
+                        DOM: </p>
+                    <pre class="fragment" data-fragment-index="1"><code class="html">&lt;div *ngIf=&quot;isVisible&quot;&gt;...&lt;/div&gt;</code></pre>
+                    <p class="fragment align-left" data-fragment-index="2"><code>*ngfor</code> - iteruje po liście i
+                        dodaje element DOM dla każdego elementu listy:</p>
+                    <pre class="fragment" data-fragment-index="2"><code class="html">&lt;div *ngFor=&quot;let user of users&quot;&gt;{{user.name}} ({{user.email}})&lt;/div&gt;</code></pre>
+                    <p class="fragment align-left" data-fragment-index="3"><code>ngSwitch, *ngSwitchCase,
+                        *ngSwitchDefault</code> - odpowiednik instrukcji switch/case/default z innych języków
+                        programowania.</p>
+                </div>
+                <aside class="notes">
+                    <pre>
+&lt;div [ngSwitch]=&quot;currentHero.emotion&quot;&gt;
+  &lt;app-happy-hero *ngSwitchCase=&quot;'happy'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-happy-hero&gt;
+  &lt;app-sad-hero *ngSwitchCase=&quot;'sad'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-sad-hero&gt;
+  &lt;app-confused-hero *ngSwitchCase=&quot;'confused'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-confused-hero&gt;
+  &lt;app-unknown-hero *ngSwitchDefault [hero]=&quot;currentHero&quot;&gt;&lt;/app-unknown-hero&gt;
+&lt;/div&gt;</pre>
+                </aside>
+            </section>
         </section>
         <section>
             <h3>Komunikacja międzykomponentowa</h3>
@@ -337,40 +385,67 @@ export class UserListComponent implements OnInit {
         <section>
             <h3>Forms</h3>
         </section>
+        <section>
+            <h3>Bibliografia</h3>
+            <div class="most-text">
+                <ul>
+                    <li>
+                        <a href="https://angular.io/docs">https://angular.io/docs</a>, a w szczególności:
+                        <ul>
+                            <li><a href="https://angular.io/guide/router">https://angular.io/guide/router</a></li>
+                            <li>
+                                <a href="https://angular.io/guide/template-syntax">https://angular.io/guide/template-syntax</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="https://blog.thoughtram.io/">https://blog.thoughtram.io/</a>, a w szczególności:
+                        <ul>
+                            <li>
+                                <a href="https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html">https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html</a>
+                            </li>
+                            <li>
+                                <a href="https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html">https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
 
-        <div id="cgLogo" style="background: url(img/cg_small.png);
+    </div>
+    <div id="cgLogo" style="background: url(img/cg_small.png);
                         position: absolute;
                         bottom: 20px;
                         left: 20px;
                         width: 250px;
                         height: 44px;"></div>
-        <div class="footer"><a href="index.html">Indeks</a></div>
-    </div>
+    <div class="footer"><a href="index.html">Indeks</a></div>
+</div>
 
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.js"></script>
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
 
-    <script>
-        // More info about config & dependencies:
-        // - https://github.com/hakimel/reveal.js#configuration
-        // - https://github.com/hakimel/reveal.js#dependencies
-        Reveal.initialize({
-            history: true,
-            slideNumber: 'c/t',
-            dependencies: [
-                {src: 'plugin/markdown/marked.js'},
-                {src: 'plugin/markdown/markdown.js'},
-                {src: 'plugin/zoom-js/zoom.js', async: true},
-                {src: 'plugin/notes/notes.js', async: true},
-                {src: 'plugin/livecode/livecode.js', async: true},
-                {
-                    src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
-                }
-            ]
-        });
-    </script>
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        slideNumber: 'c/t',
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true},
+            {src: 'plugin/livecode/livecode.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            }
+        ]
+    });
+</script>
 </body>
 </html>
