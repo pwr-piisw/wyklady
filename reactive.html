@@ -49,6 +49,88 @@
         </section>
         <section>
             <section>
+                <p>JavaScript jest językiem jednowątkowym.</p>
+                <p class="fragment more-text">W jaki sposób można dysponując jedynie jednym wątkiem obsługiwać zdarzenia
+                    typu "kliknięcie przycisku" albo komunikację sieciową?</p>
+            </section>
+            <section>
+                <h3>Model wykonawczy JavaScript</h3>
+                <img src="img/JavaScript-runtime-engine.png" alt="JS Runtime Engine" class="no-border">
+            </section>
+        </section>
+        <section>
+            <h3>Promise</h3>
+            <section>
+                <p>Co niedzielę ojciec prosi syna o prognozę pogody.</p>
+                <p class="fragment more-text">W tym celu syn musi udać się na wzgórze
+                    i obserwując horyzont przy pomocy teleskopu ocenić stan pogody.</p>
+                <img src="img/promise-tale1.png" alt="Promise 1" class="no-border fragment">
+            </section>
+            <section>
+                <div class="more-text">
+                    <p>Syn składa obietnicę: pójdę, sprawdzę i dam Ci znać!</p>
+                    <p class="fragment">Ojciec zatem zaczyna planować:
+                    <ul>
+                        <li class="fragment">Gdy pogoda będzie dobra, płynę łódką na ryby.</li>
+                        <li class="fragment">Gdy będzie zła lub też gdy prognozy nie da się określić - zostaję w domu.
+                        </li>
+                    </ul>
+                    </p>
+                </div>
+                <img src="img/promise-tale2.png" alt="Promise 2" class="no-border fragment">
+            </section>
+            <section>
+                <pre><code class="javascript">// function somewhere in father-controller.js
+        var makePromiseWithSon = function() {
+            // This service's function returns a promise,
+            // but we'll deal with that shortly
+            SonService.getWeather()
+                // then() called when son gets back
+                .then(function(data) {
+                    // promise fulfilled
+                    if (data.forecast==='good') {
+                        prepareFishingTrip();
+                    } else {
+                        prepareSundayRoastDinner();
+                    }
+                }, function(error) {
+                    // promise rejected, could log the error with:
+                    // console.log('error', error);
+                    prepareSundayRoastDinner();
+                });
+        };</code></pre>
+            </section>
+            <section>
+                <pre><code class="javascript">app.factory('SonService', function ($http, $q) {
+        return {
+            getWeather: function() {
+                // the $http API is based on the deferred/promise
+                // APIs exposed by the $q service
+                // so it returns a promise for us by default
+                return $http.get('http://fishing-weather-api.com/sunday/afternoon')
+                    .then(function(response) {
+                        if (typeof response.data === 'object') {
+                            return response.data;
+                        } else {
+                            // invalid response
+                            return $q.reject(response.data);
+                        }
+
+                    }, function(response) {
+                        // something went wrong
+                        return $q.reject(response.data);
+                    });
+            }
+        };
+    });</code></pre>
+            </section>
+            <section>
+                <p>Źródło: <a href="http://andyshora.com/promises-angularjs-explained-as-cartoon.html">http://andyshora.com/promises-angularjs-explained-as-cartoon.html</a>
+                </p>
+            </section>
+        </section>
+        <section>
+            <section>
                 <h3>Programowanie reaktywne</h3>
                 <p class="more-text">Programowanie reaktywne to technika programowania oparta o <em>asynchroniczne</em>
                     <em>strumienie danych</em>.</p>
@@ -58,8 +140,7 @@
                 <p class="fragment most-text">Strumień danych emituje: wartości, błędy oraz sygnał <em>completed</em>.
                 </p>
                 <p class="fragment most-text">Sygnał <em>completed</em> informuje o zamknięciu strumienia danych -
-                    więcej danych
-                    już nie nadejdzie.</p>
+                    więcej danych już nie nadejdzie.</p>
             </section>
         </section>
         <section>
@@ -76,9 +157,11 @@
                 <img src="img/latency-numbers.png" alt="Latency numbers" class="no-border">
             </section>
             <section>
-                <p class="more-text">W klasycznym programowaniu (synchronicznym) wątek oczekujący na odpowiedź np z serwera baz danych
+                <p class="more-text">W klasycznym programowaniu (synchronicznym) wątek oczekujący na odpowiedź np z
+                    serwera baz danych
                     nasłuchuje (bezużytecznie) na porcie TCP/IP.</p>
-                <p class="fragment more-text">I co z tego? Przecież system jest wielowątkowy, inny wątek może być wykonywany w tym
+                <p class="fragment more-text">I co z tego? Przecież system jest wielowątkowy, inny wątek może być
+                    wykonywany w tym
                     czasie.</p>
                 <p class="fragment">Przełączenie kontekstu dla wątku:
                 <ul>
