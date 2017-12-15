@@ -61,8 +61,38 @@
                     więcej danych
                     już nie nadejdzie.</p>
             </section>
+        </section>
+        <section>
             <section>
-                
+                <h3>Po co?</h3>
+                <p class="most-text fragment" data-fragment-index="1">Typowy przypadek użycia w aplikacji
+                    biznesowej.</p>
+                <div class="fragment" data-fragment-index="1">
+                    <img src="img/Typical-business-use-case.png" alt="Typical business use case" class="no-border">
+                </div>
+            </section>
+            <section>
+                <p>Ile czasu potrzeba na komunikację sieciową?</p>
+                <img src="img/latency-numbers.png" alt="Latency numbers" class="no-border">
+            </section>
+            <section>
+                <p class="more-text">W klasycznym programowaniu (synchronicznym) wątek oczekujący na odpowiedź np z serwera baz danych
+                    nasłuchuje (bezużytecznie) na porcie TCP/IP.</p>
+                <p class="fragment more-text">I co z tego? Przecież system jest wielowątkowy, inny wątek może być wykonywany w tym
+                    czasie.</p>
+                <p class="fragment">Przełączenie kontekstu dla wątku:
+                <ul>
+                    <li class="fragment">Rejestry procesora</li>
+                    <li class="fragment">Rejestr wskaźnika stosu</li>
+                    <li class="fragment">Licznik rozkazów</li>
+                    <li class="fragment">Logika <em>schedulera</em></li>
+                    <li class="fragment">A co z pamięcią podręczną procesora?</li>
+                </ul>
+                </p>
+            </section>
+            <section>
+                <p>Ile czasu oszczędzamy dzięki pamięci podręcznej procesora?</p>
+                <img src="img/latency-numbers.png" alt="Latency numbers" class="no-border">
             </section>
         </section>
     </div>
