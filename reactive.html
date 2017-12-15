@@ -178,6 +178,48 @@
                 <img src="img/latency-numbers.png" alt="Latency numbers" class="no-border">
             </section>
         </section>
+        <section>
+            <h3>Strumienie danych</h3>
+            <section>
+                <p>Biblioteka rxjs</p>
+            </section>
+            <section>
+                <img src="img/streams-example.png" alt="Stream example" class="no-border" height="480">
+                <p class="most-text">Źródło: <a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754">https://gist.github.com/staltz/868e7e9bc2a7b8c1f754</a>
+                </p>
+            </section>
+            <section>
+                <pre><code class="javascript">/ Make the raw clicks stream
+var button = document.querySelector('.this');
+var clickStream = Rx.Observable.fromEvent(button, 'click');
+
+// HERE
+// The 4 lines of code that make the multi-click logic
+var multiClickStream = clickStream
+    .buffer(function() { return clickStream.throttle(250); })
+    .map(function(list) { return list.length; })
+    .filter(function(x) { return x >= 2; });
+
+// Same as above, but detects single clicks
+var singleClickStream = clickStream
+    .buffer(function() { return clickStream.throttle(250); })
+    .map(function(list) { return list.length; })
+    .filter(function(x) { return x === 1; });
+
+// Listen to both streams and render the text label accordingly
+singleClickStream.subscribe(function (event) {
+    document.querySelector('h2').textContent = 'click';
+});
+multiClickStream.subscribe(function (numclicks) {
+    document.querySelector('h2').textContent = ''+numclicks+'x click';
+});
+Rx.Observable.merge(singleClickStream, multiClickStream)
+    .throttle(</code></pre>
+            </section>
+            <section>
+                <p>Operatory na strumieniach danych:</p>
+            </section>
+        </section>
     </div>
     <div id="cgLogo" style="background: url(img/cg_small.png);
                         position: absolute;
