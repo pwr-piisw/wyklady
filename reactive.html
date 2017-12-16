@@ -113,6 +113,21 @@
     });</code></pre>
             </section>
             <section>
+                <pre><code class="javascript">app.factory('SonService', () => {
+        return {
+            getWeather: function() {
+                return new Promise((resolve, reject) => {
+					const xhr = new XMLHttpRequest();
+					xhr.open('GET', 'myweather.com');
+					xhr.onload = () => resolve(xhr.responseText);
+					xhr.onerror = () => reject('Cannot retrieve forecast!');
+					xhr.send;
+                });
+            }
+        };
+    });</code></pre>
+            </section>
+            <section>
                 <p>Źródło: <a href="http://andyshora.com/promises-angularjs-explained-as-cartoon.html">http://andyshora.com/promises-angularjs-explained-as-cartoon.html</a>
                 </p>
             </section>
