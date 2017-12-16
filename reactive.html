@@ -292,8 +292,7 @@ var subscription = source.subscribe(
                 <p class="more-text fragment">Chcemy wiedzieć, ile było kliknięć w każdej "paczce".</p>
             </section>
             <section>
-                <pre><code class="javascript">/ Make the raw clicks stream
-var button = document.querySelector('.this');
+                <pre><code class="javascript">var button = document.querySelector('.this');
 var clickStream = Rx.Observable.fromEvent(button, 'click');
 
 var multiClickStream = clickStream
