@@ -117,11 +117,11 @@
         return {
             getWeather: function() {
                 return new Promise((resolve, reject) => {
-					const xhr = new XMLHttpRequest();
-					xhr.open('GET', 'myweather.com');
-					xhr.onload = () => resolve(xhr.responseText);
-					xhr.onerror = () => reject('Cannot retrieve forecast!');
-					xhr.send;
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'myweather.com');
+                    xhr.onload = () => resolve(xhr.responseText);
+                    xhr.onerror = () => reject('Cannot retrieve forecast!');
+                    xhr.send;
                 });
             }
         };
