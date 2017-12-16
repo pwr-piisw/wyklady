@@ -61,7 +61,7 @@
         <section>
             <h3>Promise</h3>
             <section>
-                <p>Co niedzielę ojciec prosi syna o prognozę pogody.</p>
+                <p class="fragment">Co niedzielę ojciec prosi syna o prognozę pogody.</p>
                 <p class="fragment more-text">W tym celu syn musi udać się na wzgórze
                     i obserwując horyzont przy pomocy teleskopu ocenić stan pogody.</p>
                 <img src="img/promise-tale1.png" alt="Promise 1" class="no-border fragment">
@@ -86,40 +86,28 @@
             // but we'll deal with that shortly
             SonService.getWeather()
                 // then() called when son gets back
-                .then(function(data) {
-                    // promise fulfilled
-                    if (data.forecast==='good') {
+                .then((description) => { // fulfilled
+                    if (description==='good') {
                         prepareFishingTrip();
                     } else {
                         prepareSundayRoastDinner();
                     }
-                }, function(error) {
-                    // promise rejected, could log the error with:
-                    // console.log('error', error);
+                }, (error) => { // rejected
                     prepareSundayRoastDinner();
                 });
         };</code></pre>
             </section>
             <section>
-                <pre><code class="javascript">app.factory('SonService', function ($http, $q) {
+                <pre><code class="javascript">app.factory('SonService', () => {
         return {
             getWeather: function() {
-                // the $http API is based on the deferred/promise
-                // APIs exposed by the $q service
-                // so it returns a promise for us by default
-                return $http.get('http://fishing-weather-api.com/sunday/afternoon')
-                    .then(function(response) {
-                        if (typeof response.data === 'object') {
-                            return response.data;
-                        } else {
-                            // invalid response
-                            return $q.reject(response.data);
-                        }
-
-                    }, function(response) {
-                        // something went wrong
-                        return $q.reject(response.data);
-                    });
+                return new Promise((resolve, reject) => {
+                    if (forecast.available()) {
+                       resolve(forecast.description);
+                    } else {
+                       reject('Cannot retrieve forecast!');
+                    }
+                });
             }
         };
     });</code></pre>
@@ -128,18 +116,35 @@
                 <p>Źródło: <a href="http://andyshora.com/promises-angularjs-explained-as-cartoon.html">http://andyshora.com/promises-angularjs-explained-as-cartoon.html</a>
                 </p>
             </section>
+            <section>
+                <p>ECMAScript 6: tworzenie</p>
+                <pre><code class="javascript">var p = new Promise(function(resolve, reject) {
+   if (/* condition */) {
+      resolve(/* value */);  // fulfilled successfully
+   }
+   else {
+      reject(/* reason */);  // error, rejected
+   }
+});</code></pre>
+                <p class="fragment">"konsumpcja"</p>
+                <pre class="fragment"><code class="javascript">p.then((val) => console.log("fulfilled:", val),
+       (err) => console.log("rejected: ", err));</code></pre>
+            </section>
         </section>
         <section>
             <section>
                 <h3>Programowanie reaktywne</h3>
-                <p class="more-text">Programowanie reaktywne to technika programowania oparta o <em>asynchroniczne</em>
+                <p class="more-text fragment" data-fragment-index="1">Programowanie reaktywne to technika programowania
+                    oparta o <em>asynchroniczne</em>
                     <em>strumienie danych</em>.</p>
-                <div class="fragment">
+                <div class="fragment" data-fragment-index="2">
                     <img src="img/AsyncDataStream1.png" alt="Async Data Stream" class="no-border">
                 </div>
-                <p class="fragment most-text">Strumień danych emituje: wartości, błędy oraz sygnał <em>completed</em>.
+                <p class="fragment most-text" data-fragment-index="2">Strumień danych emituje: wartości, błędy oraz
+                    sygnał <em>completed</em>.
                 </p>
-                <p class="fragment most-text">Sygnał <em>completed</em> informuje o zamknięciu strumienia danych -
+                <p class="fragment most-text" data-fragment-index="2">Sygnał <em>completed</em> informuje o zamknięciu
+                    strumienia danych -
                     więcej danych już nie nadejdzie.</p>
             </section>
         </section>
@@ -151,6 +156,7 @@
                 <div class="fragment" data-fragment-index="1">
                     <img src="img/Typical-business-use-case.png" alt="Typical business use case" class="no-border">
                 </div>
+                <p class="fragment" data-fragment-index="2">Komunikacja sieciowa!</p>
             </section>
             <section>
                 <p>Ile czasu potrzeba na komunikację sieciową?</p>
@@ -160,53 +166,146 @@
                 <p class="more-text">W klasycznym programowaniu (synchronicznym) wątek oczekujący na odpowiedź np z
                     serwera baz danych
                     nasłuchuje (bezużytecznie) na porcie TCP/IP.</p>
-                <p class="fragment more-text">I co z tego? Przecież system jest wielowątkowy, inny wątek może być
-                    wykonywany w tym
-                    czasie.</p>
+                <p class="fragment more-text"><em>I co z tego? Przecież system jest wielowątkowy, inny wątek może być
+                    wykonywany w tym czasie.</em></p>
                 <p class="fragment">Przełączenie kontekstu dla wątku:
-                <ul>
-                    <li class="fragment">Rejestry procesora</li>
-                    <li class="fragment">Rejestr wskaźnika stosu</li>
-                    <li class="fragment">Licznik rozkazów</li>
-                    <li class="fragment">Logika <em>schedulera</em></li>
-                    <li class="fragment">A co z pamięcią podręczną procesora?</li>
-                </ul>
+                <div class="more-text">
+                    <ul>
+                        <li class="fragment">Rejestry procesora</li>
+                        <li class="fragment">Rejestr wskaźnika stosu</li>
+                        <li class="fragment">Licznik rozkazów</li>
+                        <li class="fragment">Logika <em>schedulera</em></li>
+                        <li class="fragment">A co z pamięcią podręczną procesora?</li>
+                    </ul>
+                </div>
                 </p>
             </section>
             <section>
                 <p>Ile czasu oszczędzamy dzięki pamięci podręcznej procesora?</p>
                 <img src="img/latency-numbers.png" alt="Latency numbers" class="no-border">
             </section>
+            <section>
+                <p>Przykład: reaktywny serwer HTTP dla Javy (Ratpack)</p>
+                <img src="img/Reactive%20HTTP.png" alt="Reactive HTTP" class="no-border">
+                <p class="more-text">Więcej: <a href="https://ratpack.io">https://ratpack.io</a></p>
+            </section>
         </section>
         <section>
-            <h3>Strumienie danych</h3>
             <section>
-                <p>Biblioteka rxjs</p>
+                <h3>Biblioteka RxJS</h3>
+                <p class="more-text"><strong>RxJS</strong> biblioteka programowania reaktywnego wykorzystująca
+                    koncepcję <em>Observables</em> jako implementacji strumieni danych.
+                </p>
+                <p class="more-text fragment">Biblioteka RxJS jest wykorzystywana przez Angular.</p>
+                <pre class="fragment"><code class="javascript">@Injectable()
+ export class UserService {
+   constructor(private http: Http) {}
+   getAllUsers(): Observable&lt;Array&lt;User&gt;&gt; {
+     return this.http.get('services/rest/users')
+        .map(res =>  res.json());
+   }
+   findUser(id: number): Observable&lt;User&gt; {
+     return this.http.get(`services/rest/users/${id}`)
+        .map(res => res.json());
+   }
+   saveUser(user: User) {
+     return this.http.post('services/rest/users', user);
+   }
+}</code></pre>
             </section>
             <section>
-                <img src="img/streams-example.png" alt="Stream example" class="no-border" height="480">
-                <p class="most-text">Źródło: <a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754">https://gist.github.com/staltz/868e7e9bc2a7b8c1f754</a>
-                </p>
+                <h4>Tworzenie Observables</h4>
+                <div class="most-text">
+                    <ul>
+                        <li><code>Observable.fromEvent(button,'click')</code></li>
+                        <li><code>Observable.fromArray([1,2,3])</code></li>
+                        <li><code>Observable.fromPromise(promise)</code></li>
+                        <li><code>Observable.of(1,2,3)</code></li>
+                        <li><code>Observable.timer(200/*ms*/, 100/*ms*/)</code></li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <p>Subskrybowanie</p>
+                <pre><code class="javascript">var source = Rx.Observable.timer(200, 100)
+    .timeInterval()
+    .pluck('interval')
+    .take(3);
+
+var subscription = source.subscribe(
+     (x) => console.log('Next: ' + x),
+     (err) => console.log('Error: ' + err),
+     () => console.log('Completed'));
+
+// => Next: 200
+// => Next: 100
+// => Next: 100
+// => Completed</code></pre>
+            </section>
+            <section>
+                <h4>Przekształcanie Observables</h4>
+                <p class="most-text">Każdy operator przekształcający tworzy nową instancję <em>Observable</em>.</p>
+                <div class="most-text">
+                    <ul>
+                        <li><code>source.map(Function | Object)</code></li>
+                        <li><code>source.pluck(propertyName:String)</code></li>
+                        <li><code>source.filter(predicate:Function)</code></li>
+                        <li><code>source.throttle(windowDuration)</code></li>
+                        <li><code>source.skip(count)</code></li>
+                        <li><code>source.take(count)</code></li>
+                        <li><code>source.buffer(bufferClosingSelector:Observable)</code></li>
+                        <li><code>source1.merge(source2)</code></li>
+                    </ul>
+                </div>
+            </section>
+            <section>
+                <p>Przykład: Throttle</p>
+                <pre><code class="javascript">var times = [
+  { value: 0, time: 100 },
+  { value: 1, time: 600 },
+  { value: 2, time: 400 },
+  { value: 3, time: 900 },
+  { value: 4, time: 200 }
+];
+
+var source = Rx.Observable.from(times)
+  .flatMap((item) => Rx.Observable.of(item.value)
+                                 .delay(item.time))
+  .throttle(300 /* ms */);
+
+var subscription = source.subscribe(
+  (x) => console.log('Next: %s', x),
+  (err) => console.log('Error: %s', err),
+  () => console.log('Completed'));
+
+// => Next: 0
+// => Next: 2
+// => Next: 3
+// => Completed</code></pre>
+            </section>
+            <section>
+                <h4>Przykład</h4>
+                <p class="more-text">Dla przycisku chcemy reagować za każdym razem,
+                    gdy wykonano "dwuklik".</p>
+                <p class="more-text fragment">Uogólniając, chcemy reagować także na
+                    potrójne, poczwórne (itp) kliknięcia.</p>
+                <p class="more-text fragment">Chcemy wiedzieć, ile było kliknięć w każdej "paczce".</p>
             </section>
             <section>
                 <pre><code class="javascript">/ Make the raw clicks stream
 var button = document.querySelector('.this');
 var clickStream = Rx.Observable.fromEvent(button, 'click');
 
-// HERE
-// The 4 lines of code that make the multi-click logic
 var multiClickStream = clickStream
-    .buffer(function() { return clickStream.throttle(250); })
-    .map(function(list) { return list.length; })
-    .filter(function(x) { return x >= 2; });
+    .buffer(() => clickStream.throttle(250))
+    .map((list) => list.length)
+    .filter((x) => x >= 2);
 
-// Same as above, but detects single clicks
 var singleClickStream = clickStream
-    .buffer(function() { return clickStream.throttle(250); })
-    .map(function(list) { return list.length; })
-    .filter(function(x) { return x === 1; });
+    .buffer(() => clickStream.throttle(250))
+    .map((list) => list.length)
+    .filter((x) => x === 1);
 
-// Listen to both streams and render the text label accordingly
 singleClickStream.subscribe(function (event) {
     document.querySelector('h2').textContent = 'click';
 });
@@ -217,8 +316,23 @@ Rx.Observable.merge(singleClickStream, multiClickStream)
     .throttle(</code></pre>
             </section>
             <section>
-                <p>Operatory na strumieniach danych:</p>
+                <img src="img/streams-example.png" alt="Stream example" class="no-border" height="480">
+                <p class="most-text">Źródło: <a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754">https://gist.github.com/staltz/868e7e9bc2a7b8c1f754</a>
+                </p>
             </section>
+        </section>
+        <section>
+            <h3>Bibliografia</h3>
+            <div class="most-text">
+                <ul>
+                    <li><a href="https://developer.mozilla.org/pl/docs/Web/JavaScript/Reference/Global_Objects/Promise">https://developer.mozilla.org/pl/docs/Web/JavaScript/Reference/Global_Objects/Promise</a>
+                    </li>
+                    <li><a href="https://github.com/Reactive-Extensions/RxJS">https://github.com/Reactive-Extensions/RxJS</a>
+                    </li>
+                    <li><a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754">The introduction to Reactive
+                        Programming you've been missing</a></li>
+                </ul>
+            </div>
         </section>
     </div>
     <div id="cgLogo" style="background: url(img/cg_small.png);
