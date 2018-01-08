@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!--
+    Czas trwania: x
+    Ilość slajdów: x
+    -->
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/github.css">
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h3>Projekt i implementacja systemów webowych</h3>
+            <h2>Testowanie automatyczne aplikacji Angular</h2>
+        </section>
+        <section>
+            <h2>Po co automatyzujemy testy?</h2>
+        </section>
+        <section>
+            <h2>Rodzaje testów</h2>
+            <section>
+
+            </section>
+        </section>
+    </div>
+    <div id="cgLogo" style="background: url(img/cg_small.png);
+                        position: absolute;
+                        bottom: 20px;
+                        left: 20px;
+                        width: 250px;
+                        height: 44px;"></div>
+    <div class="footer"><a href="index.html">Indeks</a></div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        history: true,
+        slideNumber: 'c/t',
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true},
+            {src: 'plugin/livecode/livecode.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            }
+        ]
+    });
+</script>
+</body>
+</html>
