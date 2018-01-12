@@ -35,13 +35,85 @@
             <h2>Testowanie automatyczne aplikacji Angular</h2>
         </section>
         <section>
-            <h2>Po co automatyzujemy testy?</h2>
+            <h3>Automatyzacja testów</h3>
+            <p class="fragment">Użycie narzędzi (kod, skrypty, itp) do wykonywania testów oprogramowania i ewentualnego
+                wykrywania
+                odchyleń od założononych wyników.</p>
         </section>
         <section>
-            <h2>Rodzaje testów</h2>
+            <h3>Po co automatyzujemy testy?</h3>
+            <ul>
+                <li class="fragment">Powtarzalność</li>
+                <li class="fragment">Szybka informacja zwrotna</li>
+                <li class="fragment">Koszty</li>
+            </ul>
+        </section>
+        <section>
+            <p><i>Tools don't test. Only people test. Tools only perform actions that "help" people test."</i> - James
+                Bach,
+                <a href="http://www.satisfice.com/blog/">http://www.satisfice.com/blog/</a></p>
+        </section>
+        <section>
+            <h3>Rodzaje testów automatycznych</h3>
+            <ul>
+                <li class="fragment">Testy jednostkowe (unit tests) - pisane na poziomie jednostki programistycznej
+                    (funkcja, procedura, moduł, klasa).
+                </li>
+                <li class="fragment">Testy modułowe/komponentowe/integracyjne - testowanie większych, zintegrowanych
+                    konstrukcji.
+                </li>
+                <li class="fragment">Testy E2E - testowanie kompletnej aplikacji.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Testy w aplikacji webowej</h2>
             <section>
-
+                <img src="img/rich-front-architecture.svg" alt="Rich frontend architecture" height="350">
             </section>
+            <section>
+                <p>Testy jednostkowe backendu</p>
+                <img src="img/tests/backend-module-test.png" alt="Backend module tests" height="350">
+            </section>
+            <section>
+                <p>Testy integracyjne backendu</p>
+                <img src="img/tests/backend-integration-test.png" alt="Backend integration tests" height="350">
+            </section>
+            <section>
+                <p>Testy jednostkowe frontendu</p>
+                <img src="img/tests/frontend-unit-test.png" alt="Frontend unit tests" height="350">
+            </section>
+            <section>
+                <p>Testy komponentowe frontendu</p>
+                <img src="img/tests/frontend-component-test.png" alt="Frontend component tests" height="350">
+            </section>
+            <section>
+                <p>Testy E2E</p>
+                <img src="img/tests/e2e-test.png" alt="E2E tests" height="350">
+            </section>
+        </section>
+        <section>
+            <h3>Testowanie automatyczne frontendu</h3>
+            <p class="fragment"><strong>Jasmine</strong> framework testujący kod w JavaScript (ale także Ruby i
+                Python).
+            </p>
+            <img class="fragment" src="img/tests/karma-test-files.png" alt="Test files">
+        </section>
+        <section>
+            <div class="col left">
+                <img src="img/tests/tested-code.png" alt="Tested code" height="400">
+            </div>
+            <div class="col right">
+                <img src="img/tests/spec-code.png" alt="Spec code" height="400">
+            </div>
+        </section>
+        <section>
+            <p>Selenium</p>
+            <img src="img/tests/selenium-webdriver.jpg" alt="Selenium">
+        </section>
+        <section>
+            <h3>Testowanie E2E</h3>
+            <p>Protractor - narzędzie do testowania aplikacji Angular z użyciem prawdziwej przeglądarki.</p>
+            <img class="fragment" src="img/tests/protractor-example.png" alt="Protractor" height="350">
         </section>
     </div>
     <div id="cgLogo" style="background: url(img/cg_small.png);
@@ -71,8 +143,8 @@
             {src: 'plugin/livecode/livecode.js', async: true},
             {
                 src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
+                    hljs.initHighlightingOnLoad();
+                }
             }
         ]
     });
