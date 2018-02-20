@@ -10,6 +10,12 @@ div.right {
     float: right;
 }
 
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 div.centered {
     margin-left: 50px;
     margin-right: 50px;

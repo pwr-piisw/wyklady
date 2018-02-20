@@ -67,11 +67,11 @@
                     laboratoryjnych.</p>
                 <h4>Konsultacje</h4>
                 <div class="most-text">
-                <ul>
-                    <li>mgr inż. Adam Puchalski - wt 12:00-13:00, 302a, D-2</li>
-                    <li>mgr inż. Marcin Stachowiak - pon 16:00-17:00, 412, B-4</li>
-                    <li>mgr inż. Maciej Małecki - wt 10:00-11:00, 302a, D-2</li>
-                </ul>
+                    <ul>
+                        <li>mgr inż. Adam Puchalski - wt 12:00-13:00, 302a, D-2</li>
+                        <li>mgr inż. Marcin Stachowiak - pon 16:00-17:00, 412, B-4</li>
+                        <li>mgr inż. Maciej Małecki - wt 10:00-11:00, 302a, D-2</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -92,10 +92,11 @@
 
         <section>
             <h3>Architektura klient-serwer</h3>
-            <div class="fragment more-text">
-                    <div class="left col"><img src="img/bbs.gif" alt="BBS" width="320"></div>
-                    <div class="right col"><img src="img/quantum-link.png" alt="BBS" width="320"></div>
-
+            <div class="fragment more-text clearfix" data-fragment-index="0">
+                <div class="left col"><img src="img/bbs.gif" alt="BBS" class="no-border" width="320" height="200"></div>
+                <div class="right col"><img src="img/quantum-link.png" alt="BBS" class="no-border" width="320" height="200"></div>
+            </div>
+            <div class="fragment most-text" data-fragment-index="0">
                 <p>Źródło:
                     <a href="http://software.bbsdocumentary.com/COMMODORE/C64/CNET64/">http://software.bbsdocumentary.com/COMMODORE/C64/CNET64/</a>
                     <a href="http://linkis.com/www.tinytickle.co.uk/cAHPM">http://linkis.com/www.tinytickle.co.uk/cAHPM</a>
@@ -105,20 +106,48 @@
 
         <section>
             <h3>Architektura klient-serwer</h3>
+            <div>
+                <img src="img/client-server.png" alt="Client server" class="no-border">
+            </div>
+            <div class="most-text">
+                <ul>
+                    <li class="fragment">Aplikacje klienckie są instalowane niezależnie na maszynach klienckich.</li>
+                    <li class="fragment">Aktualizacja kodu serwera z reguły pociąga za sobą konieczność aktualizacji kodu klienta.</li>
+                    <li class="fragment">Istniały mechanizmy pozwalające na "obejście" tego problemu, jak np.
+                        <em>Java Applets</em> lub <em>Java Web Start</em>, oba wymagały jednak instalacji dodatkowego oprogramowania (JVM).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h3>Aplikacja webowa</h3>
+            <div class="more-text">
+                <ul>
+                    <li>Używa standardów takich jak HTML/CSS oraz Javascript, które mogą być wykonywane przez każdą współczesną przeglądarkę
+                    internetową.</li>
+                    <li class="fragment">Pozwala na buforowanie kodu po stronie klienta dzięki istnieniu mechanizmów <em>cache</em>.</li>
+                    <li class="fragment">Mechanizmy <em>cache</em> można kontrolować, dzięki czemu twórcy aplikacji mają kontrolę nad
+                    aktualizacją klienta razem z serwerem.</li>
+                </ul>
+            </div>
         </section>
 
         <section>
             <h3>Historia aplikacji webowych</h3>
             <div class="more-text">
-                <ul>
-                    <li><em>wczesne lata 90-te:</em> <span>statyczne strony HTML</span></li>
-                </ul>
+                <em>Wczesne lata 90-te:</em> statyczne strony HTML:
             </div>
             <section>
-                <img src="img/msn_webpage.jpg" alt="MSN" class="no-border fragment" height="400">
+                <img src="img/msn_webpage.jpg" alt="MSN" class="no-border" height="400">
             </section>
             <section>
                 <img src="img/Old-Apple-Website.jpg" alt="Old Apple Website" class="no-border">
+            </section>
+            <section>
+                <div class="most-text">
+                    <p>W praktyce struktura adresu strony odzwierciedlała położenie pliku na serwerze.</p>
+                </div>
+                <img src="img/Url.png" alt="Url">
             </section>
         </section>
 
