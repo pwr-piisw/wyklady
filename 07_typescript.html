@@ -47,6 +47,21 @@
         </section>
 
         <section>
+            <h2>Typescript</h2>
+            <div class="more-text">
+                <ul>
+                    <li>Język transpilowany do JavaScript stworzony i rozwijany przez Microsoft.</li>
+                    <li class="fragment">Język ten obecnie jest oficjalnym "poligonem doświadczalnym" dla JavaScriptu.
+                    </li>
+                    <li class="fragment">Duża część elementów TS przeszła do JS w ramach ECMAScript 6.</li>
+                    <li class="fragment">Dzięki transpilacji można korzystać z rozszerzeń ECMA na przeglądarkach, które
+                        tej wersji JS jeszcze nie wspierają.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
             <h2>Deklaracja zmiennych i stałych*</h2>
             <section>
                 <pre><code data-trim class="typescript">let price = 100.99;</code></pre>
@@ -95,7 +110,7 @@ console.log(Color["Green"]); // -> 1
                 </code></pre>
                 <p class="fragment">Typ enumeracyjny jest kompilowany do tablicy zawierającej mapowanie liczb na nazwy i
                     na odwrót.</p>
-                <pre class="fragment"><code class="typescript"data-trim>enum Color {Red, Green, Blue};
+                <pre class="fragment"><code class="typescript" data-trim>enum Color {Red, Green, Blue};
 console.log(Color); // -> {"0": "Red", "1": "Green", "2": "Blue", Red: 0, Green: 1, Blue: 2} </code></pre>
             </section>
             <section>
@@ -111,7 +126,8 @@ price = 'foo'; // błąd kompilacji
 
         <section>
             <h3>Fat arrow*</h3>
-            <p class="more-text">Funkcje można obecnie specyfikować zwięźlej stosująć notację "strzałkową" (<em>fat arrow</em>).</p>
+            <p class="more-text">Funkcje można obecnie specyfikować zwięźlej stosująć notację "strzałkową" (<em>fat
+                arrow</em>).</p>
             <pre class="fragment"><code class="typescript" data-trim>const add = function(left, right) {
   return left + right;
 };
@@ -257,8 +273,8 @@ tom.move(34);</code></pre>
             {src: 'plugin/livecode/livecode.js', async: true},
             {
                 src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
+                    hljs.initHighlightingOnLoad();
+                }
             }
         ]
     });

@@ -488,8 +488,8 @@ var f = function() {
                 <h3>Domknięcia</h3>
                 <p>Mamy następujący kod:</p>
                 <pre><code class="javascript" data-trim>
-var nextValue = function() { // co zawiera "nextValue" wyjaśnimy na końcu
-  var cntr = 0; // ta zmienna
+var nextValue = function() {
+  var cntr = 0; // zmienna lokalna
   return function() {
     ++cntr; // funkcja wewnęrzna operuje na zmiennej zadeklarowanej na zewnątrz
     return cntr; // przez co stan owej zmiennej jest wspólny dla wielu wywołań
@@ -674,6 +674,34 @@ var account = {
   }
 };
             </code></pre>
+        </section>
+        <section>
+            <h2>Zagadka</h2>
+            <div class="col left">
+            <pre><code class="javascript" data-trim>
+var account = {
+  balance: 199,
+  printBalance: function() {
+        console.log(this.balance);
+  }
+};
+            </code></pre>
+            <p class="fragment">-> 199</p>
+            </div>
+            <div class="col right">
+            <pre class="fragment"><code class="javascript" data-trim>
+var account = {
+  balance: 199,
+  printBalance: function() {
+        var inner = function() {
+            console.log(this.balance);
+        };
+        inner();
+  }
+};
+            </code></pre>
+                <p class="fragment">-> undefined <span class="fragment"><img src="img/troll.gif" class="no-border" height="100"></span></p>
+            </div>
         </section>
         <section>
             <h2>Bezklasowość</h2>
