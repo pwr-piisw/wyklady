@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!--
-    Czas trwania: x
-    Ilość slajdów: x
+    Czas trwania: 1h30m
+    Ilość slajdów: 26
     -->
     <title>Angular</title>
 
@@ -206,25 +206,34 @@
             </section>
         </section>
         <section>
+            <h3>ReactiveX</h3>
+            <p>Biblioteka / API pozwalająca zastosować wzorzec programowania reaktywnego w różnych językach
+                programowania.</p>
+            <p class="fragment more-text">Java, JavaScript, C#, Scala, Closure, C++, Lua, Ruby, Python, Go, Groovy, JRuby, Kotlin, Swift, PHP,
+                Elixir, Dart.</p>
+            <p class="fragment">Wykorzystuje koncepcję <em>Observables</em> jako implementacji strumieni danych.</p>
+        </section>
+        <section>
             <section>
                 <h3>Biblioteka RxJS</h3>
-                <p class="more-text"><strong>RxJS</strong> biblioteka programowania reaktywnego wykorzystująca
-                    koncepcję <em>Observables</em> jako implementacji strumieni danych.
+                <p class="more-text"><strong>RxJS</strong> implementacja ReactiveX dla JavaScript/Typescript.
                 </p>
                 <p class="more-text fragment">Biblioteka RxJS jest wykorzystywana przez Angular.</p>
                 <pre class="fragment"><code class="javascript">@Injectable()
  export class UserService {
-   constructor(private http: Http) {}
+   constructor(private http: HttpClient) {}
    getAllUsers(): Observable&lt;Array&lt;User&gt;&gt; {
-     return this.http.get('services/rest/users')
-        .map(res =>  res.json());
+     return this.http.get&lt;User[]&gt;('services/rest/users');
    }
    findUser(id: number): Observable&lt;User&gt; {
-     return this.http.get(`services/rest/users/${id}`)
-        .map(res => res.json());
+     return this.http.get&lt;User&gt;(`services/rest/users/${id}`);
    }
    saveUser(user: User) {
-     return this.http.post('services/rest/users', user);
+     return this.http.post&lt;User&gt;('services/rest/users', user);
+   }
+   deleteUser(user:User): Observable&lt;HttpResponse&lt;any&gt;&gt; {
+     return this.http.delete(`services/rest/users/${user.id}`,
+       {observe: 'response'});
    }
 }</code></pre>
             </section>
@@ -232,22 +241,22 @@
                 <h4>Tworzenie Observables</h4>
                 <div class="most-text">
                     <ul>
-                        <li><code>Observable.fromEvent(button,'click')</code></li>
+                        <li><code>Observable.fromEvent(button,'click')</code> - <a href="https://jsfiddle.net/maciejmaleckicapg/62g8vb25/">JSFiddle</a></li>
                         <li><code>Observable.fromArray([1,2,3])</code></li>
                         <li><code>Observable.fromPromise(promise)</code></li>
                         <li><code>Observable.of(1,2,3)</code></li>
-                        <li><code>Observable.timer(200/*ms*/, 100/*ms*/)</code></li>
+                        <li><code>Observable.timer(200/*ms*/, 100/*ms*/)</code> - <a href="https://jsfiddle.net/maciejmaleckicapg/cdgbfrmx/">JSFiddle</a></li>
                     </ul>
                 </div>
             </section>
             <section>
                 <p>Subskrybowanie</p>
-                <pre><code class="javascript">var source = Rx.Observable.timer(200, 100)
+                <pre><code class="javascript">const source = Rx.Observable.timer(200, 100)
     .timeInterval()
     .pluck('interval')
     .take(3);
 
-var subscription = source.subscribe(
+const subscription = source.subscribe(
      (x) => console.log('Next: ' + x),
      (err) => console.log('Error: ' + err),
      () => console.log('Completed'));
@@ -256,6 +265,7 @@ var subscription = source.subscribe(
 // => Next: 100
 // => Next: 100
 // => Completed</code></pre>
+                <a href="https://jsfiddle.net/maciejmaleckicapg/66ppu2h0/">JSFiddle</a>
             </section>
             <section>
                 <h4>Przekształcanie Observables</h4>
@@ -274,8 +284,30 @@ var subscription = source.subscribe(
                 </div>
             </section>
             <section>
+                <p>Przykład: merge</p>
+                <img src="img/rxjs-merge.png" alt="" height="350">
+            </section>
+            <section>
+                <pre><code class="javascript">const source1 = Rx.Observable
+  .timer(1000, 550)
+  .take(10)
+  .timeInterval()
+  .pluck('interval')
+  .map(t=>'interval ' + t);
+
+const source2 = Rx.Observable
+  .timer(300, 2000)
+  .take(10)
+  .map(i=>'item ' + i);
+
+const merged = source1.merge(source2);
+
+merged.subscribe(x=>console.log(x));</code></pre>
+                <a href="https://jsfiddle.net/maciejmaleckicapg/qpshLxyb/">JSFiddle</a>
+            </section>
+            <section>
                 <p>Przykład: Throttle</p>
-                <pre><code class="javascript">var times = [
+                <pre><code class="javascript">const times = [
   { value: 0, time: 100 },
   { value: 1, time: 600 },
   { value: 2, time: 400 },
@@ -283,12 +315,12 @@ var subscription = source.subscribe(
   { value: 4, time: 200 }
 ];
 
-var source = Rx.Observable.from(times)
+const source = Rx.Observable.from(times)
   .flatMap((item) => Rx.Observable.of(item.value)
                                  .delay(item.time))
   .throttle(300 /* ms */);
 
-var subscription = source.subscribe(
+const subscription = source.subscribe(
   (x) => console.log('Next: %s', x),
   (err) => console.log('Error: %s', err),
   () => console.log('Completed'));
@@ -297,6 +329,11 @@ var subscription = source.subscribe(
 // => Next: 2
 // => Next: 3
 // => Completed</code></pre>
+                <a href="https://jsfiddle.net/maciejmaleckicapg/xL5fcLqy/">JSFiddle</a>
+            </section>
+            <section>
+                <h4>Przykład: buffer</h4>
+                <img src="img/rxjs-buffer1.png" alt="" height="350">
             </section>
             <section>
                 <h4>Przykład</h4>
@@ -307,19 +344,17 @@ var subscription = source.subscribe(
                 <p class="more-text fragment">Chcemy wiedzieć, ile było kliknięć w każdej "paczce".</p>
             </section>
             <section>
-                <pre><code class="javascript">var button = document.querySelector('.this');
-var clickStream = Rx.Observable.fromEvent(button, 'click');
+                <pre><code class="javascript">const button = document.querySelector('.this');
+const clickStream = Rx.Observable.fromEvent(button, 'click');
 
-var multiClickStream = clickStream
+const multiClickStream = clickStream
     .buffer(() => clickStream.throttle(250))
     .map((list) => list.length)
     .filter((x) => x >= 2);
-
-var singleClickStream = clickStream
+const singleClickStream = clickStream
     .buffer(() => clickStream.throttle(250))
     .map((list) => list.length)
     .filter((x) => x === 1);
-
 singleClickStream.subscribe(function (event) {
     document.querySelector('h2').textContent = 'click';
 });
@@ -327,7 +362,10 @@ multiClickStream.subscribe(function (numclicks) {
     document.querySelector('h2').textContent = ''+numclicks+'x click';
 });
 Rx.Observable.merge(singleClickStream, multiClickStream)
-    .throttle(</code></pre>
+    .throttle(1000)
+    .subscribe((suggestion) =>
+        document.querySelector('h2').textContent = '');</code></pre>
+                <a href="http://jsfiddle.net/maciejmaleckicapg/Lz8a3mbL/">JSFiddle</a>
             </section>
             <section>
                 <img src="img/streams-example.png" alt="Stream example" class="no-border" height="480">
@@ -376,8 +414,8 @@ Rx.Observable.merge(singleClickStream, multiClickStream)
             {src: 'plugin/livecode/livecode.js', async: true},
             {
                 src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
+                    hljs.initHighlightingOnLoad();
+                }
             }
         ]
     });
