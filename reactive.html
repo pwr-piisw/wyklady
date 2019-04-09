@@ -11,7 +11,7 @@
     <title>Angular</title>
 
     <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/beige.css">
+    <link rel="stylesheet" href="css/theme/white.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="lib/css/github.css">
@@ -245,7 +245,7 @@
             <section>
                 <h4>Observable</h4>
                 <img src="img/Observable-push-pull.png" alt="">
-                <div class="more-text fragment">
+                <div class="more-text">
                     <ul>
                     <li>pull - odbiorca decyduje, kiedy odczyta wartość</li>
                     <li>push - nadawca decyduje, kiedy odbiorca otrzyma wartość</li>
@@ -261,23 +261,28 @@
             <section>
                 <h4>Tworzenie Observables</h4>
                 <div class="most-text">
+                    <code>import {fromEvent} from 'rxjs/operators';</code>
+                </div>
+                <p>Przykłady</p>
+                <div class="most-text">
                     <ul>
-                        <li><code>Observable.fromEvent(button,'click')</code> - <a
-                                href="https://jsfiddle.net/maciejmaleckicapg/62g8vb25/">JSFiddle</a></li>
-                        <li><code>Observable.fromArray([1,2,3])</code></li>
-                        <li><code>Observable.fromPromise(promise)</code></li>
-                        <li><code>Observable.of(1,2,3)</code></li>
-                        <li><code>Observable.timer(200/*ms*/, 100/*ms*/)</code> - <a
-                                href="https://jsfiddle.net/maciejmaleckicapg/cdgbfrmx/">JSFiddle</a></li>
+                        <li><code>fromEvent(button,'click')</code>
+                        <li><code>fromArray([1,2,3])</code></li>
+                        <li><code>fromPromise(promise)</code></li>
+                        <li><code>of(1,2,3)</code> - <a href="https://next.plnkr.co/edit/84Ymta716OUF3Cae?preview">Plunker</a></li>
+                        <li><code>timer(200/*ms*/, 100/*ms*/)</code> - <a
+                                href="https://next.plnkr.co/edit/dj7q7eTNrKxAAQo0?preview">Plunker</a></li>
                     </ul>
                 </div>
             </section>
             <section>
                 <p>Subskrybowanie</p>
-                <pre><code class="javascript">const source = Rx.Observable.timer(200, 100)
-    .timeInterval()
-    .pluck('interval')
-    .take(3);
+                <pre><code class="javascript">const source = timer(200, 100)
+    .pipe(
+        .timeInterval()
+        .pluck('interval')
+        .take(3)
+    );
 
 const subscription = source.subscribe(
      (x) => console.log('Next: ' + x),
@@ -288,21 +293,21 @@ const subscription = source.subscribe(
 // => Next: 100
 // => Next: 100
 // => Completed</code></pre>
-                <a href="https://jsfiddle.net/maciejmaleckicapg/66ppu2h0/">JSFiddle</a>
+                <a href="https://next.plnkr.co/edit/KPXxiDVeguC2aOj2?preview">Plunker</a>
             </section>
             <section>
-                <h4>Przekształcanie Observables</h4>
+                <h4>Transformacje</h4>
                 <p class="most-text">Każdy operator przekształcający tworzy nową instancję <em>Observable</em>.</p>
                 <div class="most-text">
                     <ul>
-                        <li><code>source.map(Function | Object)</code></li>
-                        <li><code>source.pluck(propertyName:String)</code></li>
-                        <li><code>source.filter(predicate:Function)</code></li>
-                        <li><code>source.throttle(windowDuration)</code></li>
-                        <li><code>source.skip(count)</code></li>
-                        <li><code>source.take(count)</code></li>
-                        <li><code>source.buffer(bufferClosingSelector:Observable)</code></li>
-                        <li><code>source1.merge(source2)</code></li>
+                        <li><code>map&lt;T,R&gt;(project: (value:T, index:number) => R, thisArg?: any)</code></li>
+                        <li><code>pluck&lt;T,R&gt;(...properties: string[])</code></li>
+                        <li><code>filter&lt;T&gt;(predicate: (value:T,i:number)=>boolean,thisArg?:any)</code></li>
+                        <li><code>throttle(windowDuration)</code></li>
+                        <li><code>skip(count)</code></li>
+                        <li><code>take(count)</code></li>
+                        <li><code>buffer(bufferClosingSelector:Observable)</code></li>
+                        <li><code>merge(source2)</code></li>
                     </ul>
                 </div>
             </section>
@@ -311,22 +316,21 @@ const subscription = source.subscribe(
                 <img src="img/rxjs-merge.png" alt="" height="350">
             </section>
             <section>
-                <pre><code class="javascript">const source1 = Rx.Observable
-  .timer(1000, 550)
-  .take(10)
-  .timeInterval()
-  .pluck('interval')
-  .map(t=>'interval ' + t);
+                <pre><code class="javascript">const source2 = timer(300, 2000)
+  .pipe(
+    .take(10)
+    .map(i=>'item ' + i));
 
-const source2 = Rx.Observable
-  .timer(300, 2000)
-  .take(10)
-  .map(i=>'item ' + i);
+const source1 = timer(1000, 550)
+  .pipe(
+    take(10),
+    timeInterval(),
+    pluck('interval'),
+    map(t=>'interval ' + t),
+    merge(source2));
 
-const merged = source1.merge(source2);
-
-merged.subscribe(x=>console.log(x));</code></pre>
-                <a href="https://jsfiddle.net/maciejmaleckicapg/qpshLxyb/">JSFiddle</a>
+source1.subscribe(x=>console.log(x));</code></pre>
+                <a href="https://next.plnkr.co/edit/c2TBkTaSoTMy69Hs?preview">Plunker</a>
             </section>
             <section>
                 <p>Przykład: Throttle</p>
@@ -338,21 +342,23 @@ merged.subscribe(x=>console.log(x));</code></pre>
   { value: 4, time: 200 }
 ];
 
-const source = Rx.Observable.from(times)
-  .flatMap((item) => Rx.Observable.of(item.value)
-                                 .delay(item.time))
-  .throttle(300 /* ms */);
+const source = from(times)
+  .pipe(
+     flatMap(
+        item => of(item.value).pipe(delay(item.time))),
+     throttleTime(299)
+  );
 
-const subscription = source.subscribe(
-  (x) => console.log('Next: %s', x),
-  (err) => console.log('Error: %s', err),
-  () => console.log('Completed'));
+  const subscription = source.subscribe(
+     x => console.log('Next: %s', x),
+     err => console.log(err),
+     () => console.log('Completed'));
 
 // => Next: 0
 // => Next: 2
 // => Next: 3
 // => Completed</code></pre>
-                <a href="https://jsfiddle.net/maciejmaleckicapg/xL5fcLqy/">JSFiddle</a>
+                <a href="https://next.plnkr.co/edit/2KmfQse68Rji4RGv?preview">Plunker</a>
             </section>
             <section>
                 <h4>Przykład: buffer</h4>
@@ -367,28 +373,27 @@ const subscription = source.subscribe(
                 <p class="more-text fragment">Chcemy wiedzieć, ile było kliknięć w każdej "paczce".</p>
             </section>
             <section>
-                <pre><code class="javascript">const button = document.querySelector('.this');
-const clickStream = Rx.Observable.fromEvent(button, 'click');
+                <pre><code class="javascript">const clickStream = this.obs.asObservable();
+const delay = 500;
 
-const multiClickStream = clickStream
-    .buffer(() => clickStream.throttle(250))
-    .map((list) => list.length)
-    .filter((x) => x >= 2);
-const singleClickStream = clickStream
-    .buffer(() => clickStream.throttle(250))
-    .map((list) => list.length)
-    .filter((x) => x === 1);
-singleClickStream.subscribe(function (event) {
-    document.querySelector('h2').textContent = 'click';
-});
-multiClickStream.subscribe(function (numclicks) {
-    document.querySelector('h2').textContent = ''+numclicks+'x click';
-});
-Rx.Observable.merge(singleClickStream, multiClickStream)
-    .throttle(1000)
-    .subscribe((suggestion) =>
-        document.querySelector('h2').textContent = '');</code></pre>
-                <a href="http://jsfiddle.net/maciejmaleckicapg/Lz8a3mbL/">JSFiddle</a>
+const multiClickStream = clickStream.pipe(
+    buffer(clickStream.pipe(throttleTime(delay))),
+    map(list => list.length),
+    filter(x => x >= 2)
+);
+
+const singleClickStream = clickStream.pipe(
+    buffer(clickStream.pipe(throttleTime(delay))),
+    map(list => list.length),
+    filter(x => x === 1)
+);
+
+singleClickStream.subscribe((event) => this.text = 'click');
+multiClickStream.subscribe((numclicks) => this.text = ''+numclicks+'x click');
+merge(singleClickStream, multiClickStream)
+   .pipe(throttleTime(1000))
+   .subscribe(() => this.text = '');</code></pre>
+                <a href="https://next.plnkr.co/edit/AnqDiwF9Ldh2FBhm?preview">Plunker</a>
             </section>
             <section>
                 <img src="img/streams-example.png" alt="Stream example" class="no-border" height="480">
