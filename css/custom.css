@@ -38,8 +38,11 @@ div.more-text,p.more-text {
 div.most-text,p.most-text {
     font-size: 65%;
 }
+ul.more-text {
+    font-size: 80%;
+}
 section img.no-border {
-    border-width: 0px;
+    border-width: 0;
     border-style: none;
     box-shadow: none;
 }
@@ -83,7 +86,7 @@ div.white-paper h1 {
 }
 
 div.white-paper img {
-    border-width: 0px;
+    border-width: 0;
     border-style: none;
     box-shadow: none;
 }
