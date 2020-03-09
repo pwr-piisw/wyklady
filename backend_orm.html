@@ -33,7 +33,7 @@
 	</head>
 
 	<body>
-	
+
 <div id="cgLogo" style="background: url(img/cg_small.png);
                         position: absolute;
                         top: 90px;
@@ -41,8 +41,8 @@
                         width: 250px;
                         height: 44px;"></div>
 
-	
-	
+
+
 
 		<div class="reveal">
 
@@ -53,24 +53,24 @@
 					<h3>Mapowanie obiektowo - relacyjne</h3>
 					<aside class="notes">
 						Press: 's' for presenter window<p>
-						'ESC' for a global overview	
+						'ESC' for a global overview
 					</aside>
 				</section>
-				
+
 				<section>
 					<ul>
 						<li><a href="#/jdbc">JDBC</a></li>
 						<li><a href="#/orm">ORM</a></li>
 						<li><a href="#/Hibernate">Hibernate a JPA</a></li>
 						<li><a href="#/SpringData">Spring Data</a></li>
-						<li><a href="#/Tranzakcje">Tranzakcje</a></li>
+						<li><a href="#/Transakcje">Transakcje</a></li>
 						<li><a href="#/Testowanie">Testowanie</a></li>
 						<li><a href="#/liveCoding">Baza danych - live coding</a></li>
 
-						
+
 					</ul>
 				</section>
-				
+
 				<!-- ------ -->
 				<!-- ------ -->
 				<!--  jdbc   -->
@@ -81,57 +81,57 @@
 					<section id="jdbc" data-transition="slide" data-background="orange" data-background-transition="zoom">
 						<h1>JDBC</h1>
 					</section>
-					
+
 					<section>
 				<h4>Relacyjne bazy danych a świat obiektowy</h4>
 					<ul>
 						<li>Aplikacje tworzą, zarządzają i przechowują informacje strukturalne
 						<li>Programiści wybierają języki obiektowe
-						<li>Zapisywanie i pobieranie danych wymaga znajomości SQL	
+						<li>Zapisywanie i pobieranie danych wymaga znajomości SQL
 					</ul>
-					
+
 					<img src="img/server/objectVSsql.PNG" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
-				
+
+
 				<section>
 				<h3>Dostęp do danych za pomocą JDBC</h3>
 					<ul>
 						<li>Bardzo dobrze znane API
 						<li>Wymaga dobrej znajomości SQL
-						<li>Łącze do baz danych dla języka Java	
+						<li>Łącze do baz danych dla języka Java
 					</ul>
-					
+
 					<img src="img/server/jdbc.png" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
+
 				<section>
 				<h3>JDBC - jak to działa</h3>
-				
+
 					<pre><code class="Java" data-trim>
 @Service public class CustomerServiceImpl {
 
    private static final String FIND_ALL_LIBRARIES_IN_CITY_SQL =
-      "SELECT l.id, l.name, l.address_id FROM Library l, Address a 
+      "SELECT l.id, l.name, l.address_id FROM Library l, Address a
        WHERE l.address_id = a.id AND a.city = :city";
-   
+
    @Autowired private NamedParameterJdbcOperations jdbcTemplate;
    @Autowired private LibraryRowMapper mapper;
-   
+
    public List&lt;LibraryTO&gt; findAllLibrariesInCity (String cityName) {
       SqlParameterSource params = new MapSqlParameterSource("city", cityName);
       return jdbcTemplate.query(FIND_ALL_LIBRARIES_IN_CITY_SQL, params, mapper);
    }
-					</code></pre>				
-				
+					</code></pre>
+
 					<ul>
 						<li>Konieczność definiowania zapytań SQL
 						<li>Spring NamedParameterJdbcOperations do wykonywania instrukcji SQL
-						<li>Spring RowMapper do mapowania wyniku zapytania na obiekt	
+						<li>Spring RowMapper do mapowania wyniku zapytania na obiekt
 					</ul>
 				</section>
-				
-				
+
+
 				<section>
 				<h3>JDBC - spring RowMapper</h3>
 				Implementacja interfejsu RowMapper
@@ -147,15 +147,15 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
       library.setAddress(mapAddressById(rs.getLong(3)));
       return library;
    }
-   
+
    private AddressTO mapAddressById(Long addressId) {
       if (addressId != null && Long.compare(0, addressId) != 0)
         return new AddressTO(addressId));
       return null;
    }
-					</code></pre>				
+					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>JDBC - wady</h3>
 					<ul>
@@ -167,10 +167,10 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 						<li>Ewentualne błędy w zapytaniach SQL widoczne dopiero w trakcie działania programu
 						<li>Kod nietestowalny
 					</ul>
-				</section>		
 				</section>
-				
-				
+				</section>
+
+
 				<!-- ------ -->
 				<!-- ------ -->
 				<!--  orm   -->
@@ -181,7 +181,7 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 					<section id="orm" data-transition="slide" data-background="orange" data-background-transition="zoom">
 						<h1>ORM</h1>
 					</section>
-					
+
 					<section>
 				<h3>Odwzorowanie obiektowo-relacyjne</h3>
 					<ul>
@@ -196,10 +196,10 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
  						<li>Oddzielenie warstwy dostępu do danych od biznesu
 					</ul>
 				</section>
-				
+
 				<section>
 				<h4>Odwzorowanie obiektowo-relacyjne</h4>
-				Niedopasowanie paradygmatów relacyjno-obiektowych	
+				Niedopasowanie paradygmatów relacyjno-obiektowych
 					<table>
 						<thead>
 							<tr>
@@ -210,23 +210,23 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 						<tbody>
 							<tr>
 								<td>Klasy i tabele</td>
-								<td>Szczegółowość</td> 
+								<td>Szczegółowość</td>
 							</tr>
 							<tr>
 								<td>Właściwości i kolumny</td>
-								<td>Dziedziczenie (java)</td> 
+								<td>Dziedziczenie (java)</td>
 							</tr>
 							<tr>
 								<td>Instancje i wiersze</td>
-								<td>Kolekcje (java)</td> 
+								<td>Kolekcje (java)</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td>Identyczność (==, equals vs PK)</td> 
+								<td>Identyczność (==, equals vs PK)</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td>Nawigacja po grafie obiektów</td> 
+								<td>Nawigacja po grafie obiektów</td>
 							</tr>
 						</tbody>
 					</table>
@@ -234,8 +234,8 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 				</section>
 
 				</section>
-				
-				
+
+
 				<!-- ------ -->
 				<!-- ------ -->
 				<!--  Hibernate   -->
@@ -246,7 +246,7 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 					<section id="Hibernate" data-transition="slide" data-background="orange" data-background-transition="zoom">
 						<h1>Hibernate a JPA</h1>
 					</section>
-					
+
 					<section>
 				<h3>Hibernate</h3>
 					<ul>
@@ -259,13 +259,13 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 						</ul>
 						<li>Oddziela kod biznesowy od warstwy dostepu do danych
 					</ul>
-				</section>		
-				
+				</section>
+
 				<section>
 				<h3>Hibernate a development</h3>
 					<img src="img/server/hibernate_development_tooling.jpg" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
+
 				<section>
 				<h3>Hibernate a JPA</h3>
 				<ul>
@@ -273,12 +273,11 @@ public class LibraryRowMapper implements RowMapper&lt;LibraryTO&gt; {
 					<li>Hibernate jest implementacją JPA
 					<li>Tak długo jak w projekcie używa się Hibernate można z jego adnotacji korzystać zamiennie z adnotacjami JPA
 					<li>Jeśli planujemy kiedyś zmienić ORM, to warto ograniczyć się do adnotacji JPA
-				</section>
 				</ul>
-				
+
 				<section>
 				<h3>Encja a <b>POJO</b></h3>
-				
+
 									<pre><code class="Java" data-trim>
 public class LibraryEntity {
 	private String name;
@@ -290,42 +289,42 @@ public class LibraryEntity {
 	public String getName() { return name; }
 
 	public void setName(String name) { this.name = name; }
-	
+
 	public String getDomain() { return domain; }
 
 	public void setDomain(String domain) { this. domain = domain; }
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3><b>Encja</b> a POJO</h3>
-				
+
 									<pre><code class="Java" data-trim>
 @Entity
 public class LibraryEntity {
 
 	@Id
 	private Long id;
-	
+
 	@Column(name = "name", length = 30, nullable = false)
 	private String name;
-	
+
 	@Column(name = "domain", length = 5, nullable = true)
 	private String domain;
-	
+
 	public LibraryEntity () {
 	}
-	
+
 	// getters and setters
 }
 
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h4>Adnotacje dla Encji</h4>
-				
+
 									<pre><code class="Java" data-trim>
 @Entity
 @Table(name = "LIBRARY", schema = "public")
@@ -335,25 +334,25 @@ public class LibraryEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@Column(name = "name", length = 30, nullable = false)
 	private String name;
-	
+
 	@Lob
 	@Column(nullable = false)
 	private String description;
-	
+
 	private String city;
-	
+
 	@Access(AccessType.PROPERTY)
 	public String getCity ()  { ... }
-	
+
 	public LibraryEntity ()  { }
-	
+
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h4>Adnotacje dla Encji</h4>
 					<ul>
@@ -370,7 +369,7 @@ public class LibraryEntity {
 						<li><b>@MappedSuperclas</b> - zwykłe dziedziczenie
 					</ul>
 				</section>
-				
+
 				<section>
 				<h4>Typy Embedded</h4>
 					<pre><code class="Java" data-trim>
@@ -378,21 +377,21 @@ public class LibraryEntity {
 public class PersonalData  {
 
  private String firstName;
- 
+
  private String lastName;
- 
+
  @Column (columnDefinition=" DATE", nullable = false)
  private Date birthDate;
 
  public PersonalData()  {
  }
- 
- // getters & setters     
- 
+
+ // getters & setters
+
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h4>Typy Embedded</h4>
 					<pre><code class="Java" data-trim>
@@ -402,44 +401,44 @@ public class AuthorEntity  {
   @Embedded
   @AttributeOverrides({
        @AttributeOverride(
-           name = "firstName", 
+           name = "firstName",
            column = @Column(
-              name = "FIRST_NAME", 
+              name = "FIRST_NAME",
               nullable = false)),
        @AttributeOverride(
            name = "lastName",
            column = @Column(
-       	      name = "LAST_NAME", 
+       	      name = "LAST_NAME",
        	      nullable = false))})
   vate PersonalData personalData;
-  
+
   ...
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Generowanie kluczy głównych - Strategie</h3>
 					<pre><code class="Java" data-trim>
-					
+
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
 					</code></pre>
 					<pre><code class="Java" data-trim>
-					
+
    @Id
    @SequenceGenerator(name = "bookGen", sequenceName = "BOOK_SEQ")
-   @GeneratedValue(strategy = GenerationType.SEQUENCE, 
+   @GeneratedValue(strategy = GenerationType.SEQUENCE,
 					generator = "bookGen")
    private Long id;
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Generowanie kluczy głównych - Strategie</h3>
 					<pre><code class="Java" data-trim>
-					
+
     @Id
     @TableGenerator(
          name="bookGen",
@@ -451,7 +450,7 @@ public class AuthorEntity  {
     private Long id;
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Cykl życia encji</h3>
 					<ul>
@@ -465,12 +464,12 @@ public class AuthorEntity  {
 						</ul>
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Cykl życia encji</h3>
 					<img src="img/server/entity_cycle.png" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
+
 				<section>
 				<h3>Listenery</h3>
 					<ul>
@@ -483,7 +482,7 @@ public class AuthorEntity  {
 						<li><b>@PostRemove     </b>
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Listenery wewnątrz encji</h3>
 					<pre><code class="Java" data-trim>
@@ -494,7 +493,7 @@ public class CustomerCardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	
+
     @Column(nullable = false)
     private String serialNumber;
 
@@ -505,7 +504,7 @@ public class CustomerCardEntity {
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Listenery stand alone</h3>
 					<pre><code class="Java" data-trim>
@@ -517,14 +516,14 @@ public class CustomerCardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	
+
     @Column(nullable = false)
     private String serialNumber;
 
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Listenery stand alone</h3>
 					<pre><code class="Java" data-trim>
@@ -536,19 +535,19 @@ public class CustomerCardListener  {
         String serialNumber = new SerialNumberGenerator().generate();
         customerCardEntity.setSerialNumber(serialNumber);
     }
-	
+
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h4>Entity Manager</h4>
 					<ul>
 						<li>Podstawowy element całej warstwy persystencji
 						<li>Zarządza transakcjami i encjami
 					</ul>
-				
-				
+
+
 									<pre><code class="Java" data-trim>
 String unitName = "MyPersistenceUnit";
 
@@ -564,7 +563,7 @@ em.close();
 emf.close();
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h4>Entity Manager - dostęp do danych</h4>
 					<ul>
@@ -591,7 +590,7 @@ Product product = em.createQuery(
 
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Relacje</h3>
 					<ul>
@@ -601,8 +600,8 @@ Product product = em.createQuery(
 						<li><b>@ManyToMany</b> – wiele encji A może mieć relację do wielu encji B
 						<ul><li>Tworzy tabelę asocjacyjną</ul>
 					</ul>
-				</section>	
-				
+				</section>
+
 				<section>
 				<h3>Relacje</h3>
 					<ul>
@@ -613,7 +612,7 @@ Product product = em.createQuery(
 						</ul>
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>@OneToOne - jednokierunkowa</h3>
 				<pre><code class="Java" data-trim>
@@ -634,7 +633,7 @@ public class Address {
 
 					</code></pre>
 				</section>
-								
+
 				<section>
 				<h3>@OneToOne - dwukierunkowa</h3>
 				<pre><code class="Java" data-trim>
@@ -661,7 +660,7 @@ public class Address {
 						<li>bez mappedBy klucz obcy po obu stronach
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>@OneToMany / @ManyToOne - jednokierunkowa</h3>
 				<pre><code class="Java" data-trim>
@@ -685,9 +684,9 @@ public class Address {
 						<li>bez <b>@JoinColumn</b> utworzona zostanie tabela asocjacyjna
 					</ul>
 				</section>
-				
-				
-				
+
+
+
 				<section>
 				<h3>@OneToMany / @ManyToOne - dwukierunkowa</h3>
 				<pre><code class="Java" data-trim>
@@ -712,7 +711,7 @@ public class Address {
 						<li>mappedBy tak samo jak <b>@JoinColumn</b> usuwa tabelę asocjacyjną
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>@ManyToMany - jednokierunkowa</h3>
 				<pre><code class="Java" data-trim>
@@ -721,21 +720,21 @@ public class User {
 
 	@ManyToMany(
 		cascade = CascadeType.ALL, // default: empty
-		fetch = FetchType. LAZY) // default: EAGER    
+		fetch = FetchType. LAZY) // default: EAGER
 	@JoinTable(name = "USER_ADDRESS",
 		joinColumns = {@JoinColumn(
-			name = "USER_ID", 
-			nullable = false, 
+			name = "USER_ID",
+			nullable = false,
 			updatable = false)},
 		inverseJoinColumns = {@JoinColumn(
-			name = "ADDRESS_ID", 
-			nullable = false, 
+			name = "ADDRESS_ID",
+			nullable = false,
 			updatable = false)})
 	private Collection&lt;Address&gt; addresses;
 }
 					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>@ManyToMany - dwukierunkowa</h3>
 				<pre><code class="Java" data-trim>
@@ -751,7 +750,7 @@ public class Address {
 						<li>bez mappedBy dwie tabele asocjacyjne zostaną stworzone
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Kaskady</h3>
 					<ul>
@@ -763,9 +762,9 @@ public class Address {
 							<li><b>REMOVE       </b>
 							<li><b>ALL          </b>
 						</ul>
-					</ul>				
+					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Kaskady</h3>
 				<pre><code class="Java" data-trim>
@@ -775,11 +774,11 @@ public class BookEntity  {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
     private BookSpoilerEntity bookSpoiler;
-	
+
 }
-					</code></pre>			
+					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Dziedziczenie</h3>
 					<ul>
@@ -792,9 +791,9 @@ public class BookEntity  {
 							<li><b>JOINED          </b>
 						</ul>
 						<li>Możliwość wykonywania zapytań polimorficznych
-					</ul>	
+					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Single Table</h3>
 					<ul>
@@ -802,16 +801,16 @@ public class BookEntity  {
 						<li>Rekordy rozróżniane są przez tzw. Dyskryminator
 						<li>Wydajne wyszukiwanie – brak złączeń
 						<li>Puste kolumny (różnice między obiektami)
-						<li>Problem z warunkiem Not-Null. 
-					</ul>	
+						<li>Problem z warunkiem Not-Null.
+					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Single Table</h3>
 				<pre><code class="Java" data-trim>
 @Entity
 @Table(name = "AUTHOR")
-@DiscriminatorColumn(name = "TYPE", length = 6, 
+@DiscriminatorColumn(name = "TYPE", length = 6,
 		discriminatorType = DiscriminatorType.STRING)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class AuthorEntity  {
@@ -819,14 +818,14 @@ public abstract class AuthorEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-	
+
     @Column(nullable = true, length = 30)
     protected String nickName;
 
 }
-					</code></pre>			
+					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Single Table</h3>
 				<pre><code class="Java" data-trim>
@@ -836,11 +835,11 @@ public class WriterEntity extends AuthorEntity  {
 
     @Enumerated(EnumType.STRING)
     private LiteraryGenre literaryGenre;
-	
+
 }
-					</code></pre>	
+					</code></pre>
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Single Table</h3>
 				<pre><code class="Java" data-trim>
@@ -852,25 +851,25 @@ public class ProfessorEntity extends AuthorEntity  {
     private String university;
 
 }
-					</code></pre>	
+					</code></pre>
 				</section>
-				
+
 				<section>
 					<h3>Strategie: Single Table</h3>
 					<img src="img/server/inheritance_single_table_db.png" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Table per class</h3>
 					<ul>
 						<li>Oddzielna tabela bazy danych na jedną encję
 						<li>Brak porblemów z warunkami Not-Null
 						<li>Redundancja wspólnych atrybótów
-						<li>Niewydajne zapytania SQL przy zapytaniach polimorficznych 
+						<li>Niewydajne zapytania SQL przy zapytaniach polimorficznych
 
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Joined</h3>
 					<ul>
@@ -881,7 +880,7 @@ public class ProfessorEntity extends AuthorEntity  {
 						<li>Wymagane złączenie tabel przy zapytaniach polimorficznych
 					</ul>
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Joined</h3>
 				<pre><code class="Java" data-trim>
@@ -893,14 +892,14 @@ public abstract class BookExemplarEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
-	
+
     @Column(nullable = false, length = 15, unique = true)
     protected String serialNumber;
 }
-					</code></pre>	
+					</code></pre>
 				<img src="img/server/inheritance_joined_db_1.png" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
+
 				<section>
 				<h3>Strategie: Joined</h3>
 				<pre><code class="Java" data-trim>
@@ -910,21 +909,21 @@ public abstract class BookExemplarEntity  {
 public class PaperBookExemplarEntity extends BookExemplarEntity  {
 
     private int pagesCount;
-	
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaperSize paperSize;
-	
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BookCover bookCover;
 }
-					</code></pre>	
+					</code></pre>
 				<img src="img/server/inheritance_joined_db_2.png" style="background:none; border:none; box-shadow:none;">
 				</section>
 				</section>
-				
-				
+
+
 				<!-- ------ -->
 				<!-- ------ -->
 				<!--  SpringData   -->
@@ -935,19 +934,19 @@ public class PaperBookExemplarEntity extends BookExemplarEntity  {
 					<section id="SpringData" data-transition="slide" data-background="orange" data-background-transition="zoom">
 						<h1>Spring Data</h1>
 					</section>
-					
+
 					<section>
 						<h3>Czym jest Spring Data JPA</h3>
 							<ul>
 								<li>kolejna warstwa abstrakcji
 								<li>która pozwala pisać mniej kodu!
 							</ul>
-							
+
 							<img src="img/server/spring_data.JPG" style="background:none; border:none; box-shadow:none;">
 <a href="http://simplej2eetutorials.blogspot.de/2014/12/spring-data-jpa-tutorial.html"> LINK </a>
 					</section>
-					
-					
+
+
 					<section>
 						<h3>Bez Spring Data</h3>
 					<pre><code class="Java" data-trim contenteditable>
@@ -981,18 +980,18 @@ class AccountDaoJpaImpl implements AccountDao {
 }
 </code></pre>
 					</section>
-					
+
 					<section>
 						<h3>Z Spring Data!</h3>
 					<pre><code class="Java" data-trim contenteditable>
-public interface AccountRepository extends 
+public interface AccountRepository extends
 	JpaRepository&lt;Account, Long&gt; {
 
-    List&lt;Account&gt; findByCustomer(Customer customer); 
+    List&lt;Account&gt; findByCustomer(Customer customer);
 }
 </code></pre>
 					</section>
-					
+
 					<section>
 						<h3>Query by Convention</h3>
 					<pre><code class="Java" data-trim contenteditable>
@@ -1004,7 +1003,7 @@ public interface CustomerRepository extends CrudRepository&lt;Customer, Long&gt;
 }
 </code></pre>
 					</section>
-					
+
 					<section>
 						<h3>@Query</h3>
 					<pre><code class="Java" data-trim contenteditable>
@@ -1021,7 +1020,7 @@ int setFixedFirstnameFor(String firstname, String lastname);
 }
 </code></pre>
 					</section>
-					
+
 				<section>
 						<h3>Podsumowanie</h3>
 					<ul>
@@ -1031,14 +1030,14 @@ int setFixedFirstnameFor(String firstname, String lastname);
 						<li>Wszystkie metody są wykonywane w transakcji
 					</ul>
 				</section>
-				
+
 				<section>
 					<h3>Query DSL</h3>
 					<ul>
 						<li>Powstał z potrzeby utrzymywania zapytań HQL w formie bezpiecznej z perspektywy typizacji
 					</ul>
 				</section>
-				
+
 				<section>
 					<h3>Query DSL</h3>
 <pre><code class="Java" data-trim contenteditable>
@@ -1051,12 +1050,12 @@ JPAQueryFactory queryFactory = new JPAQueryFactory(this.em);
 
 QCustomer customer = QCustomer.customer;
 Customer result = queryFactory.selectFrom(customer)
-    .where(customer.firstName.eq("Bob"), 
+    .where(customer.firstName.eq("Bob"),
 	customer.lastName.eq("Wilson"))
     .fetchOne();
 </code></pre>
 				</section>
-				
+
 				<section>
 					<h3>Query DSL - sortowanie</h3>
 <pre><code class="Java" data-trim contenteditable>
@@ -1067,7 +1066,7 @@ List&lt;Customer&gt; results = queryFactory.selectFrom(customer)
 
 </code></pre>
 				</section>
-				
+
 				<section>
 					<h3>Query DSL - grupowanie</h3>
 <pre><code class="Java" data-trim contenteditable>
@@ -1077,9 +1076,9 @@ List&lt;Customer&gt; results = queryFactory.select(customer.lastName).from(custo
 
 </code></pre>
 				</section>
-				
-				
-				
+
+
+
 				<section>
 					<h3>Query DSL - usuwanie</h3>
 <pre><code class="Java" data-trim contenteditable>
@@ -1093,7 +1092,7 @@ queryFactory.delete(customer).where(customer.level.lt(3)).execute();
 
 </code></pre>
 				</section>
-				
+
 								<section>
 					<h3>Query DSL - Klauzula Where</h3>
 
@@ -1101,10 +1100,10 @@ queryFactory.delete(customer).where(customer.level.lt(3)).execute();
 						<li>przyjmuje predykat bądź listę predykatów
 						<li>Predykat to Typ i interfejs, jego implementacje są poniżej
 					</ul>
-					
+
 					<img src="img/server/predicate.PNG" style="background:none; border:none; box-shadow:none;">
 				</section>
-				
+
 				<section>
 					<h3>Query DSL - BooleanExpression</h3>
 
@@ -1117,9 +1116,9 @@ ex = ex.and(legoSet.legoName.contains("asdf"));
 
 ex = ex.and(legoSet.legoVersion.isNull());
 					</code></pre>
-					
+
 				</section>
-				
+
 				<section>
 					<h3>Query DSL - BooleanBuilder</h3>
 
@@ -1138,22 +1137,22 @@ if (StringUtils.isNotBlank(externallId)) {
 
 Predicate p = builder.getValue();
 					</code></pre>
-					
+
 				</section>
 				</section>
 
-				
+
 				<!-- ------ -->
 				<!-- ------ -->
-				<!--  Tranzakcje   -->
+				<!--  Transakcje   -->
 				<!-- ------ -->
 				<!-- ------ -->
 				<section>
 					<!-- Start -->
-					<section id="Tranzakcje" data-transition="slide" data-background="orange" data-background-transition="zoom">
-						<h1>Tranzakcje</h1>
+					<section id="Transakcje" data-transition="slide" data-background="orange" data-background-transition="zoom">
+						<h1>Transakcje</h1>
 					</section>
-					
+
 					<section>
 				<h3>Transakcje</h3>
 					<ul>
@@ -1164,14 +1163,14 @@ Predicate p = builder.getValue();
 							<li>Atomowość (<b>A</b>tomicity)
 							<li>Spójność (<b>C</b>onsistency)
 							<li>Izolacja (<b>I</b>soation)
-							<li>Trwałość (<b>D</b>urability)	
+							<li>Trwałość (<b>D</b>urability)
 						</ul>
 					</ul>
 				</section>
-				
+
 				<section>
 				<h4>Transakcje - Entity Manager</h4>
-				
+
 									<pre><code class="Java" data-trim>
 // rozpoczyna transakcję
 em.getTransaction().begin();
@@ -1187,18 +1186,18 @@ em.getTransaction().commit();
 em.getTransaction().rollback();
 					</code></pre>
 				</section>
-				
+
 				<section>
 				Transakcje Spring <b>@Transactional</b>
-				
+
 					<ul>
-						<li>Najlepszy sposób budowania transakcyjnych aplikacji Spring 
+						<li>Najlepszy sposób budowania transakcyjnych aplikacji Spring
  						<li>Brak powielonego kodu
 						<li>Bardzo łatwa konfiguracja
 						<li>Propagacja, izolacja, timeout, readOnly, rollbackFor itp.
 						<li>Możliwość zdefiniowania na całej klasie i metodzie
 					</ul>
-				</section>	
+				</section>
 
 				<section>
 				<h4>@Transactional</h4>
@@ -1209,10 +1208,10 @@ public class LibraryServiceImpl implements LibraryService {
 
 	@Autowired
 	private LibraryRepository libraryRepository;
-	
+
 	@Autowired
 	private MapperFacade mapper;
-	
+
 	@Override
 	public List&lt;LibraryTO&gt; findAllLibraries () {
 		List&lt;LibraryEntity&gt; libraries = libraryRepository.findAll();
@@ -1220,12 +1219,12 @@ public class LibraryServiceImpl implements LibraryService {
 	}
 }
 					</code></pre>
-				</section>	
+				</section>
 				</section>
 
-				
-				
-				
+
+
+
 				<!-- ------ -->
 				<!-- ------ -->
 				<!--  Testowanie   -->
@@ -1236,23 +1235,23 @@ public class LibraryServiceImpl implements LibraryService {
 					<section id="Testowanie" data-transition="slide" data-background="orange" data-background-transition="zoom">
 						<h1>Testowanie</h1>
 					</section>
-					
+
 					<section>
 				<h3>Po co testy?</h3>
-				
+
 				</section>
-				
-				<section>		
-				
+
+				<section>
+
 				<img src="img/server/sc.jpg" style="background:none; border:none; box-shadow:none;">
-				
+
 				</section>
-				
+
 				<section>
 				<h3>Jakie testy warto tworzyć</h3>
 					<ol>
 						<li>Jednostkowe
-						<li>Integracyjne	
+						<li>Integracyjne
 						<li>Komponentowe
 						<li>E2E
 						<li>Akceptacyjne
@@ -1261,7 +1260,7 @@ public class LibraryServiceImpl implements LibraryService {
 					<small><a href="https://en.wikipedia.org/wiki/Software_testing">Wikipedia</a></small>
 					</p>
 				</section>
-				
+
 				<section>
 				<h3>Jakie narzędzia wykorzystywać przy tworzeniu testów</h3>
 					<ol>
@@ -1274,10 +1273,10 @@ public class LibraryServiceImpl implements LibraryService {
 					</ol>
 				</section>
 
-				
+
 				<section>
 				<h3>Test Jednostkowy z wykorzystaniem MockMVC</h3>
-				<pre><code class="Java" data-trim>		
+				<pre><code class="Java" data-trim>
 @EnableWebMvc
 @ComponentScan("org.itsurvival.books.rest")
 public static class BooksRestServiceTestConfiguration {
@@ -1301,7 +1300,7 @@ private ArgumentCaptor&lt;BookSearchCriteria&gt; bookSearchCriteriaCaptor;
 
 @Captor
 private ArgumentCaptor&lt;BookTo&gt; bookCaptor;
-				
+
 @Test
 public void shouldAddNewBook() throws Exception {
 
@@ -1332,9 +1331,9 @@ public void shouldAddNewBook() throws Exception {
 }
 				</code></pre>
 				</section>
-				</section>				
-				
-				
+				</section>
+
+
 				<!-- ------ -->
 				<!-- ------ -->
 				<!--  liveCoding   -->
@@ -1345,20 +1344,20 @@ public void shouldAddNewBook() throws Exception {
 					<section id="liveCoding" data-transition="slide" data-background="orange" data-background-transition="zoom">
 						<h1>Baza danych - live coding</h1>
 					</section>
-					
+
 					<!-- TODO -->
-					
+
 					<section>
 						Lets get going!
 						<small><a href="https://github.com/pwr-piisw/oasp-seed/tree/backend/databaseSetup">Changes on the Repo!</a></small>
 					</section>
-				</section>		
-				
-				
-				
-				
-				
-			
+				</section>
+
+
+
+
+
+
 				<section id="ex" style="text-align: left;" data-transition="slide" data-background="lime" data-background-transition="zoom">
 					<h1>?</h1>
 					<h4>Questions</h4>

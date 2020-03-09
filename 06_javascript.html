@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -21,83 +21,85 @@
 
     <!-- Printing and PDF exports -->
     <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
+      var link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.type = 'text/css'
+      link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css'
+      document.getElementsByTagName('head')[0].appendChild(link)
     </script>
-</head>
-<body>
-<div class="reveal">
-    <div class="slides">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
         <section>
-            <h3>Projekt i implementacja systemów webowych</h3>
-            <h1>Język JavaScript</h1>
+          <h3>Projekt i implementacja systemów webowych</h3>
+          <h1>Język JavaScript</h1>
         </section>
         <section>
-            <div class="centered"><h2>Historia</h2>
-                <p>JavaScript to język programowania zaprojektowany przez firmę Netscape Communications dla
-                    przeglądarki internetowej.</p>
-                <p class="fragment">Twórcą języka jest Brendan Eich: <em>"To defend the idea of JavaScript against
-                    competing proposals, the company needed a prototype. Eich wrote one in 10 days, in May 1995."</em>
-                </p>
-            </div>
+          <div class="centered"><h2>Historia</h2>
+            <p>JavaScript to język programowania zaprojektowany przez firmę Netscape Communications dla
+              przeglądarki internetowej.</p>
+            <p class="fragment">Twórcą języka jest Brendan Eich: <em>"To defend the idea of JavaScript against
+              competing proposals, the company needed a prototype. Eich wrote one in 10 days, in May 1995."</em>
+            </p>
+          </div>
         </section>
         <section>
-            <p><em>JavaScript: The Good Parts</em>, Douglas Crockford</p>
-            <img data-src="diagrams/js-good-vs-definitive.jpg" height="400px" class="fragment">
-            <aside class="notes">
-                <ul>
-                    <li>JavaScript - The Good Parts</li>
-                    <li>JavaScript - The Definitive Guide</li>
-                </ul>
-            </aside>
+          <p><em>JavaScript: The Good Parts</em>, Douglas Crockford</p>
+          <img data-src="diagrams/js-good-vs-definitive.jpg" height="400px" class="fragment">
+          <aside class="notes">
+            <ul>
+              <li>JavaScript - The Good Parts</li>
+              <li>JavaScript - The Definitive Guide</li>
+            </ul>
+          </aside>
         </section>
         <section>
-            <section>
-                <p>Javascript łączy w sobie trzy koncepcje:</p>
-                <ul>
-                    <li class="fragment">Funkcyjność wzorowana na języku <em>Scheme</em></li>
-                    <li class="fragment">Obiektowość wzorowana na języku <em>Smalltalk</em></li>
-                    <li class="fragment">Składnię języka <em>Java</em></li>
-                </ul>
-                <p class="fragment"><strong>Język Javascript nie jest wariantem języka Java!!!</strong></p>
-            </section>
-            <section>
-                <h3>Cechy języka</h3>
-                <ul>
-                    <li class="fragment"><em>Przenośność</em> - identyczne działanie niezależnie od platformy
-                        sprzętowej.
-                    </li>
-                    <li class="fragment"><em>Dynamiczna typizacja</em> - typ nie jest ściśle przypisany do konkretnej
-                        zmiennej lub wyrażenia.
-                    </li>
-                    <li class="fragment"><em>Jednowątkowość</em></li>
-                </ul>
-            </section>
-            <section>
-                <h3>Dlaczego Javascript jest ważny?</h3>
-                <p class="fragment">
-                    Javascript jest językiem dostępnym w każdej nowoczesnej przeglądarce internetowej.
-                </p>
-                <p class="fragment">
-                    Użytkownik nie musi instalować niczego poza przeglądarką.
-                </p>
-                <p class="fragment">
-                    Użytkownik nie musi akceptować aktualizacji ani instalacji żadnych dodatkowych pluginów.
-                </p>
-                <p class="fragment">
-                    Język Javascript jest aktualizowany wraz z przeglądarką, co z reguły, w dzisiejszych czasach,
-                    dokonuje się automatycznie.
-                </p>
-            </section>
+          <section>
+            <h3>Javascript łączy w sobie trzy koncepcje:</h3>
+            <ul>
+              <li class="fragment">Funkcyjność wzorowana na języku <em>Scheme</em></li>
+              <li class="fragment">Obiektowość wzorowana na języku <em>Smalltalk</em></li>
+              <li class="fragment">Składnię języka <em>Java</em></li>
+            </ul>
+            <p class="fragment"><strong>Język Javascript nie jest wariantem języka Java!!!</strong></p>
+          </section>
+          <section>
+            <h3>Cechy języka</h3>
+            <ul>
+              <li class="fragment"><em>Przenośność</em> - identyczne działanie niezależnie od platformy
+                sprzętowej.
+              </li>
+              <li class="fragment"><em>Dynamiczna typizacja</em> - typ nie jest ściśle przypisany do konkretnej
+                zmiennej lub wyrażenia.
+              </li>
+              <li class="fragment"><em>Jednowątkowość</em></li>
+            </ul>
+          </section>
+          <section>
+            <h3>Dlaczego Javascript jest ważny?</h3>
+            <ul>
+              <li class="fragment">
+                Javascript jest językiem dostępnym w każdej nowoczesnej przeglądarce internetowej.
+              </li>
+              <li class="fragment">
+                Użytkownik nie musi instalować niczego poza przeglądarką.
+              </li>
+              <li class="fragment">
+                Użytkownik nie musi akceptować aktualizacji ani instalacji żadnych dodatkowych pluginów.
+              </li>
+              <li class="fragment">
+                Język Javascript jest aktualizowany wraz z przeglądarką, co z reguły, w dzisiejszych czasach,
+                dokonuje się automatycznie.
+              </li>
+            </ul>
+          </section>
         </section>
         <section>
-            <h2>Najprostszy "przypadek użycia"</h2>
-            <section>
-                <h3>Osadzenie w stronie HTML</h3>
-                <pre><code class="html" data-trim>
+          <h2>Najprostszy "przypadek użycia"</h2>
+          <section>
+            <h3>Osadzenie w stronie HTML</h3>
+            <pre><code class="html" data-trim>
 &lt;html&gt;
   &lt;body&gt;
     &lt;script&gt;
@@ -106,116 +108,116 @@
   &lt;/body&gt;
 &lt;/html&gt;
                 </code></pre>
-            </section>
-            <section>
-                <h3>Użycie osobnego pliku źródłowego</h3>
-                <div class="col left">
-                    <p>index.html</p>
-                    <pre><code class="html" data-trim>
+          </section>
+          <section>
+            <h3>Użycie osobnego pliku źródłowego</h3>
+            <div class="col left">
+              <p>index.html</p>
+              <pre><code class="html" data-trim>
 &lt;html&gt;
   &lt;body&gt;
     &lt;script src=&quot;script.js&quot;/&gt;
   &lt;/body&gt;
 &lt;/html&gt;
                     </code></pre>
-                </div>
-                <div class="col right">
-                    <p>script.js</p>
-                    <pre><code class="javascript" title="script.js">
+            </div>
+            <div class="col right">
+              <p>script.js</p>
+              <pre><code class="javascript" title="script.js">
 console.log('Hello world');
                     </code></pre>
-                </div>
-            </section>
+            </div>
+          </section>
         </section>
 
         <!-- ZMIENNE i WYRAŻENIA cz. 1 -->
         <section>
-            <section>
-                <h2>Zmienne</h2>
-                <p class="fragment" data-fragment-index="1">Zmienne deklarujemy przy użyciu słowa kluczowego
-                    <em>var</em>*.</p>
-                </p>
-                <pre class="fragment" data-fragment-index="2"><code class="javascript" data-trim>
+          <section>
+            <h2>Zmienne</h2>
+            <p class="fragment" data-fragment-index="1">Zmienne deklarujemy przy użyciu słowa kluczowego
+              <em>var</em>*.</p>
+            </p>
+            <pre class="fragment" data-fragment-index="2"><code class="javascript" data-trim>
 var a = 10, b;   // a -> 10, b -> undefined
 var c = null;    // c -> null
                 </code></pre>
-                <p class="fragment" data-fragment-index="2">Niezainicjowania zmienna przyjmuje wartość
-                    <em>undefined</em>.</p>
-                <p class="fragment align-left most-text" data-fragment-index="1">* chwilowo ignorujemy istnienie
-                    ECMAScript 6</p>
-                <aside class="notes">
-                    <p>Zmienna zadeklarowana poza zasięgiem jakiejkolwiek funkcji staje się automatycznie zmienną
-                        globalną.</p>
-                    <p>Słowo kluczowe <em>var</em> jest opcjonalne, tj przypisanie wartości do zmiennej bez jej
-                        deklaracji także spowoduje utworzenie takiej zmiennej. Zaleca się jednak zawsze używać słowa
-                        <em>var</em> (będzie o tym jeszcze w części dotyczącej zasięgu zmiennych).</p>
-                </aside>
-            </section>
-            <section>
-                <h2>Typy danych</h2>
-                <div class="centered more-text"><p class="justified"><strong>JavaScript jest językiem dynamicznie
-                    typizowanym.</strong> Oznacza to,
-                    że typ zmiennej lub wyrażenia nie może być określony podczas kompilacji.</p>
-                    <p class="justified fragment">Jednakże podczas wykonywania kodu typ wartości przechowywanej w
-                        zmiennej
-                        lub będącej wynikiem obliczenia wyrażenia jest dobrze określony.</p></div>
-                <pre class="fragment"><code class="javascript" data-trim>
+            <p class="fragment" data-fragment-index="2">Niezainicjowania zmienna przyjmuje wartość
+              <em>undefined</em>.</p>
+            <p class="fragment align-left most-text" data-fragment-index="1">* chwilowo ignorujemy istnienie
+              ECMAScript 6</p>
+            <aside class="notes">
+              <p>Zmienna zadeklarowana poza zasięgiem jakiejkolwiek funkcji staje się automatycznie zmienną
+                globalną.</p>
+              <p>Słowo kluczowe <em>var</em> jest opcjonalne, tj przypisanie wartości do zmiennej bez jej
+                deklaracji także spowoduje utworzenie takiej zmiennej. Zaleca się jednak zawsze używać słowa
+                <em>var</em> (będzie o tym jeszcze w części dotyczącej zasięgu zmiennych).</p>
+            </aside>
+          </section>
+          <section>
+            <h2>Typy danych</h2>
+            <div class="centered more-text"><p class="justified"><strong>JavaScript jest językiem dynamicznie
+              typizowanym.</strong> Oznacza to,
+              że typ zmiennej lub wyrażenia nie może być określony podczas kompilacji.</p>
+              <p class="justified fragment">Jednakże podczas wykonywania kodu typ wartości przechowywanej w
+                zmiennej
+                lub będącej wynikiem obliczenia wyrażenia jest dobrze określony.</p></div>
+            <pre class="fragment"><code class="javascript" data-trim>
 var a;
 a = 2 + 2;
 console.log(typeof(a)); // -> number
 a = 'foo';
 console.log(typeof(a)); // -> string
                 </code></pre>
-            </section>
-            <section>
-                <h2>Typy danych</h2>
-                <table>
-                    <tr>
-                        <th>typ</th>
-                        <th>przykłady</th>
-                    </tr>
-                    <tr>
-                        <td><code>number</code></td>
-                        <td><code>0, 1, 0.5, 2E-10</code></td>
-                    </tr>
-                    <tr>
-                        <td><code>boolean</code></td>
-                        <td><code>true, false</code></td>
-                    </tr>
-                    <tr>
-                        <td><code>string</code></td>
-                        <td><code>'', 'foo'</code></td>
-                    </tr>
-                    <tr>
-                        <td><code>function</code></td>
-                        <td><code>function(a) { return a + 1; }</code></td>
-                    </tr>
-                    <tr>
-                        <td><code>array</code></td>
-                        <td><code>[], ['apple', 'orange']</code></td>
-                    </tr>
-                    <tr>
-                        <td><code>object</code></td>
-                        <td><code>{}, {id: 5, value: 'foo'}</code></td>
-                    </tr>
-                </table>
-            </section>
+          </section>
+          <section>
+            <h2>Typy danych</h2>
+            <table>
+              <tr>
+                <th>typ</th>
+                <th>przykłady</th>
+              </tr>
+              <tr>
+                <td><code>number</code></td>
+                <td><code>0, 1, 0.5, 2E-10</code></td>
+              </tr>
+              <tr>
+                <td><code>boolean</code></td>
+                <td><code>true, false</code></td>
+              </tr>
+              <tr>
+                <td><code>string</code></td>
+                <td><code>'', 'foo'</code></td>
+              </tr>
+              <tr>
+                <td><code>function</code></td>
+                <td><code>function(a) { return a + 1; }</code></td>
+              </tr>
+              <tr>
+                <td><code>array</code></td>
+                <td><code>[], ['apple', 'orange']</code></td>
+              </tr>
+              <tr>
+                <td><code>object</code></td>
+                <td><code>{}, {id: 5, value: 'foo'}</code></td>
+              </tr>
+            </table>
+          </section>
         </section>
         <!-- /ZMIENNE i WYRAŻENIA cz. 1 -->
 
         <!-- FUNKCJE -->
         <section>
-            <h2>Funkcje</h2>
-            <section>
-                <p>Funkcja jest wartością utworzoną przy użyciu literału funkcyjnego:</p>
-                <div class="col left">
+          <h2>Funkcje</h2>
+          <section>
+            <p>Funkcja jest wartością utworzoną przy użyciu literału funkcyjnego:</p>
+            <div class="col left">
                     <pre class="fragment"><code data-trim class="javascript">
 var add = function(left, right) {
   return left + right;
 };
 add(2, 2); // -> 4
                     </code></pre>
-                    <pre class="fragment"><code data-trim class="javascript">
+              <pre class="fragment"><code data-trim class="javascript">
 var add = function() {
   var sum = 0;
   for (i = 0; i < arguments.length; ++i) {
@@ -225,28 +227,28 @@ var add = function() {
 };
 add(1, 2, 3, 4); // -> 10
                     </code></pre>
-                </div>
-                <div class="col right">
-                    <p class="fragment">a co jeśli...</p>
-                    <pre class="fragment"><code class="javascript" data-trim>
+            </div>
+            <div class="col right">
+              <p class="fragment">a co jeśli...</p>
+              <pre class="fragment"><code class="javascript" data-trim>
 var add = function(left, right) {
   return
   left + right;
 };
 add(2, 2); // ?
                     </code></pre>
-                    <pre class="fragment"><code class="javascript" data-trim>
+              <pre class="fragment"><code class="javascript" data-trim>
 var add = function(left, right) {
   left + right;
 };
 add(2, 2); // ?
                     </code></pre>
-                </div>
-            </section>
+            </div>
+          </section>
 
-            <section>
-                <p>Nic nie stoi na przeszkodzie, aby parametrem funkcji była funkcja...</p>
-                <div class="col left">
+          <section>
+            <p>Nic nie stoi na przeszkodzie, aby parametrem funkcji była funkcja...</p>
+            <div class="col left">
                 <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
 var map = function(array, fn) {
   var result = [];
@@ -256,8 +258,8 @@ var map = function(array, fn) {
   return result;
 };
                  </code></pre>
-                </div>
-                <div class="col right">
+            </div>
+            <div class="col right">
                 <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
 var array = [1,2,3,4,5];
 
@@ -268,26 +270,26 @@ map(array, incrementFn);
 map(array, function(a) { return a * 2; });
 map(array, incrementFn()); // ?
                 </code></pre>
-                </div>
-            </section>
+            </div>
+          </section>
 
-            <section>
-                <p>...a także, aby wartością funkcji była funkcja.</p>
-                <div class="col left">
+          <section>
+            <p>...a także, aby wartością funkcji była funkcja.</p>
+            <div class="col left">
                     <pre><code class="javascript" data-trim>
 var createMultiplier = function(amount) {
   return function(a) { return a * amount; };
 };
 createMultiplier(5)(2); // -> 10
                 </code></pre>
-                    <p class="fragment more-text">Na szczęście funkcja map jest standardowo zdefiniowana dla typu
-                        tablicowego:</p>
-                    <pre class="fragment"><code class="javascript" data-trim>
+              <p class="fragment more-text">Na szczęście funkcja map jest standardowo zdefiniowana dla typu
+                tablicowego:</p>
+              <pre class="fragment"><code class="javascript" data-trim>
 [1,2,3,4,5].map(createMultiplier(2));
 // -> [2,4,5,8,10];
                 </code></pre>
-                </div>
-                <div class="col right">
+            </div>
+            <div class="col right">
                     <pre><code class="javascript" data-trim>
 var map = function(array, fn) {
   var result = [];
@@ -297,18 +299,18 @@ var map = function(array, fn) {
   return result;
 };
                  </code></pre>
-                </div>
-                <aside class="notes">
-                    <p>Standard ECMAScript 2015 (ES6) wprowadza uproszczoną notację funkcyjną "fat arrow": można pisać
-                        <code>(a) => a + 1</code> zamiast <code>function(a) { return a + 1; }</code>.</p>
-                </aside>
-            </section>
-            <section>
-                <p>W języku JavaScript funkcję można zadeklarować (stworzyć) na kilka
-                    sposobów...</p>
-                <div class="col left fragment">
-                    <p>Następujące sposoby są <strong>tożsame</strong>:</p>
-                    <pre><code class="javascript" data-trim>
+            </div>
+            <aside class="notes">
+              <p>Standard ECMAScript 2015 (ES6) wprowadza uproszczoną notację funkcyjną "fat arrow": można pisać
+                <code>(a) => a + 1</code> zamiast <code>function(a) { return a + 1; }</code>.</p>
+            </aside>
+          </section>
+          <section>
+            <p>W języku JavaScript funkcję można zadeklarować (stworzyć) na kilka
+              sposobów...</p>
+            <div class="col left fragment">
+              <p>Następujące sposoby są <strong>tożsame</strong>:</p>
+              <pre><code class="javascript" data-trim>
 var add = function(left, right) {
   return left + right;
 };
@@ -318,10 +320,10 @@ function sub(left, right) {
 console.log(add);
 console.log(sub);
                 </code></pre>
-                </div>
-                <div class="col right fragment">
-                    <p>W konsekwencji:</p>
-                    <pre><code class="javascript" data-trim>
+            </div>
+            <div class="col right fragment">
+              <p>W konsekwencji:</p>
+              <pre><code class="javascript" data-trim>
 function add(left, right) {
   return left + right;
 }
@@ -333,20 +335,20 @@ add(2, 2); // -> 0
 add = null;
 add(2, 2); // -> Uncaught TypeError: add is not a function
                     </code></pre>
-                </div>
-            </section>
+            </div>
+          </section>
         </section>
         <!-- /FUNKCJE -->
 
         <!-- ZASIĘG ZMIENNYCH -->
         <section>
-            <section>
-                <h3>Zmienne globalne</h3>
-                <p>Użycie zmiennej wewnątrz ciała funkcji bez wcześniejszej deklaracji z użyciem słowa <em>var</em>
-                    spowoduje użycie lub stworzenie zmiennej globalnej.</p>
-                <p class="fragment"><strong>Jest to fatalny błąd projektowy, który popełnili twórcy języka
-                    JavaScript!</strong></p>
-                <div class="col left fragment">
+          <section>
+            <h3>Zmienne globalne</h3>
+            <p>Użycie zmiennej wewnątrz ciała funkcji bez wcześniejszej deklaracji z użyciem słowa <em>var</em>
+              spowoduje użycie lub stworzenie zmiennej globalnej.</p>
+            <p class="fragment"><strong>Jest to fatalny błąd projektowy, który popełnili twórcy języka
+              JavaScript!</strong></p>
+            <div class="col left fragment">
                     <pre><code class="javascript" data-trim>
 var a = 10;
 var f = function() {
@@ -356,8 +358,8 @@ var f = function() {
 f();
 console.log(a); // -> 99 !!!
                 </code></pre>
-                </div>
-                <div class="col right fragment">
+            </div>
+            <div class="col right fragment">
                     <pre><code class="javascript" data-trim>
 var f = function() {
   a = 99;
@@ -365,12 +367,12 @@ var f = function() {
 f();
 console.log(a); // -> 99 !!!
                     </code></pre>
-                </div>
-            </section>
-            <section>
-                <h3>Zmienne globalne</h3>
-                <p>Szczególnie groźne jest błędne użycie zmiennej indeksującej w pętli <em>for</em>:</p>
-                <div class="col left fragment">
+            </div>
+          </section>
+          <section>
+            <h3>Zmienne globalne</h3>
+            <p>Szczególnie groźne jest błędne użycie zmiennej indeksującej w pętli <em>for</em>:</p>
+            <div class="col left fragment">
                     <pre><code class="javascript" data-trim>
 var processRow = function(row) {
   for (i = 0; i < row.length; ++i) {
@@ -384,9 +386,9 @@ var processMatrix = function(matrix) {
 };
 processMatrix([[1,2,3], [4,5,6], [7,8,9]]);
                 </code></pre>
-                    <p class="fragment"><code class="javascript">-> 1 2 3</code></p>
-                </div>
-                <div class="col right fragment">
+              <p class="fragment"><code class="javascript">-> 1 2 3</code></p>
+            </div>
+            <div class="col right fragment">
                     <pre><code class="javascript" data-trim>
 var processRow = function(row) {
   for (var i = 0; i < row.length; ++i) {
@@ -400,19 +402,19 @@ var processMatrix = function(matrix) {
 };
 processMatrix([[1,2,3], [4,5,6], [7,8,9]]);
                     </code></pre>
-                    <p class="fragment"><code class="javascript">-> 1 2 3 4 5 6 7 8 9</code></p>
-                </div>
-            </section>
-            <section>
-                <h3>Zmienne lokalne</h3>
-                <p>Wewnątrz funkcji zawsze deklarujemy zmienne z użyciem słowa <em>var</em>, gdyż wtedy stają się one
-                    zmiennymi <strong>lokalnymi</strong>.</p>
-            </section>
-            <section>
-                <h3>Wyciąganie zmiennych</h3>
-                <p>Zasięg zmiennych w JavaScripcie jest <strong>funkcyjny a nie blokowy</strong>, chociaż blokowa
-                    składnia sugeruje coś innego.</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+              <p class="fragment"><code class="javascript">-> 1 2 3 4 5 6 7 8 9</code></p>
+            </div>
+          </section>
+          <section>
+            <h3>Zmienne lokalne</h3>
+            <p>Wewnątrz funkcji zawsze deklarujemy zmienne z użyciem słowa <em>var</em>, gdyż wtedy stają się one
+              zmiennymi <strong>lokalnymi</strong>.</p>
+          </section>
+          <section>
+            <h3>Wyciąganie zmiennych</h3>
+            <p>Zasięg zmiennych w JavaScripcie jest <strong>funkcyjny a nie blokowy</strong>, chociaż blokowa
+              składnia sugeruje coś innego.</p>
+            <pre class="fragment"><code class="javascript" data-trim>
 var f1 = function() {
   console.log(a); // -> Uncaught ReferenceError: a is not defined
 };
@@ -429,27 +431,27 @@ var f3 = function() {
   }
 };
                 </code></pre>
-            </section>
-            <section>
-                <h3>Wyciąganie zmiennych</h3>
-                <p>Wyciąganie zmiennych (ang. <em>hoisting</em>) - każda deklaracja zmiennej w danej funkcji zostanie
-                    "wyciągnięta" na początek tej funkcji.</p>
-                <p class="fragment">Wartość każdej z takiej zmiennej początkowo jest <em>undefined</em>, miejsce w
-                    którym
-                    przypisuje się zmiennej wartość pozostaje bez zmian.</p>
-                <div class="col left fragment">
-                    <p>Kod oryginalny:</p>
-                    <pre><code class="javascript" data-trim>
+          </section>
+          <section>
+            <h3>Wyciąganie zmiennych</h3>
+            <p>Wyciąganie zmiennych (ang. <em>hoisting</em>) - każda deklaracja zmiennej w danej funkcji zostanie
+              "wyciągnięta" na początek tej funkcji.</p>
+            <p class="fragment">Wartość każdej z takiej zmiennej początkowo jest <em>undefined</em>, miejsce w
+              którym
+              przypisuje się zmiennej wartość pozostaje bez zmian.</p>
+            <div class="col left fragment">
+              <p>Kod oryginalny:</p>
+              <pre><code class="javascript" data-trim>
 var f2 = function() {
   console.log(a);
   var a = 10;
   console.log(a);
 };
                 </code></pre>
-                </div>
-                <div class="col right fragment">
-                    <p>Jak to widzi JavaScript?</p>
-                    <pre><code class="javascript" data-trim>
+            </div>
+            <div class="col right fragment">
+              <p>Jak to widzi JavaScript?</p>
+              <pre><code class="javascript" data-trim>
 var f2 = function() {
   var a; // hoisted, a === undefined
   console.log(a); // -> undefined
@@ -457,13 +459,13 @@ var f2 = function() {
   console.log(a); // -> 10
 };
                     </code></pre>
-                </div>
-            </section>
-            <section>
-                <h3>Dobra praktyka</h3>
-                <p>Zmienne w funkcjach należy deklarować wyłącznie na początku funkcji, wykorzystując w tym celu
-                    pojedynczą instrukcję <em>var</em>.</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+            </div>
+          </section>
+          <section>
+            <h3>Dobra praktyka</h3>
+            <p>Zmienne w funkcjach należy deklarować wyłącznie na początku funkcji, wykorzystując w tym celu
+              pojedynczą instrukcję <em>var</em>.</p>
+            <pre class="fragment"><code class="javascript" data-trim>
 var f = function() {
     var a,
         b = 10,
@@ -473,21 +475,21 @@ var f = function() {
     return result;
 };
                 </code></pre>
-                <p class="fragment">A co ze zmiennymi indeksującymi pętli? <span class="fragment">... ?</span></p>
-                <aside class="notes">
-                    <p>
-                        Jeśli przyjmiemy zasadę, że zmienne indeksujące zawsze nazywamy w znormalizowany sposób (np <em>i</em>,
-                        <em>j</em>, <em>k</em>), to możemy zrobić wyjątek w regule i deklarować je dopiero w instrukcji
-                        <em>for</em>. Ponieważ JavaScript jest językiem funkcyjnym, to w praktyce klasyczną pętlę <em>for</em>
-                        będziemy używać bardzo rzadko, gdyż typ tablicowy udostępnia metody <em>map</em>,
-                        <em>forEach</em> oraz <em>filter</em>.
-                    </p>
-                </aside>
-            </section>
-            <section>
-                <h3>Domknięcia</h3>
-                <p>Mamy następujący kod:</p>
-                <pre><code class="javascript" data-trim>
+            <p class="fragment">A co ze zmiennymi indeksującymi pętli? <span class="fragment">... ?</span></p>
+            <aside class="notes">
+              <p>
+                Jeśli przyjmiemy zasadę, że zmienne indeksujące zawsze nazywamy w znormalizowany sposób (np <em>i</em>,
+                <em>j</em>, <em>k</em>), to możemy zrobić wyjątek w regule i deklarować je dopiero w instrukcji
+                <em>for</em>. Ponieważ JavaScript jest językiem funkcyjnym, to w praktyce klasyczną pętlę <em>for</em>
+                będziemy używać bardzo rzadko, gdyż typ tablicowy udostępnia metody <em>map</em>,
+                <em>forEach</em> oraz <em>filter</em>.
+              </p>
+            </aside>
+          </section>
+          <section>
+            <h3>Domknięcia</h3>
+            <p>Mamy następujący kod:</p>
+            <pre><code class="javascript" data-trim>
 var nextValue = function() {
   var cntr = 0; // zmienna lokalna
   return function() {
@@ -496,11 +498,11 @@ var nextValue = function() {
   };
 }();// no własnie, nextValue zawiera funkcję wewnętrzną, funkcja zewnętrzna jest natychmiast wywołana
                 </code></pre>
-            </section>
-            <section>
-                <h3>Domknięcia</h3>
-                <p>Mamy następujący kod:</p>
-                <div class="col left">
+          </section>
+          <section>
+            <h3>Domknięcia</h3>
+            <p>Mamy następujący kod:</p>
+            <div class="col left">
                     <pre><code class="javascript" data-trim>
 var nextValue = function() {
   var cntr = 0;
@@ -512,79 +514,75 @@ var nextValue = function() {
 console.log(nextValue()); // -> 1
 console.log(nextValue()); // -> 2
                 </code></pre>
-                </div>
-                <div class="col right fragment more-text">
-                    <ul>
-                        <li>Funkcja ma dostęp do parametrów i zmiennych widocznych w miejscu, w którym owa
-                            funkcja została zadeklarowana.*
-                        </li>
-                        <li class="fragment">Owe parametry i zmienne są dostępne nawet wówczas, gdy funkcja wewnętrzna
-                            ma dłuższy czas życia niż funkcja zewnętrzna.
-                        </li>
-                        <li class="fragment">Mechanizm ten nazywamy domknięciem (ang. <em>closure</em>).</li>
-                    </ul>
-                    <p class="align-left">*
-                        <small>Wyjątkiem są zmienne <em>this</em> oraz <em>arguments</em>.</small>
-                    </p>
-                </div>
-                <div class="centered"><p class="fragment justified"><i>Po co?</i></p>
-                    <p class="fragment justified more-text">Dzięki temu ukryliśmy dostęp do zmiennej <em>cntr</em> przed
-                        użytkownikami naszej biblioteki. Warto zauważyć, że w JavaScripcie nie ma pojęcia hermetyzacji
-                        ani pól prywatnych.
-                    </p></div>
-            </section>
+            </div>
+            <div class="col right fragment more-text">
+              <ul>
+                <li>Funkcja ma dostęp do parametrów i zmiennych widocznych w miejscu, w którym owa
+                  funkcja została zadeklarowana.*
+                </li>
+                <li class="fragment">Owe parametry i zmienne są dostępne nawet wówczas, gdy funkcja wewnętrzna
+                  ma dłuższy czas życia niż funkcja zewnętrzna.
+                </li>
+                <li class="fragment">Mechanizm ten nazywamy domknięciem (ang. <em>closure</em>).</li>
+              </ul>
+              <p class="align-left">*
+                <small>Wyjątkiem są zmienne <em>this</em> oraz <em>arguments</em>.</small>
+              </p>
+            </div>
+
+          </section>
         </section>
         <!-- /ZASIĘG ZMIENNYCH -->
 
         <!-- INSTRUKCJE KONTROLNE -->
         <section>
-            <section><h2>Instrukcje kontrolne</h2></section>
-            <section>
-                <h3>Instrukcja warunkowa</h3>
-                <pre><code class="javascript" data-trim>
+          <section><h2>Instrukcje kontrolne</h2></section>
+          <section>
+            <h3>Instrukcja warunkowa</h3>
+            <pre><code class="javascript" data-trim>
 if(a === 3) {
    ...
 } else {
    ...
 }
                 </code></pre>
-                <div class="centered">
-                    <ul>
-                        <li class="fragment">Składnia jest identyczna jak w języku C lub Javie.</li>
-                        <li class="fragment">Wyrażenie nie musi być typu <em>boolean</em>.</li>
-                        <li class="fragment">Dla każdego wyrażenia w instrukcji <em>if</em> JavaScript określa czy jest
-                            ono
-                            <em>truthy</em> czy też <em>falsy</em>.
-                        </li>
-                        <li class="fragment">Do porównywania tożsamościowego stosujemy wyłącznie operatory
-                            <code>===</code> oraz <code>!==</code>.
-                        </li>
-                    </ul>
-                </div>
-                <aside class="notes">
-                    <p>Operatory <code>===</code> oraz <code>!==</code> nie dokonują niejawnej konwersji typów i
-                        wartością przez nie zwracaną jest zawsze <em>false</em>, jeśli operandy są różnych typów.</p>
-                    <p>Operatory <code>==</code> oraz <code>!=</code> dokonują konwersji typów wg dość złożonych i
-                        nieintuicyjnych reguł, dlatego odradza się ich stosowanie.</p>
-                </aside>
-            </section>
-            <section>
-                <h3>Wartości <em>falsy</em> i <em>truthy</em></h3>
-                <p>Następujące wartości są <em>falsy</em>:</p>
-                <ul>
-                    <li><code>false</code></li>
-                    <li><code>null</code></li>
-                    <li><code>undefined</code></li>
-                    <li>Pusty napis: <code>''</code></li>
-                    <li>Liczba <code>0</code></li>
-                    <li>Liczba <code>NaN</code></li>
-                </ul>
-                <p class="fragment">Pozostałe wartości są <em>truthy</em> wliczając w to <code>true</code>, napis <code>'false'</code>
-                    oraz dowolną wartość obiektową.</p>
-            </section>
-            <section>
-                <h3>Instrukcje pętli</h3>
-                <pre><code class="javascript" data-trim>
+            <div class="centered">
+              <ul>
+                <li class="fragment">Składnia jest identyczna jak w języku C lub Javie.</li>
+                <li class="fragment">Wyrażenie nie musi być typu <em>boolean</em>.</li>
+                <li class="fragment">Dla każdego wyrażenia w instrukcji <em>if</em> JavaScript określa czy jest
+                  ono
+                  <em>truthy</em> czy też <em>falsy</em>.
+                </li>
+                <li class="fragment">Do porównywania tożsamościowego stosujemy wyłącznie operatory
+                  <code>===</code> oraz <code>!==</code>.
+                </li>
+              </ul>
+            </div>
+            <aside class="notes">
+              <p>Operatory <code>===</code> oraz <code>!==</code> nie dokonują niejawnej konwersji typów i
+                wartością przez nie zwracaną jest zawsze <em>false</em>, jeśli operandy są różnych typów.</p>
+              <p>Operatory <code>==</code> oraz <code>!=</code> dokonują konwersji typów wg dość złożonych i
+                nieintuicyjnych reguł, dlatego odradza się ich stosowanie.</p>
+            </aside>
+          </section>
+          <section>
+            <h3>Wartości <em>falsy</em> i <em>truthy</em></h3>
+            <p>Następujące wartości są <em>falsy</em>:</p>
+            <ul>
+              <li><code>false</code></li>
+              <li><code>null</code></li>
+              <li><code>undefined</code></li>
+              <li>Pusty napis: <code>''</code></li>
+              <li>Liczba <code>0</code></li>
+              <li>Liczba <code>NaN</code></li>
+            </ul>
+            <p class="fragment">Pozostałe wartości są <em>truthy</em> wliczając w to <code>true</code>, napis <code>'false'</code>
+              oraz dowolną wartość obiektową.</p>
+          </section>
+          <section>
+            <h3>Instrukcje pętli</h3>
+            <pre><code class="javascript" data-trim>
 while (expression) {
    ...
 };
@@ -595,31 +593,31 @@ for (var i = 0; i < size; ++i) {
    ...
 };
                 </code></pre>
-                <ul>
-                    <li class="fragment">Wyrażenie <code>expression</code> podobnie jak w przypadku instrukcji
-                        warunkowej obliczane jest do wartości <em>falsy</em> i <em>truly</em>.
-                    </li>
-                    <li class="fragment">Koniecznie należy pamiętać o deklarowaniu zmiennej indeksującej w pętli
-                        <em>for</em>.
-                    </li>
-                </ul>
-            </section>
+            <ul>
+              <li class="fragment">Wyrażenie <code>expression</code> podobnie jak w przypadku instrukcji
+                warunkowej obliczane jest do wartości <em>falsy</em> i <em>truly</em>.
+              </li>
+              <li class="fragment">Koniecznie należy pamiętać o deklarowaniu zmiennej indeksującej w pętli
+                <em>for</em>.
+              </li>
+            </ul>
+          </section>
         </section>
         <!-- /INSTRUKCJE KONTROLNE -->
         <!-- OBIEKTY -->
         <section>
-            <h2>Obiekty</h2>
-            <section>
-                <p>JavaScript oferuje bardzo wygodną formę deklarowania obiektów przy użyciu tzw <em>literału
-                    obiektowego</em>:</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+          <h2>Obiekty</h2>
+          <section>
+            <p>JavaScript oferuje bardzo wygodną formę deklarowania obiektów przy użyciu tzw <em>literału
+              obiektowego</em>:</p>
+            <pre class="fragment"><code class="javascript" data-trim>
 var person = {
    name: 'John',
    surname: 'Doe',
    age: 30
 };
                 </code></pre>
-                <pre class="fragment"><code class="javascript" data-trim>
+            <pre class="fragment"><code class="javascript" data-trim>
 person.name;                            // -> 'John'
 person['age'];                          // -> 30
 person.email;                           // -> undefined
@@ -627,10 +625,10 @@ person.email || ''                      // -> ''
 person.address.street                   // -> TypeError
 person.address && person.address.street // -> undefined
                 </code></pre>
-            </section>
-            <section>
-                <p>Obiekty są strukturami dynamicznymi, można dodawać i usuwać właściwości "w locie":</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+          </section>
+          <section>
+            <p>Obiekty są strukturami dynamicznymi, można dodawać i usuwać właściwości "w locie":</p>
+            <pre class="fragment"><code class="javascript" data-trim>
 var item = {};            // obiekt "pusty"
 item.name = 'ATmega1284';
 item.price = 199.90;
@@ -639,11 +637,11 @@ console.log(item);        // {name: "ATmega1284", price: 199.9}
 delete item.name;
 console.log(item);        // {price: 199.9}
                 </code></pre>
-            </section>
-            <section>
-                <p>Możliwe jest wyliczenie wszystkich właściwości obiektu przy użyciu specjalnej składni <code>for
-                    in</code>.</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+          </section>
+          <section>
+            <p>Możliwe jest wyliczenie wszystkich właściwości obiektu przy użyciu specjalnej składni <code>for
+              in</code>.</p>
+            <pre class="fragment"><code class="javascript" data-trim>
 var obj = {
    name: 'John',
    age: 30,
@@ -653,12 +651,12 @@ for(var property in obj) {
    console.log(property + ':' + typeof obj[property]);
 };
                 </code></pre>
-            </section>
+          </section>
         </section>
         <section>
-            <h2>Metody</h2>
-            <p>Obiekty mogą posiadać właściwości typu funkcyjnego. Tak zdefiniowane funkcje nazywamy metodami.</p>
-            <pre class="fragment"><code class="javascript" data-trim>
+          <h2>Metody</h2>
+          <p>Obiekty mogą posiadać właściwości typu funkcyjnego. Tak zdefiniowane funkcje nazywamy metodami.</p>
+          <pre class="fragment"><code class="javascript" data-trim>
 var account = {
   balance: 0,
   debit: function(amount) {
@@ -676,8 +674,8 @@ var account = {
             </code></pre>
         </section>
         <section>
-            <h2>Zagadka</h2>
-            <div class="col left">
+          <h2>Zagadka</h2>
+          <div class="col left">
             <pre><code class="javascript" data-trim>
 var account = {
   balance: 199,
@@ -687,8 +685,8 @@ var account = {
 };
             </code></pre>
             <p class="fragment">-> 199</p>
-            </div>
-            <div class="col right">
+          </div>
+          <div class="col right">
             <pre class="fragment"><code class="javascript" data-trim>
 var account = {
   balance: 199,
@@ -700,22 +698,23 @@ var account = {
   }
 };
             </code></pre>
-                <p class="fragment">-> undefined <span class="fragment"><img src="img/troll.gif" class="no-border" height="100"></span></p>
-            </div>
+            <p class="fragment">-> undefined <span class="fragment"><img src="img/troll.gif" class="no-border"
+                                                                         height="100"></span></p>
+          </div>
         </section>
         <section>
-            <h2>Bezklasowość</h2>
-            <p>JavaScript jest językiem obiektowym w którym nie istnieje pojęcie klasy ani konstruktora.</p>
-            <p class="fragment">Ponieważ istnieje tylko jeden typ obiektowy (wszystkie obiekty są tego samego typu),
-                pojęcie klasy nie ma sensu.</p>
-            <p class="fragment">Klasy są jednak także użyteczne jako wzorce do tworzenia obiektów, JavaScript oferuje
-                inne mechanizmy wzorców.</p>
+          <h2>Bezklasowość</h2>
+          <p>JavaScript do wersji ES5 włącznie był językiem obiektowym, w którym nie istniało pojęcie klasy ani konstruktora.</p>
+          <p class="fragment">Ponieważ istnieje tylko jeden typ obiektowy (wszystkie obiekty są tego samego typu),
+            pojęcie klasy nie ma sensu.</p>
+          <p class="fragment">Klasy są jednak także użyteczne jako wzorce do tworzenia obiektów, JavaScript oferuje
+            inne mechanizmy wzorców.</p>
         </section>
         <section>
-            <section><h2>Tworzenie obiektów</h2></section>
-            <section>
-                <h3>Sposób 1: literał obiektowy</h3>
-                <pre><code class="javascript" data-trim>
+          <section><h2>Tworzenie obiektów</h2></section>
+          <section>
+            <h3>Sposób 1: literał obiektowy</h3>
+            <pre><code class="javascript" data-trim>
 var employee = {
   name: 'John',
   surname: 'Doe',
@@ -724,10 +723,10 @@ var employee = {
 };
 employee.sayHello();
                 </code></pre>
-            </section>
-            <section>
-                <h3>Sposób 2: funkcja fabrykująca</h3>
-                <div class="left col">
+          </section>
+          <section>
+            <h3>Sposób 2: funkcja fabrykująca</h3>
+            <div class="left col">
                     <pre><code class="javascript" data-trim>
 var employeeMaker = function(name, surname, age) {
   return {
@@ -742,11 +741,11 @@ var employeeMaker = function(name, surname, age) {
 };
 employeeMaker('John', 'Doe', 30).sayHello();
                 </code></pre>
-                </div>
-                <div class="right col"><p class="fragment" data-fragment-index="1">...lub bardziej elegancko przy
-                    użyciu obiektu
-                    specyfikującego</p>
-                    <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
+            </div>
+            <div class="right col"><p class="fragment" data-fragment-index="1">...lub bardziej elegancko przy
+              użyciu obiektu
+              specyfikującego</p>
+              <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
 var employeeMaker = function(spec) {
   return {
     name: spec.name,
@@ -761,13 +760,13 @@ var employeeMaker = function(spec) {
 employeeMaker({name: 'John', surname: 'Doe', age: 30})
   .sayHello();
                 </code></pre>
-                </div>
-            </section>
-            <section>
-                <h3>Sposób 3: dziedziczenie prototypiczne</h3>
-                <p class="fragment">Dziedziczenie pozwala na tworzenie wielu obiektów bazujących na obiekcie -
-                    prototypie, które dziedziczą wszyskie jego właściwości (także metody).</p>
-                <div class="left col">
+            </div>
+          </section>
+          <section>
+            <h3>Sposób 3: dziedziczenie prototypiczne</h3>
+            <p class="fragment">Dziedziczenie pozwala na tworzenie wielu obiektów bazujących na obiekcie -
+              prototypie, które dziedziczą wszystkie jego właściwości (także metody).</p>
+            <div class="left col">
                     <pre class="fragment"><code class="javascript" data-trim>
 var employee = {
   name: '',
@@ -781,24 +780,24 @@ john.name = 'John';
 john.surname = 'Doe';
 john.sayHello(); // -> Hello John Doe
                 </code></pre>
-                </div>
-                <div class="right col fragment">
-                    <p class="more-text">Połączenie z prototypem jest "żywe": każda zmiana w prototypie jest natychmiast
-                        widoczna w obiektach dziedziczących.</p>
-                    <pre><code class="javascript" data-trim>
+            </div>
+            <div class="right col fragment">
+              <p class="more-text">Połączenie z prototypem jest "żywe": każda zmiana w prototypie jest natychmiast
+                widoczna w obiektach dziedziczących.</p>
+              <pre><code class="javascript" data-trim>
 employee.sayHello = function() {
   console.log('Hello ' + this.name);
 };
 john.sayHello(); // -> Hello John
                     </code></pre>
-                </div>
-            </section>
-            <section>
-                <h3>Sposób 4: funkcja fabrykująca i pola prywatne</h3>
-                <p>W obiektach JavaScriptowych nie ma pól (a więc i metod) prywatnych.</p>
-                <p class="fragment">Można jednak ukrywać szczegóły implementacyjne obiektów stosując funkcję fabrykującą
-                    oraz mechanizm domknięć.</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+            </div>
+          </section>
+          <section>
+            <h3>Sposób 4: funkcja fabrykująca i pola prywatne</h3>
+            <p>W obiektach JavaScriptowych nie ma pól (a więc i metod) prywatnych.</p>
+            <p class="fragment">Można jednak ukrywać szczegóły implementacyjne obiektów stosując funkcję fabrykującą
+              oraz mechanizm domknięć.</p>
+            <pre class="fragment"><code class="javascript" data-trim>
 var employeeMaker = function(spec) {
   var name = spec.name,
       surname = spec.surname;
@@ -811,78 +810,78 @@ john.sayHello(); // -> Hello John Doe
 john.name; // undefined
 john.surname; // undefined
                 </code></pre>
-            </section>
+          </section>
         </section>
         <!-- /OBIEKTY -->
         <!-- TABLICE -->
         <section>
-            <h2>Tablice</h2>
-            <section>
-                <div class="centered more-text"><p class="align-left">Tablice w języku JavaScript są obiektami o pewnej
-                    specjalnej charakterystyce:</p>
-                    <ul>
-                        <li class="fragment">Właściwości o nazwach będących nieujemną liczbą całkowitą (tzw indeksy
-                            tablicy) zawierają elementy tablicy.
-                        </li>
-                        <li class="fragment">Istnieje specjalna właściwość <code>length</code>, której wartością jest
-                            najwyższy indeks, jaki był zdefiniowany w danej tablicy.
-                        </li>
-                        <li class="fragment">Tablice mogą zawierać nieciągłości indeksów.</li>
-                        <li class="fragment">Tablice mogą zawierać właściwości nie będące liczbami nieujemnymi (ich
-                            wartość nie wpływa wówczas na wartość <code>length</code>).
-                        </li>
-                        <li class="fragment">Odczytanie wartości spoza listy zefiniowanych elementów zwraca wartość
-                            <code>undefined</code>.
-                        </li>
-                    </ul>
-                </div>
-            </section>
-            <section>
-                <div class="centered">
-                    <p class="align-left">Istnieje dedykowany literał do deklarowania wartości typu tablicowego:</p>
-                    <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
+          <h2>Tablice</h2>
+          <section>
+            <div class="centered more-text"><p class="align-left">Tablice w języku JavaScript są obiektami o pewnej
+              specjalnej charakterystyce:</p>
+              <ul>
+                <li class="fragment">Właściwości o nazwach będących nieujemną liczbą całkowitą (tzw indeksy
+                  tablicy) zawierają elementy tablicy.
+                </li>
+                <li class="fragment">Istnieje specjalna właściwość <code>length</code>, której wartością jest
+                  najwyższy indeks, jaki był zdefiniowany w danej tablicy.
+                </li>
+                <li class="fragment">Tablice mogą zawierać nieciągłości indeksów.</li>
+                <li class="fragment">Tablice mogą zawierać właściwości nie będące liczbami nieujemnymi (ich
+                  wartość nie wpływa wówczas na wartość <code>length</code>).
+                </li>
+                <li class="fragment">Odczytanie wartości spoza listy zefiniowanych elementów zwraca wartość
+                  <code>undefined</code>.
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section>
+            <div class="centered">
+              <p class="align-left">Istnieje dedykowany literał do deklarowania wartości typu tablicowego:</p>
+              <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
 var fibb = [1,2,3,5,8,13];
                     </code></pre>
-                    <p class="align-left fragment" data-fragment-index="2">JavaScript dopuszcza używania wartości
-                        różnych typów w ramach jednej tablicy:</p>
-                    <pre class="fragment" data-fragment-index="2"><code class="javascript" data-trim>
+              <p class="align-left fragment" data-fragment-index="2">JavaScript dopuszcza używania wartości
+                różnych typów w ramach jednej tablicy:</p>
+              <pre class="fragment" data-fragment-index="2"><code class="javascript" data-trim>
 var bag = [1,5,'foo',{}, {name: 'Doe'}, [1,2,3]];
                     </code></pre>
-                </div>
-            </section>
-            <section>
-                <div class="centered">
-                    <p class="align-left">Iterowanie klasyczne:</p>
-                    <pre><code class="javascript" data-trim>
+            </div>
+          </section>
+          <section>
+            <div class="centered">
+              <p class="align-left">Iterowanie klasyczne:</p>
+              <pre><code class="javascript" data-trim>
 var fibb = [1,2,3,5,8,13];
 for(var i = 0; i < fibb.length; ++i) {
   console.log(i + ': ' + fibb[i]);
 };
                     </code></pre>
-                    <p class="align-left">Iterowanie funkcyjne:</p>
-                    <pre><code class="javascript" data-trim>
+              <p class="align-left">Iterowanie funkcyjne:</p>
+              <pre><code class="javascript" data-trim>
 var fibb = [1,2,3,5,8,13];
 fibb.forEach(function(val, i) {
   console.log(i + ': ' + val);
 });
                     </code></pre>
-                </div>
-            </section>
+            </div>
+          </section>
         </section>
         <!-- /TABLICE -->
+      </div>
+      <div class="footer"><a href="index.html">Indeks</a></div>
     </div>
-    <div class="footer"><a href="index.html">Indeks</a></div>
-</div>
 
 
-<script src="lib/js/head.min.js"></script>
-<script src="js/reveal.js"></script>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
 
-<script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
-    Reveal.initialize({
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
         history: true,
         width: '90%',
 //        height: '100%',
@@ -891,17 +890,17 @@ fibb.forEach(function(val, i) {
         maxScale: 1,
         slideNumber: 'c/t',
         dependencies: [
-            {src: 'plugin/markdown/marked.js'},
-            {src: 'plugin/markdown/markdown.js'},
-            {src: 'plugin/zoom-js/zoom.js', async: true},
-            {src: 'plugin/notes/notes.js', async: true},
-            {
-                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                hljs.initHighlightingOnLoad();
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true },
+          {
+            src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+              hljs.initHighlightingOnLoad()
             }
-            }
+          }
         ]
-    });
-</script>
-</body>
+      })
+    </script>
+  </body>
 </html>

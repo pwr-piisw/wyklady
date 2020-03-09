@@ -53,13 +53,16 @@
                     <li>Język transpilowany do JavaScript stworzony i rozwijany przez Microsoft.</li>
                     <li class="fragment">Język ten obecnie jest oficjalnym "poligonem doświadczalnym" dla JavaScriptu.
                     </li>
-                    <li class="fragment">Duża część elementów TS przeszła do JS w ramach ECMAScript 6.</li>
+                    <li class="fragment">Duża część elementów TS przeszła do JS w ramach (ES2015).</li>
                     <li class="fragment">Dzięki transpilacji można korzystać z rozszerzeń ECMA na przeglądarkach, które
                         tej wersji JS jeszcze nie wspierają.
                     </li>
                 </ul>
             </div>
         </section>
+      <section>
+        <a href="https://www.typescriptlang.org/en/play">https://www.typescriptlang.org/en/play</a>
+      </section>
 
         <section>
             <h2>Deklaracja zmiennych i stałych*</h2>
@@ -71,7 +74,7 @@
                     <p class="more-text">podobnie jak <code>let</code>, lecz raz przypisanej wartości nie można zmienić
                     </p>
                 </div>
-                <p class="more-text fragment">* Te metody deklaracji występują także w wersji ECMAScript 6.</p>
+                <p class="more-text fragment">* Te metody deklaracji występują także w wersji ECMAScript 2015.</p>
             </section>
             <section>
                 <h3>Dobre praktyki:</h3>
@@ -113,6 +116,15 @@ console.log(Color["Green"]); // -> 1
                 <pre class="fragment"><code class="typescript" data-trim>enum Color {Red, Green, Blue};
 console.log(Color); // -> {"0": "Red", "1": "Green", "2": "Blue", Red: 0, Green: 1, Blue: 2} </code></pre>
             </section>
+          <section>
+            <h3>Bieda-enumeracje</h3>
+            <p>Typescript pozwala na deklarowania typów jako unii wartości</p>
+            <pre><code class="typescript" data-trim>type Color = 'Red' | 'Green' | 'Blue';
+let color: Color;
+color = 'Red'; // ok
+color = 'foo'; // transpilation error
+            </code></pre>
+          </section>
             <section>
                 <h3>Wnioskowanie</h3>
                 <p class="align-left">W wielu miejscach stosowanie specyfikatorów typów nie jest konieczne. TypeScript
@@ -246,6 +258,28 @@ let sam = new Snake("Sammy the Python");
 let tom: Animal = new Horse("Tommy the Palomino");
 sam.move();
 tom.move(34);</code></pre>
+        </section>
+
+        <section>
+          <h2>Unie i przecięcia</h2>
+          <h3>Union</h3>
+          <pre><code class="typescript" data-trim="">'foo' | 'bar'
+string | number
+          </code></pre>
+          <h3>Intersection</h3>
+          <pre><code class="typescript" data-trim>Person & Serializable & Loggable
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Co jeszcze?</h2>
+          <ul>
+            <li>Type inference</li>
+            <li>Generics</li>
+            <li>Getters and setters</li>
+            <li>Conditional types</li>
+            <li>Type guards</li>
+          </ul>
         </section>
 
         <section>
