@@ -61,7 +61,7 @@
             </div>
         </section>
       <section>
-        <a href="https://www.typescriptlang.org/en/play">https://www.typescriptlang.org/en/play</a>
+        <a href="https://www.typescriptlang.org/play/index.html">https://www.typescriptlang.org/play/index.html</a>
       </section>
 
         <section>
@@ -158,7 +158,7 @@ const add3 = (left, right) => left + right;
 
         <section>
             <h2>Specyfikacja sygnatury funkcji</h2>
-            <p>Parametry oraz rezultat mogą być typizowane.</p>
+            <p class="more-text">Parametry oraz rezultat mogą być typizowane.</p>
             <pre><code class="typescript" data-trim>const add = function(left: number, right: number): number {
   return left + right;
 };
@@ -168,7 +168,7 @@ const add2 = (left: number, right: number): number => {
 // lub zwięźlej
 const add3 = (left: number, right: number) => left + right;
 </code></pre>
-            <p class="fragment">Zmienne typu funkcyjnego mogą być dokładnie wyspecyfikowane:</p>
+            <p class="fragment more-text">Zmienne typu funkcyjnego mogą być dokładnie wyspecyfikowane:</p>
             <pre class="fragment"><code class="typescript" data-trim>const addFn: (left: number, right: number) => number;
 addFn = (left: number, right: number) => left + right; // OK
 addFn = () => "Foo"; // błąd kompilacji
