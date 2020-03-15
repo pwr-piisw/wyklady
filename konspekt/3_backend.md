@@ -19,4 +19,20 @@ Narzędzia automatyzujące budowanie oprogramowania zapewniają powtarzalność 
 * Apache Maven
 * Gradle
 
-W ramach wykładu skupimy się na systemie Maven.
+### Apache MAVEN
+W ramach wykładu skupimy się na systemie Maven. Maven służy do automatyzacji i standaryzacji procesu budowania oprogramowania. Danymi wejściowymi do systemu Maven są:
+* źródło oprogramowania,
+* opis projektu stworzony w formie pliku `pom.xml` (Project Object Model).
+
+Drugą ważną cechą systemu Maven jest zarządzanie zależnościami, zarówno wewnętrznymi jak i zewnętrznymi.
+
+Każda zależność określona jest przy pomocy:
+* identyfikatora grupy (Group ID, np. `org.hibernate`),
+* identyfikatora artefaktu (Artifact ID, np. `hibernate-tools`),
+* specyfikatora wersji (np. `5.4.12.Final`).
+
+Zależności rejestrowane są globalnie w tzw. repozytoriach, np. https://search.maven.org. Maven potrafi także używać lokalnych repozytoriów, wykorzystywanych w celach developerskich.
+
+Maven wykorzystuje ustandaryzowaną strukturę projektu zgodnie z ideą "convention over configuration".
+
+![Struktura projektu](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/maven.puml)

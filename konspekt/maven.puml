@@ -1,0 +1,12 @@
+@startwbs
+* Project
+** src
+*** main
+**** java
+**** resources
+*** test
+**** java
+**** rsources
+** target
+** pom.xml
+@endwbs
