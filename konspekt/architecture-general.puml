@@ -1,0 +1,39 @@
+@startuml
+  node frontend [
+    <b>frontend</b>
+    ====
+    <i>Rich frontend:</i>
+    - Angular
+    - React
+  ]
+  node persistence [
+    <b>persistence</b>
+    ====
+    <i>Utrwalanie:</i>
+    - JPA
+    - MongoDB
+    - GraphDB
+    - ElasticSearch
+  ]
+  node systemA [
+    <b>system A</b>
+    ====
+  ]
+  node systemB [
+    <b>system B</b>
+    ====
+  ]
+  node backend [
+    <b>backend</b>
+    ====
+    <i>Infrastruktura</i> - szczegóły techniczne, frameworki
+    ....
+    <i>Aplikacja</i> - przypadki użycia
+    ....
+    <i>Domena</i> - logika biznesowa
+  ]
+  frontend -(0- backend: Rest API
+  backend -0)- persistence
+  systemA -(0)- backend: Rest API
+  systemB -(0)- backend: AMQP
+@enduml
