@@ -1,0 +1,16 @@
+@startuml
+  node frontend
+  database persistence
+  node systemA
+  node systemB
+  node application
+  node logic
+  node repository
+
+  frontend -(0- application: Rest API
+  application <... logic
+  logic <... repository
+  repository -(0- persistence
+  systemA -(0)- application: Rest API
+  systemB -(0)- application: AMQP
+@enduml
