@@ -5,11 +5,11 @@ Backendem nazywamy zbiór komponentów software'owych realizujących logikę apl
 
 W architekturach systemów biznesowych staramy się w ramach backendu enkapsulować tzw. logikę biznesową, czyli zbiór reguł i struktur danych specyficznych dla danej dziedziny biznesowej. Logika biznesowa jest najcenniejszym zasobem programistycznym, powinna więc podlegać szczególnej ochronie. W szczególności logika biznesowa jako relatywnie stała i niezmienna, powinna być uniezależniona od zmian technologicznych. Jedną z metod ochrony logiki jest zastosowania modelu heksagonalnego architektury, widocznego na diagramie.
 
-![Architektura heksagonalna](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/architecture-general.puml)
+![Architektura heksagonalna](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/master/konspekt/architecture-general.puml)
 
 Często stosuje się uproszczony model architektury - architekturę warstwową:
 
-![Architektura warstwowa](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/architecture-layered.puml)
+![Architektura warstwowa](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/master/konspekt/architecture-layered.puml)
 
 Architektura warstwowa dopuszcza zależność logiki biznesowej od warstwy repozytorium, przez co możliwe jest bezpośrednie wykorzystywanie encji JPA do modelowania domeny. Pozwala to na prostszy kod i przynosi oszczędności w przypadku niewielkich projektów. Niestety, często architektura warstwowa uzależnia logikę biznesową od warstwy utrwalania, przez co niemożliwe staje się proste wymienienie tej warstwy np poprzez zastosowanie innego systemu bazy danych.
 
@@ -35,4 +35,4 @@ Zależności rejestrowane są globalnie w tzw. repozytoriach, np. https://search
 
 Maven wykorzystuje ustandaryzowaną strukturę projektu zgodnie z ideą "convention over configuration".
 
-![Struktura projektu](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/maven.puml)
+![Struktura projektu](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/master/konspekt/maven.puml)
