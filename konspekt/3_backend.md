@@ -4,7 +4,7 @@ W ramach wykładu poznamy podstawowe pojęcia, narzędzia i technologie związan
 
 Uwagi i pytania proszę kierować do: maciej.malecki@pwr.edu.pl
 
-Link do slajdów: https://pwr-piisw.github.io/wyklady/backend_spring.html#/
+Link do slajdów: [https://pwr-piisw.github.io/wyklady/backend_spring.html#/](https://pwr-piisw.github.io/wyklady/backend_spring.html#/)
 
 ## Architektura
 Backendem nazywamy zbiór komponentów software'owych realizujących logikę aplikacji, które rozmieszczone oraz wykonywane są na serwerach. Backend z reguły jest silnie wydzielonym fragmentem kodu, który komunikuje się z innymi komponentami przy pomocy dobrze zdefiniowanych interfejsów (tzw. API).
@@ -257,14 +257,14 @@ Przykład: aby użyć kodu bazodanowego z pośrednictwem JPA należy użyć star
     </dependency>
 ```
 
-Kompletna lista oficjalnych starterów: https://github.com/spring-projects/spring-baoot/tree/master/spring-boot-project/spring-boot-starters
+Kompletna lista oficjalnych starterów: [link](https://github.com/spring-projects/spring-baoot/tree/master/spring-boot-project/spring-boot-starters)
 
 ## Dodatkowe materiały
-1. https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-1. https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
-1. https://maven.apache.org/
-1. https://gradle.org/
-1. https://spring.io/
-1. https://start.spring.io
-1. https://en.wikipedia.org/wiki/Representational_state_transfer
-1. https://spring.io/projects/spring-boot
+1. [Clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+1. [Hexagonal architecture](https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/)
+1. [Maven](https://maven.apache.org/)
+1. [Gradle](https://gradle.org/)
+1. [Spring](https://spring.io/)
+1. [Start.spring.io](https://start.spring.io)
+1. [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer)
+1. [Springboot](https://spring.io/projects/spring-boot)
