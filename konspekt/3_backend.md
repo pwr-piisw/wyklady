@@ -235,3 +235,34 @@ public CarTo updateCar(@RequestBody CarTo car) { ... }
 @RequestMapping(path = "/car/{id}", method = RequestMethod.DELETE)
 public boolean deleteCar(@PathVariable("id") Long id) { ... }
 ```
+
+## Springboot
+Springboot uzupełnia Spring framework o konfigurację, mechanizmy autokonfiguracji oraz pozwala w prosty sposób stworzyć działającą aplikację. Aplikacja Springboot posiada wbudowany serwer HTTP przez co nie ma potrzeby uruchamiania jej za pośrednictwem serwera aplikacji. Jest to ostateczne zerwanie z koncepcją serwerów aplikacji propagowanych przez architekturę JEE.
+
+### Zalety
+1. Aplikacja uruchamiana jest z poziomu metody statycznej `main`, nie jest potrzebna żadna dodatkowa konfiguracja.
+2. Dodatkowa konfiguracja możliwa dzięki beanom `@Configuration` oraz plikom konfiguracyjnym (`yml`)
+
+### Startery
+Starterem nazywamy zależność zawierającą dodatkową konfigurację Springa, który wzbogaca aplikację Springboot o dodatkowe funkcjonalności.
+
+Przykład: aby użyć kodu bazodanowego z pośrednictwem JPA należy użyć startera `spring-boot-starter-data-jpa` dodając następującą zależność:
+```xml
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
+```
+
+Kompletna lista oficjalnych starterów: https://github.com/spring-projects/spring-baoot/tree/master/spring-boot-project/spring-boot-starters
+
+## Dodatkowe materiały
+1. https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+1. https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
+1. https://maven.apache.org/
+1. https://gradle.org/
+1. https://spring.io/
+1. https://start.spring.io
+1. https://en.wikipedia.org/wiki/Representational_state_transfer
+1. https://spring.io/projects/spring-boot
