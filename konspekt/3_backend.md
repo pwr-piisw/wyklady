@@ -4,6 +4,8 @@ W ramach wykładu poznamy podstawowe pojęcia, narzędzia i technologie związan
 
 Uwagi i pytania proszę kierować do: maciej.malecki@pwr.edu.pl
 
+Link do slajdów: https://pwr-piisw.github.io/wyklady/backend_spring.html#/
+
 ## Architektura
 Backendem nazywamy zbiór komponentów software'owych realizujących logikę aplikacji, które rozmieszczone oraz wykonywane są na serwerach. Backend z reguły jest silnie wydzielonym fragmentem kodu, który komunikuje się z innymi komponentami przy pomocy dobrze zdefiniowanych interfejsów (tzw. API).
 
@@ -166,4 +168,103 @@ public class BooksRestService {
 ### Rozpoczęcie pracy
 Jak zacząć: jedyna słuszna metoda w 2020 roku to: https://start.spring.io
 
+## RESTful web services
+REST to skrót od Representation State Transfer. REST to styl architektoniczny, który nadaje pewną okresloną semantykę elementom protokołu HTTP tworzącemu serwisy webowe (web services).
 
+### Ograniczenia architektoniczne stylu REST
+1. *Architektura klient-serwer*
+2. *Bezstanowość* - każde żądanie zawiera pełną informację niezbędną do jego wykonania, tj. kontekst klienta nie jest przechowywany na serwerze.
+3. *Buforowalność* (cacheability)
+4. *Warstwowość* - dopuszczalne jest wstawianie dodatkowych warstw między klientem i serwerem; warstwy te są przeźroczyste dla kilenta. Warstwy te mogą np realizować funkcje proxy lub load balancera.
+5. *Jednolitość interfejsu*
+
+### Jednolitość interfejsu REST
+1. Zasoby udostępniane przez interfejs REST są identyfikowalne przez ich lokalizator (URI) oraz typ reprezentacji (MIME type).
+2. Typ reprezentacji zasobu może być rózna od formy składowania tego zasobu na serwerze.
+3. Zasobami można manipulować (usuwać, zmieniać, dodawać) posiadając jego lokalizację.
+4. Samoopisywalność - odpowiedź serwera zawiera komplet informacji opisujących format danych.
+5. Hipermedialność - odpowiedź serwera zawiera komplet informacji dotyczących operacji, jakie można wykonać na zasobie, łącznie z linkami.
+
+### Elementy słownika REST
+1. Lokalizator (URI) - część adresu - łącza, identyfikująca zasób, np. `\orders\123\lines` określa zbiór linii zamówienia o identyfikatorze `123`.
+2. Akcja - czasownik - metoda protokołu HTTP określającą czynność, jaka będzie wykonana na zasobie: `HEAD`, `GET`, `PUT`, `POST`, `DELETE`, `CONNECT`, `OPTIONS`, `TRACE`.
+3. Wyróżnik formatu danych wejściowych i wyjściowych: `content-type` akceptujący tzw. MIME types, jak: `application/json`, `text/html`, `application/xml`, itp.
+
+### Podstawowa semantyka lokalizatorów i metod
+<table>
+  <thead>
+    <tr>
+      <th>Metoda</th>
+      <th>Kolekcja (/orders)</th>
+      <th>Element (/orders/123)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>Pobranie listy elementów kolekcji</td>
+      <td>Pobranie elementu</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>Dodanie nowego elementu do kolekcji</td>
+      <td>Utworzenie nowego elementu</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>Zastąpienie kolekcji nową kolekcją</td>
+      <td>Modyfikacja istniejącego elementu</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Usunięcie kolekcji</td>
+      <td>Usunięcie elementu</td>
+    </tr>
+  </tbody>
+</table>
+
+### Implementacja stylu REST z użyciem Spring Web
+```java
+@RequestMapping(path = "/cars", method = RequestMethod.GET)
+public List<CarTo> findAllCars() { ... }
+
+@RequestMapping(path = "/car", method = RequestMethod.POST)
+public CarTo addCar(@RequestBody CarTo car) { ... }
+
+@RequestMapping(path = "/car", method = RequestMethod.PUT)
+public CarTo updateCar(@RequestBody CarTo car) { ... }
+
+@RequestMapping(path = "/car/{id}", method = RequestMethod.DELETE)
+public boolean deleteCar(@PathVariable("id") Long id) { ... }
+```
+
+## Springboot
+Springboot uzupełnia Spring framework o konfigurację, mechanizmy autokonfiguracji oraz pozwala w prosty sposób stworzyć działającą aplikację. Aplikacja Springboot posiada wbudowany serwer HTTP przez co nie ma potrzeby uruchamiania jej za pośrednictwem serwera aplikacji. Jest to ostateczne zerwanie z koncepcją serwerów aplikacji propagowanych przez architekturę JEE.
+
+### Zalety
+1. Aplikacja uruchamiana jest z poziomu metody statycznej `main`, nie jest potrzebna żadna dodatkowa konfiguracja.
+2. Dodatkowa konfiguracja możliwa dzięki beanom `@Configuration` oraz plikom konfiguracyjnym (`yml`)
+
+### Startery
+Starterem nazywamy zależność zawierającą dodatkową konfigurację Springa, który wzbogaca aplikację Springboot o dodatkowe funkcjonalności.
+
+Przykład: aby użyć kodu bazodanowego z pośrednictwem JPA należy użyć startera `spring-boot-starter-data-jpa` dodając następującą zależność:
+```xml
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
+```
+
+Kompletna lista oficjalnych starterów: https://github.com/spring-projects/spring-baoot/tree/master/spring-boot-project/spring-boot-starters
+
+## Dodatkowe materiały
+1. https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+1. https://herbertograca.com/2017/11/16/explicit-architecture-01-ddd-hexagonal-onion-clean-cqrs-how-i-put-it-all-together/
+1. https://maven.apache.org/
+1. https://gradle.org/
+1. https://spring.io/
+1. https://start.spring.io
+1. https://en.wikipedia.org/wiki/Representational_state_transfer
+1. https://spring.io/projects/spring-boot
