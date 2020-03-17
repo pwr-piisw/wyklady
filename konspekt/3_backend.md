@@ -166,4 +166,72 @@ public class BooksRestService {
 ### Rozpoczęcie pracy
 Jak zacząć: jedyna słuszna metoda w 2020 roku to: https://start.spring.io
 
+## RESTful web services
+REST to skrót od Representation State Transfer. REST to styl architektoniczny, który nadaje pewną okresloną semantykę elementom protokołu HTTP tworzącemu serwisy webowe (web services).
 
+### Ograniczenia architektoniczne stylu REST
+1. *Architektura klient-serwer*
+2. *Bezstanowość* - każde żądanie zawiera pełną informację niezbędną do jego wykonania, tj. kontekst klienta nie jest przechowywany na serwerze.
+3. *Buforowalność* (cacheability)
+4. *Warstwowość* - dopuszczalne jest wstawianie dodatkowych warstw między klientem i serwerem; warstwy te są przeźroczyste dla kilenta. Warstwy te mogą np realizować funkcje proxy lub load balancera.
+5. *Jednolitość interfejsu*
+
+### Jednolitość interfejsu REST
+1. Zasoby udostępniane przez interfejs REST są identyfikowalne przez ich lokalizator (URI) oraz typ reprezentacji (MIME type).
+2. Typ reprezentacji zasobu może być rózna od formy składowania tego zasobu na serwerze.
+3. Zasobami można manipulować (usuwać, zmieniać, dodawać) posiadając jego lokalizację.
+4. Samoopisywalność - odpowiedź serwera zawiera komplet informacji opisujących format danych.
+5. Hipermedialność - odpowiedź serwera zawiera komplet informacji dotyczących operacji, jakie można wykonać na zasobie, łącznie z linkami.
+
+### Elementy słownika REST
+1. Lokalizator (URI) - część adresu - łącza, identyfikująca zasób, np. `\orders\123\lines` określa zbiór linii zamówienia o identyfikatorze `123`.
+2. Akcja - czasownik - metoda protokołu HTTP określającą czynność, jaka będzie wykonana na zasobie: `HEAD`, `GET`, `PUT`, `POST`, `DELETE`, `CONNECT`, `OPTIONS`, `TRACE`.
+3. Wyróżnik formatu danych wejściowych i wyjściowych: `content-type` akceptujący tzw. MIME types, jak: `application/json`, `text/html`, `application/xml`, itp.
+
+### Podstawowa semantyka lokalizatorów i metod
+<table>
+  <thead>
+    <tr>
+      <th>Metoda</th>
+      <th>Kolekcja (/orders)</th>
+      <th>Element (/orders/123)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>Pobranie listy elementów kolekcji</td>
+      <td>Pobranie elementu</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>Dodanie nowego elementu do kolekcji</td>
+      <td>Utworzenie nowego elementu</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td>Zastąpienie kolekcji nową kolekcją</td>
+      <td>Modyfikacja istniejącego elementu</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td>Usunięcie kolekcji</td>
+      <td>Usunięcie elementu</td>
+    </tr>
+  </tbody>
+</table>
+
+### Implementacja stylu REST z użyciem Spring Web
+```java
+@RequestMapping(path = "/cars", method = RequestMethod.GET)
+public List<CarTo> findAllCars() { ... }
+
+@RequestMapping(path = "/car", method = RequestMethod.POST)
+public CarTo addCar(@RequestBody CarTo car) { ... }
+
+@RequestMapping(path = "/car", method = RequestMethod.PUT)
+public CarTo updateCar(@RequestBody CarTo car) { ... }
+
+@RequestMapping(path = "/car/{id}", method = RequestMethod.DELETE)
+public boolean deleteCar(@PathVariable("id") Long id) { ... }
+```
