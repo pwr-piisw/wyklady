@@ -4,6 +4,8 @@ W ramach wykładu poznamy podstawowe pojęcia, narzędzia i technologie związan
 
 Uwagi i pytania proszę kierować do: maciej.malecki@pwr.edu.pl
 
+Link do slajdów: https://pwr-piisw.github.io/wyklady/backend_spring.html#/
+
 ## Architektura
 Backendem nazywamy zbiór komponentów software'owych realizujących logikę aplikacji, które rozmieszczone oraz wykonywane są na serwerach. Backend z reguły jest silnie wydzielonym fragmentem kodu, który komunikuje się z innymi komponentami przy pomocy dobrze zdefiniowanych interfejsów (tzw. API).
 
