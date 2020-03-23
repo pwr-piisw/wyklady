@@ -1,0 +1,10 @@
+@startuml
+  object BusinessLogic
+  interface Repository
+  object DataSource
+  class RepositoryImpl implements Repository
+
+  RepositoryImpl ..> DataSource
+  BusinessLogic ..> Repository
+
+@enduml
