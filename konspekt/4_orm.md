@@ -61,8 +61,14 @@ Hibernate opiera się na kilku podstawowych koncepcjach:
 - Session - sesja Hibernate, w ramach której zarządzane są transakcje oraz w ramach której można dokonywać przekształceń modelu relacyjnego na obiektowy i vice versa.
 - HQL - język zapytań Hibernate, pozwalający na realizowanie złożonych zapytań do baz danych. Język ten jest niezależny od dialektu SQL. Hibernate dokonuje odpowiednich translacji do natywnego SQLa.
 
+W pierwszych wersjach Hibernate, mapowanie realizowane było za pomocą plików `.hbm.xml`, obecnie najczęściej wykorzystuje się adnotacje języka Java.
+
 ### JPA
+Jak wspomniano wcześniej, obecnie rzadko wykorzystuje się Hibernate bezpośrednio. Najczęsciej wykorzystywany jest mechanizm JPA, który jest standardową specyfikacją Javy.
+
 ### Spring Data
+
+### Krytyka mechanizmów ORM
 
 ## Transakcje
 
