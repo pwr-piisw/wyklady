@@ -123,7 +123,36 @@ public class Author {
 
 Właściwości klasy embeddable zostaną zmapowane na odpowiednie kolumny dla encji zawierającej.
 
-JPA specyfikuje mechanizm generowania wartości dla kluczy głównych.
+JPA specyfikuje mechanizm generowania wartości dla kluczy głównych. Strategie generowania kluczy są niestety specyficzne dla konkretnego silnika baz danych i to jest jeden z aspektów JPA, który nie zapewnia bezproblemowej przenośności.
+
+Dla baz wspierających typ AUTOINCREMENT (jak MSSQL):
+```java
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private Long id;  
+```
+
+Dla baz wspierających sekwencje:
+```java
+@Id
+@SequenceGenerator(name = "bookGen", sequenceName = "BOOK_SEQ")
+@GeneratedValue(strategy = GenerationType.SEQUENCE,
+		generator = "bookGen")
+private Long id;
+```
+
+Dla baz, które nie wspierają ani AUTOINCREMENT, ani sekwencji:
+```java
+@Id
+@TableGenerator(
+     name="bookGen",
+     table="ID_GEN", // opcjonalnie
+     pkColumnName="GEN_KEY", // opcjonalnie
+     valueColumnName="GEN_VALUE", // opcjonalnie
+     pkColumnValue="BOOK_ID_GEN") // opcjonalnie
+@GeneratedValue(strategy = GenerationType.TABLE, generator = "bookGen")
+private Long id;
+```
 
 #### Cykl życia obiektu JPA
 Encja JPA czyli instancja obiektu zaadnotowanego jako `@Entity` ma określony cykl życia i może znajdować się w następujących stanach:
@@ -147,6 +176,7 @@ JPA pozwala na wykonywanie dodatkowych akcji podczas przejść między stanami e
 
 Metody powyższe powinny zawsze być bez parametrowe i nie powinny zwracać żadnej wartości (`void`).
 
+<!--
 #### Entity Manager
 
 #### Modelowanie asocjacji
@@ -193,3 +223,4 @@ Metody powyższe powinny zawsze być bez parametrowe i nie powinny zwracać żad
 ** Elastic Search
 
 ## Testowanie
+-->
