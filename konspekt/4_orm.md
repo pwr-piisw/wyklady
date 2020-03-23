@@ -24,7 +24,14 @@ UWAGA: zaleca sie wykorzystywać `PreparedStatement` wszędzie tam, gdzie musimy
 ## Mapowanie obiektowo-relacyjne
 Powszechne od lat 90-tych programowanie obiektowe oraz języki programowania je wspierające stały się standardem w projektowaniu systemów biznesowych. Obiekty, którymi operujemy są strukturami danych alokowanymi w ulotnej pamięci typu RAM. Cechą charakterystyczną systemów biznesowych zaś jest trwałość danych, a zatem także obiektów służących do modelowania tychże danych. Nic więc dziwnego, że ustawicznie trwają starania o to, aby w możliwie bezbolesny sposób umożliwić utrwalanie obiektów ulotnych. W tej częsci zapoznamy się z kilkoma najczęściej używanymi technikami.
 
-Obecnie najczęsciej wykorzystywaną techniką w ekosystemie Javy są tzw. systemy ORM, czyli Object-Relational Mapping, techniki pozwalające na mniej lub bardziej skuteczne mapowanie obiektów i rekordów w relacyjnych bazach danych.
+Odwzorowanie obiektowo-relacyjne (czyli ORM) jest mechanizmem, który posiada następujące cechy:
+* Przekształca obiekty w rekordy w bazie danych i odwrotnie.
+* Mapuje typy danych specyficzne dla danego języka oraz typy danych obsługiwane przez bazę danych.
+* Realizuje obiektowy język zapytań oraz mapuje go na język SQL.
+* Zapewnia trwałość obiektów, tzn. każda zmiana na drzewie obiektów powinna być zapisana w bazie danych.
+* Przekształca połączenia między obiektami na powiązania międzytabelowe w bazie danych (bazujące na kluczach obcych oraz tabelach łączących).
+
+Odwzorowanie obiektowo-relacyjne jest obecnie najczęsciej wykorzystywaną techniką utrwalania danych biznesowych w ekosystemie Javy.
 
 ### Repository
 Wzorzec Repository jest często używanym wzorcem wszędzie tam, gdzie istnieje komunikacja z mechanizmami utrwalania danych, w tym z bazami danych. Wzorzec ten często używany jest razem z narzędziami typu ORM jak Hibernate, ale także może być używany niezależnie, jako element tzw. czystej architektury.
