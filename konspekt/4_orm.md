@@ -7,7 +7,7 @@ JDBC to inaczej Java DataBase Connectivity - jest to mechanizm pozwalający na k
 
 JDBC operuje pojęciem sterownika (ang. driver), który jest implementacją specyficzną dla danego silnika SQL i jest z reguły dostarczana w formie biblioteki przez producenta tego silnika. Sterownik odpowiada za szczegóły związane z nawiązaniem połączenia sieciowego z bazą danych oraz implementuje API JDBC.
 
-![Architektura JDBC](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/jdbc.puml)
+![Architektura JDBC](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/master/konspekt/jdbc.puml)
 
 JDBC pozwala na wykorzystanie pełni funkcjonalności języka zapytań:
 * Zadawanie zapytań (`Statement`, `PreparedStatement`) i odbieranie wyników (`ResultSet`).
@@ -36,7 +36,7 @@ Odwzorowanie obiektowo-relacyjne jest obecnie najczęsciej wykorzystywaną techn
 ### Repository
 Wzorzec Repository jest często używanym wzorcem wszędzie tam, gdzie istnieje komunikacja z mechanizmami utrwalania danych, w tym z bazami danych. Wzorzec ten często używany jest razem z narzędziami typu ORM jak Hibernate, ale także może być używany niezależnie, jako element tzw. czystej architektury.
 
-![Wzorzec Repository](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/repository.puml)
+![Wzorzec Repository](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/master/konspekt/repository.puml)
 
 _Prawidłowe_ zastosowanie wzorca Repository pozwala na odseparowanie szczegółów technicznych związanych z utrwalaniem od logiki biznesowej.
 
@@ -163,7 +163,7 @@ Encja JPA czyli instancja obiektu zaadnotowanego jako `@Entity` ma określony cy
 
 Poniżej przedstawiono kompletny diagram przejść stanów encji JPA.
 
-![Diagram przejść stanów encji](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/entity-lifecycle.puml)
+![Diagram przejść stanów encji](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/master/konspekt/entity-lifecycle.puml)
 
 JPA pozwala na wykonywanie dodatkowych akcji podczas przejść między stanami encji. Akcje te można wykonać w ramach metod klasy encji oznaczonych odpowiednimi adnotacjami:
 * `@PrePersist`
