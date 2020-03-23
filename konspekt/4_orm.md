@@ -64,13 +64,66 @@ Hibernate opiera się na kilku podstawowych koncepcjach:
 W pierwszych wersjach Hibernate, mapowanie realizowane było za pomocą plików `.hbm.xml`, obecnie najczęściej wykorzystuje się adnotacje języka Java.
 
 ### JPA
-Jak wspomniano wcześniej, obecnie rzadko wykorzystuje się Hibernate bezpośrednio. Najczęsciej wykorzystywany jest mechanizm JPA, który jest standardową specyfikacją Javy.
+Jak wspomniano wcześniej, obecnie rzadko wykorzystuje się Hibernate bezpośrednio. Najczęsciej wykorzystywany jest mechanizm JPA, który jest standardową specyfikacją Javy. Jest to podejście zalecane, ponieważ, przynajmniej w teorii, ułatwia to zmianę dostawcy JPA.
 
 #### Modelowanie encji
-* Encja
-* Adnotacje
-* Typy embedded
-* Klucze głowne, strategie
+Encją JPA nazywamy klasę POJO, która zmapowana jest na tabelę (lub kilka tabel) modelu relacyjego. Mapowanie najczęściej dokonane jest przy użyciu adnotacji:
+* `@Entity` - określa, że dana klasa definiuje encję JPA.
+* `@Id` - wyróżnia właściwość reprezentującą klucz główny.
+
+JPA (a właściwie dostawca, np. Hibernate) dokonuje automatycznie założeń odnośnie nazwy tabeli oraz kolumn w modelu relacyjnym.
+
+Większą kontrolę nad mapowaniem daje dodatkowe zastosowanie poniższych adnotacji:
+* `@Table` - pozwala na zdefiniowanie m.in. nazwy tabeli w modelu relacyjnym.
+* `@Column` - pozwala na zdefiniowanie m.in. nazwy kolumny, jej typu, rozmiaru w modelu relacyjnym.
+
+```java
+@Entity
+@Table(name="LIBRARY")
+public class LibraryEntity {
+	@Id
+	private Long id;
+	@Column(name = "NAME", length = 30, nullable = false)
+	private String name;
+	@Column(name = "DOMAIN", length = 5, nullable = true)
+	private String domain;
+	public LibraryEntity () {
+	}
+
+	// getters and setters
+}
+```
+
+Lista pozostałych użytecznych adnotacji JPA:
+* `@Access` - pozwala na określenie miejsca umieszczania adnotacji na polach / getterach.
+* `@GeneratedValue`- automatyczne generowanie wartości dla klucza głównego.
+* `@Lob` - typ dla dużych danych tekstowych lub binarnych.
+* `@Enumerated` - typy wyliczeniowe (enum)
+* `@Transient` - pole zaanotowane w ten sposób będzie traktowane jako wyliczane i nie będzie brało udziału w utrwalaniu.
+* `@MappedSuperclass` - pozwala na deklarowanie wspólnego komponentu dla wielu encji (nie mylić z trwałym dziedziczeniem, które opisane zostanie później).
+
+Typy "embeddable" są to klasy, które deklarują złożone właściwości encji. Technika ta pozwala na wielokrotne wykorzystywanie kodu. Do deklarowania takich klas służy adnotacja `@Embeddable`:
+
+```java
+@Embeddable
+public class PersonalData  {
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
+}
+```
+
+```java
+@Entity
+public class Author {
+    @Embedded
+    private PersonalData personalData;
+}
+```
+
+Właściwości klasy embeddable zostaną zmapowane na odpowiednie kolumny dla encji zawierającej.
+
+JPA specyfikuje mechanizm generowania wartości dla kluczy głównych.
 
 #### Cykl życia obiektu JPA
 Encja JPA czyli instancja obiektu zaadnotowanego jako `@Entity` ma określony cykl życia i może znajdować się w następujących stanach:
@@ -79,14 +132,22 @@ Encja JPA czyli instancja obiektu zaadnotowanego jako `@Entity` ma określony cy
 * odłączony (detached) - encja posiada ID, ale nie jest powiązana z kontekstem trwałości. JPA nie zarządza tą encją, wszelkie zmiany nie będą synchronizowane z bazą danych, próba odwołania się do leniwych cech i asocjacji może zakończyć się wyjątkiem wykonania (runtime exception).
 * usunięty (removed) - encja została oznaczona jako "do usunięcia". Jest ona wciąż zarządzana przez JPA ale odpowiadający jej rekord w bazie danych zostanie usunięty podczas zatwierdzania transakcji.
 
-
 Poniżej przedstawiono kompletny diagram przejść stanów encji JPA.
 
 ![Diagram przejść stanów encji](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/entity-lifecycle.puml)
 
+JPA pozwala na wykonywanie dodatkowych akcji podczas przejść między stanami encji. Akcje te można wykonać w ramach metod klasy encji oznaczonych odpowiednimi adnotacjami:
+* `@PrePersist`
+* `@PostPersist`
+* `@PreUpdate`
+* `@PostUpdate`
+* `@PostLoad`
+* `@PreRemove`
+* `@PostRemove`
 
-* Listenery
-* Entity manager
+Metody powyższe powinny zawsze być bez parametrowe i nie powinny zwracać żadnej wartości (`void`).
+
+#### Entity Manager
 
 #### Modelowanie asocjacji
 * Typy asocjacji: krotność, zwrot
