@@ -73,7 +73,18 @@ Jak wspomniano wcześniej, obecnie rzadko wykorzystuje się Hibernate bezpośred
 * Klucze głowne, strategie
 
 #### Cykl życia obiektu JPA
-* Graf
+Encja JPA czyli instancja obiektu zaadnotowanego jako `@Entity` ma określony cykl życia i może znajdować się w następujących stanach:
+* nowy (new/transient) - brak przypisanego identyfikatora oraz brak powiązania z kontekstem trwałości (persistence context). Obiekt taki zachowuje się jak zwykły obiekt Javowy.
+* zarządzany (managed) - encja posiada ID i jest powiązana z kontekstem trwałości. JPA zarządza tą encją, śledzi zmiany, jakim podlega oraz zapewnia synchronizację tej encji z bazą danych. JPA odpowiada za materializację leniwych (lazy) cech tej encji a także leniwych asocjacji.
+* odłączony (detached) - encja posiada ID, ale nie jest powiązana z kontekstem trwałości. JPA nie zarządza tą encją, wszelkie zmiany nie będą synchronizowane z bazą danych, próba odwołania się do leniwych cech i asocjacji może zakończyć się wyjątkiem wykonania (runtime exception).
+* usunięty (removed) - encja została oznaczona jako "do usunięcia". Jest ona wciąż zarządzana przez JPA ale odpowiadający jej rekord w bazie danych zostanie usunięty podczas zatwierdzania transakcji.
+
+
+Poniżej przedstawiono kompletny diagram przejść stanów encji JPA.
+
+![Diagram przejść stanów encji](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/pwr-piisw/wyklady/develop/konspekt/entity-lifecycle.puml)
+
+
 * Listenery
 * Entity manager
 
