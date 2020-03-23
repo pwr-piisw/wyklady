@@ -66,12 +66,58 @@ W pierwszych wersjach Hibernate, mapowanie realizowane było za pomocą plików 
 ### JPA
 Jak wspomniano wcześniej, obecnie rzadko wykorzystuje się Hibernate bezpośrednio. Najczęsciej wykorzystywany jest mechanizm JPA, który jest standardową specyfikacją Javy.
 
+#### Modelowanie encji
+* Encja
+* Adnotacje
+* Typy embedded
+* Klucze głowne, strategie
+
+#### Cykl życia obiektu JPA
+* Graf
+* Listenery
+* Entity manager
+
+#### Modelowanie asocjacji
+* Typy asocjacji: krotność, zwrot
+* Eager vs lazy
+* Asocjacje wielokierunkowe
+* Kaskady
+
+#### Modelowanie dziedziczenia
+* Single table
+* Table per class
+* Joined
+
+#### Constructor expressions
+
 ### Spring Data
+* Czym jest Spring Data: repozytorium
+* Query by convention
+* Crud repository
+
+### Query DSL
 
 ### Krytyka mechanizmów ORM
+* Zbędna warstwa abstakcji
+* Złudna abstrakcja
+* Kłopoty wydajnościowe
+* Kłopotliwy cykl życia
+* Bardzo wysoka złożoność biblioteki
 
 ## Transakcje
+* Cechy transakcji: ACID
+* Poziomy izolacji
+* Realizacja izolacji transakcji
+* EntityManager
+* Spring i Transactional
+* JPA i lock
+* Blokady optymistyczne i pesymistyczne
 
 ## Alternatywne metody utrwalania danych
+* Reaktywny driver R2DBC
+* Narzędzia NOSQL:
+** Bazy Grafowe: NeoDB
+** MongoDB
+** Elastic Search
 
 ## Testowanie
