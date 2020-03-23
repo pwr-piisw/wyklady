@@ -41,6 +41,19 @@ Repozytorium oferuje najczęściej następujące funkcjonalności:
 Wzorzec repozytorium ma zastosowanie w architekturze heksagonalnej (ports and adapters): warstwa domenowa deklaruje interfejs repozytorium, który następnie jest implementowany w warstwie aplikacyjnej.
 
 ### Hibernate
+Hibernate jest biblioteką ORM dla ekosystemu Javy. Zdobyła ona największą popularność, jej twórcy uczyli się na błędach wcześniejszych rozwiązań takich jak EJB Entity Beans (a po częsci także JDO). Biblioteka Hibernate stała się inspiracją dla specyfikacji JPA, nowsze wersje Hibernate zresztą tę specyfikację implementują.
+
+W ramach wykładu szerzej zapoznamy się ze specyfikacją JPA, warto jednak pamiętać, że w prawie każdym wypadku będziemy mieli do czynienia z realizacją opartą właśnie na silniku Hibernate.
+
+Hibernate opiera się na obiektach POJO (Plain Java Object), co było istotną zmianą w stosunku do wcześniejszych rozwiązań, gdzie często konieczne było implementowanie specyficznych interfejsów lub rozszerzanie wygenerowanych klas. Hibernate tego nie wymaga, przez co rozwiązanie jest quasi-transparentne dla logiki biznesowej go używającego (quasi, ponieważ istnieje wiele efektów ubocznych tego mechanizmu, o czym później).
+
+Hibernate opiera się na kilku podstawowych koncepcjach:
+- Encja - to obiekt POJO, który mapowany jest przez Hibernate na rekord tabeli relacyjnej bazy danych.
+- Asocjacja - to kolekcja łącząca ze sobą obiekty różnych klas; asocjacje mapowane są na powiązania międzytabelowe relacyjnej bazy danych. Asocjacje pozwalają na realizację krotności 1-1, 1-n, n-n, 0-n, itd.
+- SessionManager - obiekt zarządzający sesjami.
+- Session - sesja Hibernate, w ramach której zarządzane są transakcje oraz w ramach której można dokonywać przekształceń modelu relacyjnego na obiektowy i vice versa.
+- HQL - język zapytań Hibernate, pozwalający na realizowanie złożonych zapytań do baz danych. Język ten jest niezależny od dialektu SQL. Hibernate dokonuje odpowiednich translacji do natywnego SQLa.
+
 ### JPA
 ### Spring Data
 
