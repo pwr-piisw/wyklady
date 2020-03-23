@@ -1,0 +1,19 @@
+@startuml
+  class DriverManager
+  interface Driver
+  interface Connection
+  interface Statement
+  interface CallableStatement extends Statement
+  interface PreparedStatement extends Statement
+  interface ResultSet
+  class PostgreSQLDriver extends Driver
+  class OracleThinDriver extends Driver
+  class OracleOCIDriver extends Driver
+  class MSSQLDriver extends Driver
+
+  DriverManager ..> Driver
+  Connection ..> Statement
+  Driver ..> Connection
+  DriverManager ..> Connection
+  Statement ..> ResultSet
+@enduml

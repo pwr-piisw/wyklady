@@ -1,0 +1,18 @@
+@startuml
+
+  [*] --> Transient
+  Transient --> Managed: persist
+  Managed --> Detached: commit/rollback/close
+  Detached --> Managed: merge
+  Managed --> Removed: remove
+  Removed --> Transient: commit
+  Managed --> Transient: rollback*/new
+  Managed --> Managed: refresh
+  Removed --> Managed: persist/rollback*
+  Removed --> Detached: rollback
+
+  legend left
+    [*] = extended persistence context
+  end legend
+
+@enduml
