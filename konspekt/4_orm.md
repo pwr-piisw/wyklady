@@ -176,21 +176,105 @@ JPA pozwala na wykonywanie dodatkowych akcji podczas przejść między stanami e
 
 Metody powyższe powinny zawsze być bez parametrowe i nie powinny zwracać żadnej wartości (`void`).
 
-<!--
 #### Entity Manager
+Entity Manager jest serwisem zarządzającym sesją JPA (jest to odpowiednik obiektu Session w Hibernate). Zawiera metody służące do obsługi cyklu życia encji, do wykonywania zapytań, do obsługi transakcji oraz blokad.
+
+```java
+    EntityManager em = ...
+
+    // wczytanie encji o ID = 123    
+    Product product = em.find(Product.class, 123);
+
+    // usunięcie encji
+    em.remove(product);
+
+    // utrwalenie nowej encji
+    Product newProduct = new Product(123, "foo");
+    em.persist(newProduct);
+
+    // zapytanie JPQL
+    
+```
+
+Instancję `EntityManager` uzyskujemy:
+* ręcznie, z użyciem `EntityManagerFactory`,
+* z kontenera, poprzez mechanizm dependency injection (używamy adnotacji `@PersistenceContext`),
+* w aplikacji Springowej zależność ta jest wstrzykiwana przez Springa.
+
+#### Obiektowy język zapytań JPQL
+JPA wprowadza nowy język zapytań, niezależny od dialektu SQL. Jest to odpowiednik (bardzo zbliżony) języka HQL z Hibernate.
+
+Składnia języka JPQL przypomina nieco SQL jednak zamiast tabelami operujemy w nim encjami, ich właściwościami oraz asocjacjami między encjami.
+
+Podstawowym elementem JPQL jest projekcja, do której wykorzystujemy klauzulę `SELECT`:
+```jpaql
+SELECT a FROM Author a
+```
+Tak określone zapytanie zwraca wszystkie encje typu `Author`. W praktyce, wykonanie tego zapytania w Javie wyglądać będzie następująco:
+```java
+List<Author> authors = em.createQuery("SELECT a FROM Author a").getResultList();
+```
+przy czym `Author` musi być encją JPA.
+
+Istnieje bardzo użyteczna forma projekcji z wykorzystaniem słowa kluczowego `new`, która pozwala zmapować wynik zapytania na dowolny obiekt Javy, przy założeniu, że istnieje odpowiedni konstruktor:
+```java
+class AuthorCount {
+    public AuthorCount(String lastName, int count) {
+        ...
+    }   
+}
+
+List<AuthorCount> authors = em.createQuery(
+    "SELECT new io.github.pwrpiiws.AuthorCount(a.lastName, COUNT(a))" + 
+    " FROM Author a GROUP BY a.department")
+```
+
+Zapytania można zawężać stosując klauzulę `WHERE`:
+```jpaql
+SELECT a FROM Author a WHERE a.name LIKE 'Sta%' AND a.age > 40
+```
+
+Zapytania można sortować stosująć klauzulę `ORDER BY`. Zapytania można agregować stosująć klauzulę `GROUP BY`, można stosować także warunki zawężające dla agregatów stosując klauzulę `HAVING`.
+
+`EntityManager` umożliwia parametryzowanie zapytań przy pomocy nazwanych parametrów, np:
+
+```java
+List<Author> authors = em.createQuery(
+    "SELECT a FROM Author a WHERE a.age > :age and a.name = :name")
+        .setParameter("age", 40)
+        .setParameter("name", "Stanislaw")
+        .getResultList();
+```
 
 #### Modelowanie asocjacji
-* Typy asocjacji: krotność, zwrot
-* Eager vs lazy
-* Asocjacje wielokierunkowe
-* Kaskady
+Asocjacja jest relacją między encjami. W przypadku języka Java, w zależności od krotności asocjacje realizujemy jako zbiory (Set), listy (List) lub referencje (dla krotności `0..1` lub `1`). W przypadku baz relacyjnych zależności takie realizujemy przy pomocy kluczy obcych (relacje 1-1, 1-n) lub tabel łaczących (n-n).
 
+Mapowanie obiektowo relacyjne realizowane jest w przypadku asocjacji przy pomocy adnotacji:
+* `@OneToOne` - relacja jeden do jednego, realizowana przy użyciu referencji do obiektu
+* `@OneToMany` - releacja jeden do wielu (opcjonalna lub nie), realizowana przy pomocy referencji
+* `@ManyToOne` - relacja jeden do wielu realizowana przy pomocy kolekcji
+* `@ManyToMany` - relacja wiele do wielu realizowana przy pomocy obustronnej kolekcji
+
+Asocjacje można modelować jako jednokierunkowe jak i dwukierunkowe. Kierunek oznacza możliwość nawigacji po grafie obiektów z encji A do encji B. W przypadku asocjacji dwukierunkowych jeden z kierunków musi być kierunkiem pasywnym (tj. JPA nie śledzi zmian w kolekcji realizującej danych kierunek).
+
+Kolekcje mogą być leniwe albo natychmiastowe (odpowiednio lazy i eager). Zadeklarowanie asocjacji jako eager oznacza konieczność wczytania wszystkich elementów danej kolekcji przez JPA. Zadeklarowanie wszystkich asocjacji jako eager oznacza konieczność każdorazowego podnoszenia grafu obiektów - jest do zdecydowanie niezalecane podejscie.
+
+Kolekcje typu lazy oznaczają, że dane zostaną wczytane dopiero wtedy, gdy będzie taka potrzeba, tj. podczas iterowania kolekcji lub przy dostępie do właściwości obiektów. W praktyce oznacza to, że JPA generuje obiekty proxy, które udają obiekty docelowe i które realizują funkcję wczytywania leniwego.
+
+W przypadku odłączenia encji zawierającej leniwe asocjacje, przy próbie dostępu do niezainicjalizowanych kolekcji nastąpi błąd wykonania.
+
+Asocjacje JPA oferują funkcję kaskadowej propagacji. Oznacza to propagację operacji wykonywanej na encji bazowej na encje powiązane. Następujące operacje mogą być realizowane kaskadowo:
+* PERSIST
+* MERGE
+* REMOVE
+
+Możliwe jest także uzyskanie pełnej kaskadowości (opcja ALL).
+
+<!--
 #### Modelowanie dziedziczenia
 * Single table
 * Table per class
 * Joined
-
-#### Constructor expressions
 
 ### Spring Data
 * Czym jest Spring Data: repozytorium
