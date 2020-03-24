@@ -278,19 +278,49 @@ JPA wspiera mapowanie hierarchii dziedziczenia obiektów, mapując to na odpowie
 
 Każda ze strategii ma swoje wady i zalety, a ich wybór powinien być zawsze świadomą decyzją dostosowaną do konkretnej specyfiki. Jeśli często będziemy wykonywać zapytania polimorficzne to lepszym rozwiązaniem będzie strategia single table albo joined. Jeśli zapytania polimorficzne nie są niezbędne, warto rozważyć table per class, jeśli zaś zależy nam na redukcji rozmiaru bazy danych, to najefektywniejszym rozwiązaniem jest strategia joined.
 
-<!--
 ### Spring Data
-* Czym jest Spring Data: repozytorium
-* Query by convention
-* Crud repository
+Spring Data to kolejna warstwa abstrakcji zbudowana na JPA. Automatyzuje ona w znacznym stopniu proces tworzenia repozytoriów. W większości przypadków nie ma potrzeby bezpośredniej interakcji z EntityManagerem.
+
+W szczególności praktycznie za darmo uzyskujemy funkcjonalność CRUD dla danej encji. Wystarczy następująca deklaracja:
+```java
+public interface AuthorRepository extends CrudRepository<Author, Long> {
+}
+```
+i uzyskujemy dostęp do podstawowych funkcji takich jak:
+* `findById`
+* `findAll`
+* `save`
+* `delete`
+* `count`
+i kilku innych.
+
+Istotnym udogodnieniem jest tzw. query by convention - odpowiednio nazwana i sparametryzowana metoda repozytorium zwalnia nas z konieczności pisana zapytań JPQL:
+```java
+public interface AuthorRepository extends CrudRepository<Author, Long> {
+    List<Author> findByLastName(String lastName);
+    List<Author> findByLastNameAndAgeGreaterThan(String lastName, int age);
+    List<Author> findByLastNameLike(String lastName);
+}
+```
+
+Stosowanie query by convention jest opcjonalne i zawsze można stosować adnotację `@Query` wraz z zapytaniem JPQL:
+```java
+public interface AuthorRepository extends CrudRepository<Author, Long> {
+    @Query("SELECT a FROM Author a WHERE a.lastName LIKE %?1%")
+    List<Author> findByLastNameLike(String lastName);
+}
+```
+Możliwe jest także stosowanie zapytań natywnych, wprost w języku SQL.
 
 ### Krytyka mechanizmów ORM
-* Zbędna warstwa abstrakcji
-* Złudna abstrakcja
-* Kłopoty wydajnościowe
-* Kłopotliwy cykl życia
-* Bardzo wysoka złożoność biblioteki
+Mimo, że ORM (w szczególności JPA) są obecnie standardem przemysłowym, wielu specjalistów uważa to podejście (czyli mapowanie obiektowo-relacyjne) za błędne. Przede wszystkim należy mieć świadomość, że model obiektowy i relacyjny nie są w pełni kompatybilne. Szczególnie kłopotliwe są asocjacje - w przypadku grafu obiektu istotna jest cecha kierunkowości asocjacji, ta sama cecha nie ma żadnego znaczenia w przypadku modelu relacyjnego. Inne często podnoszone problemy to:
+* Kolejna (zbędna) warstwa abstrakcji - abstrahujemy nad abstrakcją, którą jest model relacyjny oraz nad abstrakcyjnym językiem, jakim jest SQL.
+* Złudna abstrakcja - JPA ukrywa większość szczegółów związanych z modelem relacyjnym przed programistą, ale wiele efektów związanych z istnieniem bazy danych nadal jest widoczne: lenime asocjacje, więzy integralności, pasywne kierunki asocjacji, itp.
+* Kłopoty wydajnościowe - nieumiejętne wykorzystywanie JPA często prowadzi do problemów wydajnościowych. Często występującym problemem jest problem n+1 odczytów - wczytanie każdego obiektu w kolekcji realizowane jest przy pomocy pojedynczego, osobnego zapytania. Jest to efekt leniwych asocjacji i braku jawnego wykonania złączenia.
+* Kłopotliwy cykl życia - odłączenie encji lub wyjście poza zasięg działania sesji prowadzi do błędów materializacji proxy.
+* Bardzo wysoka złożoność biblioteki - objawiają się one w przypadku bardzo złożonych modeli obiektowych, wielu asocjacji, kaskad itp. Pojawiają się problemy trudne do rozwiązania, w ilości wprost proporcjonalnej do złożoności modelu.
 
+<!--
 ## Transakcje
 * Cechy transakcji: ACID
 * Poziomy izolacji
