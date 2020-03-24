@@ -320,6 +320,8 @@ Mimo, że ORM (w szczególności JPA) są obecnie standardem przemysłowym, wiel
 * Kłopotliwy cykl życia - odłączenie encji lub wyjście poza zasięg działania sesji prowadzi do błędów materializacji proxy.
 * Bardzo wysoka złożoność biblioteki - objawiają się one w przypadku bardzo złożonych modeli obiektowych, wielu asocjacji, kaskad itp. Pojawiają się problemy trudne do rozwiązania, w ilości wprost proporcjonalnej do złożoności modelu.
 
+Z punktu widzenia architektonicznego najpoważniejszym problemem jest powszechne modelowania obiektów logiki biznesowej (domeny) z użyciem encji JPA. Jest to pogwałcenie zasady niezależności domeny od szczegółów technicznych (mechanizm składowania danych i komunikacji z relacyjną bazą danych). Jak już wspomniano, abstrakcja JPA jest bardzo nie doskonała i w praktyce kod logiki biznesowej musi być optymalizowany pod kątem zastosowanego mechanizmu utrwalania.
+
 <!--
 ## Transakcje
 * Cechy transakcji: ACID
