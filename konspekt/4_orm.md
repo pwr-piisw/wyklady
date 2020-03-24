@@ -270,21 +270,22 @@ Asocjacje JPA oferują funkcję kaskadowej propagacji. Oznacza to propagację op
 
 Możliwe jest także uzyskanie pełnej kaskadowości (opcja ALL).
 
-<!--
 #### Modelowanie dziedziczenia
-* Single table
-* Table per class
-* Joined
+JPA wspiera mapowanie hierarchii dziedziczenia obiektów, mapując to na odpowiedni model relacyjny. Stosowane są przy tym trzy strategie:
+* `Single table` - hierarchia klas mapowana jest na pojedynczą tabelę w bazie danych; występuje kolumna dyskryminatora, która jest wyróżnikiem typu. Pola które występują tylko w klasach pochodnych mapowane są na kolumny, które mają wartość nieokreśloną (NULL) w przypadku klas bazowych.
+* `Table per class` - każda klasa posiada własną tabelę i następuje tutaj redundancja wspólnych kolumn. Zapytania polimorficzne są niewydajne.
+* `Joined` - każda klasa posiada własną tabelę, ale wspólne dane trzymane są tylko raz, w tabeli dla nadklasy. Także tutaj występuje dyskryminator a wczytanie danych dla klas pochodnych wymaga zastosowania złączeń.
 
+Każda ze strategii ma swoje wady i zalety, a ich wybór powinien być zawsze świadomą decyzją dostosowaną do konkretnej specyfiki. Jeśli często będziemy wykonywać zapytania polimorficzne to lepszym rozwiązaniem będzie strategia single table albo joined. Jeśli zapytania polimorficzne nie są niezbędne, warto rozważyć table per class, jeśli zaś zależy nam na redukcji rozmiaru bazy danych, to najefektywniejszym rozwiązaniem jest strategia joined.
+
+<!--
 ### Spring Data
 * Czym jest Spring Data: repozytorium
 * Query by convention
 * Crud repository
 
-### Query DSL
-
 ### Krytyka mechanizmów ORM
-* Zbędna warstwa abstakcji
+* Zbędna warstwa abstrakcji
 * Złudna abstrakcja
 * Kłopoty wydajnościowe
 * Kłopotliwy cykl życia
@@ -305,6 +306,4 @@ Możliwe jest także uzyskanie pełnej kaskadowości (opcja ALL).
 ** Bazy Grafowe: NeoDB
 ** MongoDB
 ** Elastic Search
-
-## Testowanie
 -->
