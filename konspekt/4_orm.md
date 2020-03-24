@@ -322,20 +322,29 @@ Mimo, że ORM (w szczególności JPA) są obecnie standardem przemysłowym, wiel
 
 Z punktu widzenia architektonicznego najpoważniejszym problemem jest powszechne modelowania obiektów logiki biznesowej (domeny) z użyciem encji JPA. Jest to pogwałcenie zasady niezależności domeny od szczegółów technicznych (mechanizm składowania danych i komunikacji z relacyjną bazą danych). Jak już wspomniano, abstrakcja JPA jest bardzo nie doskonała i w praktyce kod logiki biznesowej musi być optymalizowany pod kątem zastosowanego mechanizmu utrwalania.
 
-<!--
 ## Transakcje
-* Cechy transakcji: ACID
-* Poziomy izolacji
-* Realizacja izolacji transakcji
-* EntityManager
-* Spring i Transactional
-* JPA i lock
-* Blokady optymistyczne i pesymistyczne
+Transakcje to ciągi operacji na danych które powinny być zrealizowane w całości zgodnie z modelem ACID. Cechy modelu ACID charakteryzujące transakcję to:
+* Atomicity - atomowość - transakcja jest niepodzielna, tzn. albo wykona się poprawnie w całości, albo nie wykona się wcale (w praktyce oznacza to, że wszystkie zmiany wprowadzone w trakcie zostaną wycofane w wyniku procesu zwanego rollback).
+* Consistency - spójność - wykonanie transakcji zmienia dane w sposób spójny, tj. żadne więzy integralności nie zostaną naruszone w wyniku zatwierdzenia transakcji.
+* Isolation - izolacja - tymczasowe zmiany w danych wprowadzane w trakcie wykonania transakcji a przed jej zatwierdzeniem są niewidoczne dla innych sesji dostępu do danych.
+* Durability - trwałość - po zatwierdzeniu transakcji zmiany zapisywane są w sposób trwały.
+ 
+### Poziomy izolacji transakcji
+Cechy ACD są bezproblemowo realizowane przez system transakcyjny, głównie dzięki mechanizmom undo/redo logów. Izolacja jest o tyle kłopotliwa, że wymaga blokowania dostępu do częśći danych dla innych sesji bazodanowych co istotnie wpływa na współbieżność dostępu do danych i co za tym idzie, na wydajność systemu docelowego. W praktyce bazy danych a także mechanizmy API takie jak JDBC, Hibernate, JPA, Spring pozwalają na regulowanie jakości izolacji poprzez definiowanie poziomu izolacji. Dostępne są następujące poziomy:
+* Read uncommited - tzw. dirty reads - nie ma żadnej izolacji, inne sesje widzą dane modyfikowane wewnątrz transakcji.
+* Read commited - często jest to domyślny poziom - modyfikowane dane nie są widoczne dla innych sesji.
+* Repeatable read - ten poziom izolacji zapewnia, że rekordy raz odczytane przez daną transakcję nie mogą się zmienić dopóki transakcja nie zostanie zatwierdzona.
+* Serializable - ten poziom izolacji zapewnia, że zbiór danych zwrócony przez zapytanie z określoną klauzulą where pozostanie niezmienny podczas trwania danej transakcji.
 
+W praktyce poziom Read commited wymaga stosowania blokowania na poziomie rekordów, a poziom Serializable wymaga blokowania części lub całych tabel. Stosowanie izolacji wyższej niż Read commited bardzo podnosi ryzyko zakleszczeń (deadlocks). Zakleszczenia są także możliwe dla poziomu read commited.
+
+<!--
 ## Alternatywne metody utrwalania danych
 * Reaktywny driver R2DBC
 * Narzędzia NOSQL:
 ** Bazy Grafowe: NeoDB
 ** MongoDB
 ** Elastic Search
+
+## Bibliografia
 -->
