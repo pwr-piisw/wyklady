@@ -260,12 +260,45 @@ Podstawowe dyrektywy strukturalne Angulara:
 * `ngIf`
 * `ngSwitch`, `ngSwitchCase`, `ngSwitchDefault`
 
-<!--
 ### Serwisy
+Serwisem nazywamy klasy i ich obiekty, które Angular potrafi wstrzykiwać do innych serwisów albo komponentów. Serwisy są bardzo użyteczne tam, gdzie potrzebujemy współdzielić kod ale nie bardzo jest sens tworzyć w tym celu komponent (ponieważ element taki nie posiada cech wizualnych). Serwisy Angulara są w tym sensie bardzo podobne go serwisów albo komponentów Springa.
+
+Serwis musi być oznaczony dekoratorem `@Injectable()`.
+
+Przykładowe zastosowania serwisów:
+* Wrappery na interfejsy RESTowe służące do komunikacji np. z backendem.
+* Zapewnienie środków komunikacji między komponentami (serwis staje się Singletonem przy pomocy którego komponenty mogą wymieniać się danymi).
+
+Aby serwis był dostępny w każdym miejscu aplikacji, należy odpowiednio skojarzyć go z injectorem:
+```typescript
+@Injectable({
+    providedIn: 'root'
+})
+export class BookstoreService {
+
+}
+```
+
+Serwis jest gotowy do użycia, należy pozwolić Angularowi na wstrzyknięcie go do komponentu albo innego serwisu. Wykorzystujemy w tym celu konstruktorowe wstrzykiwanie zależności:
+```typescript
+@Component()
+export class BookListComponent {
+  constructor(private readonly bookstoreService: BookstoreService) {
+  }
+  ...
+}
+```
+
+Więcej w dokumentacji Angulara: https://angular.io/guide/dependency-injection
+<!--
 ## Angular Router
+Więcej informacji w dokumentacji Angulara: https://angular.io/guide/router
+
 ## Techniki komunikacji między komponentowej
-## Komunikacja z backendem
 -->
+
+## Komunikacja z backendem
+Więcej informacji w dokumentacji Angulara: https://angular.io/guide/http
 
 ## Bibliografia
 * https://pwr-piisw.github.io/wyklady/angular_1.html#/
@@ -274,3 +307,6 @@ Podstawowe dyrektywy strukturalne Angulara:
 * https://angular.io/guide/ngmodules
 * https://angular.io/guide/displaying-data
 * https://angular.io/guide/user-input
+* https://angular.io/guide/router
+* https://angular.io/guide/http
+* https://angular.io/guide/dependency-injection
