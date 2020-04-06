@@ -13,15 +13,12 @@ Dodatkowo, dla Angulara tworzone jest wiele bibliotek, m.in.:
 ## Architektura
 Angular jest realizacją architektury aplikacji "Single Page Application", którą poznaliśmy już na pierwszym wykładzie.
 
-[Architektura SPA](../img/rich-front-architecture.svg)
+[Architektura SPA](img/rich-front-architecture.svg)
 
 Angular odpowiada za całość implementacji po stronie przeglądarki, łącznie z Routerem, przy czym Router jest modułem opcjonalnym.
 
-[Architektura Angular](../img/angular-architecture.png)
+[Architektura Angular](img/angular-architecture.png)
 
-
-## Środowisko developerskie
-## Opis aplikacji Bookstore
 ## Podstawowe elementy Angulara
 ### Moduły
 ### Komponenty
@@ -32,4 +29,6 @@ Angular odpowiada za całość implementacji po stronie przeglądarki, łącznie
 ## Angular Router
 ## Techniki komunikacji międzykomponentowej
 ## Komunikacjaz z backendem
+## Środowisko developerskie
+## Opis aplikacji Bookstore
 ## Bibliografia
