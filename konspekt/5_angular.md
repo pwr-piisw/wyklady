@@ -99,11 +99,39 @@ Więcej szczegółów uzyskać można w dokumentacji Angulara: https://angular.i
 Więcej informacji na temat samych modułów tamże: https://angular.io/guide/ngmodules
 
 ### Komponenty
+Komponent jest podstawową jednostką, przy pomocy której zbudowana jest każda aplikacja Angularowa. Komponent jest elementem wizualnym, tj może on być wyrenderowany na ekranie (w modelu DOM dokumentu HTML) i służy do prezentacji danych oraz reagowania na akcje wykonywane przez użytkownika.
+
+Komponent składa się z nastepujących elementów:
+* kod komponentu (klasa Typescript),
+* template komponentu (fragment HTML z możliwością stosowania dyrektyw),
+* prywatny arkusz styli (dokument CSS, SCSS lub inny wspierany).
+
+Elementy te mogą być zgrupowane w ramach jednego pliku, najczęsciej jednak stosuje się kilka niezależnych plików źródłowych:
+* `<nazwa>.component.html` - dla template,
+* `<nazwa>.component.scss` - dla arkusza styli,
+* `<nazwa>.component.ts` - dla kodu komponentu.
+
+Dla kodu komponentu może istnieć także zestaw testów jednostkowych: `<nazwa>.component.spec.ts`.
+
+Komponent musi być zadeklarowany w ramach modułu (musi znaleźć się w kolekcji `declarations`). Komponenty najczęściej deklarowane są w ramach dedykowanego folderu. Możliwe - i zalecane - jest zagnieżdżanie komponentów w sobie w sytuacji, gdy deklarujemy komponenty prywatne, używane wewnętrznie przez inny komponent.
+
+Komponenty mogą komunikować się między sobą na kilka sposobów. To zagadnienie jest szczegółowo opisane w innym punkcie tego dokumentu.
+
+Komponenty można wygenerować z użyciem Angular CLI:
+```
+cd src/app
+ng generate component <name>
+```
+Nazwa komponentu może (powinna) być poprzedzona nazwą modułu oraz ewentualnie nazwą komponentu-rodzica.
+
+Więcej informacji na temat Angular CLI: https://angular.io/cli/generate#component-command
+Więcej informacji na temat komponentów: https://angular.io/guide/displaying-data
+
 ### Template
 ### Data-binding
 ### Dyrektywy
 ### Serwisy
 ## Angular Router
-## Techniki komunikacji międzykomponentowej
+## Techniki komunikacji między komponentowej
 ## Komunikacjaz z backendem
 ## Bibliografia
