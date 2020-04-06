@@ -1,5 +1,5 @@
  # Wykład 5 (2020-03-30) - SPA, Angular
-Link do wykładów: https://pwr-piisw.github.io/wyklady/angular_1.html#/
+Link do prezentacji: https://pwr-piisw.github.io/wyklady/angular_1.html#/
 
 ## Wprowadzenie
 Framework Angular jest jednym z dwóch najważniejszych obecnie frameworków wykorzystywanych do implementacji aplikacji SPA w środowisku JavaScript. Jest to kompletne narzędzie w skład którego wchodzą także:
@@ -104,7 +104,7 @@ Więcej informacji na temat samych modułów tamże: https://angular.io/guide/ng
 Komponent jest podstawową jednostką, przy pomocy której zbudowana jest każda aplikacja Angularowa. Komponent jest elementem wizualnym, tj może on być wyrenderowany na ekranie (w modelu DOM dokumentu HTML) i służy do prezentacji danych oraz reagowania na akcje wykonywane przez użytkownika.
 
 Komponent składa się z nastepujących elementów:
-* kod komponentu (klasa Typescript),
+* kod komponentu (klasa Typescript) pełniący funkcję kontrolera,
 * template komponentu (fragment HTML z możliwością stosowania dyrektyw),
 * prywatny arkusz styli (dokument CSS, SCSS lub inny wspierany).
 
@@ -130,10 +130,22 @@ Więcej informacji na temat Angular CLI: https://angular.io/cli/generate#compone
 Więcej informacji na temat komponentów: https://angular.io/guide/displaying-data
 
 ### Template
-### Data-binding
+Angular nie wprowadza własnej notacji do reprezentacji Template'ów, ale raczej stosuje rozszerzenie języka HTML. W efekcie, template definiuje fragment dokumentu HTML'a, który będzie zastępował każdorazowo wystąpienie komponentu w nadrzędnym dokumencie HTML.
+
+Kod komponentu (`<name>.component.ts`) jako klasa języka TS/JS pozwala na deklarowanie pól publicznych. Takie pola dostępne są z poziomu template, dzięki czemu template może wyświetlać dane enkapsulowane przez komponent. 
+
+Do dynamicznego budowania reprezentacji graficznej komponentu wykorzystywane są wiązania danych oraz dyrektywy, które są traktowane jak rozszerzenie języka HTML do języka template'ów Angulara. Mechanizmy to opiszemy w następnych punktach.
+
+### Wiązanie danych
+
 ### Dyrektywy
+Podstawowe dyrektywy strukturalne Angulara:
+* `ngFor`
+* `ngIf`
+* `ngSwitch`, `ngSwitchCase`, `ngSwitchDefault`
+
 ### Serwisy
 ## Angular Router
 ## Techniki komunikacji między komponentowej
-## Komunikacjaz z backendem
+## Komunikacja z backendem
 ## Bibliografia
