@@ -137,6 +137,113 @@ Kod komponentu (`<name>.component.ts`) jako klasa języka TS/JS pozwala na dekla
 Do dynamicznego budowania reprezentacji graficznej komponentu wykorzystywane są wiązania danych oraz dyrektywy, które są traktowane jak rozszerzenie języka HTML do języka template'ów Angulara. Mechanizmy to opiszemy w następnych punktach.
 
 ### Wiązanie danych
+Więcej informacji na temat zagadnień opisanych w tym punkcie można znaleźć w dokumentacji: https://angular.io/guide/user-input#user-input
+
+#### Interpolacja
+Podstawowym mechanizmem pozwalającym na powiązanie danych komponentu z widokiem jest interpolacja. Interpolacja to wyliczenie wyrażenia ujętego w podwójny nawias: `{{ }}`. W najprostszym przypadku interpolacja pozwala na wyświetlenie zawartości publicznego pola klasy komponentu w dokumencie HTML:
+```typescript
+@Component()
+export class ValueComponent {
+
+    name: string;
+
+}
+```
+Możliwe jest wyświetlenie wartości `name` wewnątrz paragrafu:
+```angular2html
+<div>
+<p>{{ name }}</p>
+</div>
+```
+Co ciekawe, każda zmiana wartości `name` spowoduje automatyczną aktualizację tekstu wewnątrz paragrafu.
+
+#### Property binding
+Wiązanie właściwości propaguje wartość do właściwości elementu. Wiązanie to działa tylko w jednym kierunku: od komponentu do HTML.
+```angular2html
+<div>
+<input [value]="name">
+</div>
+```
+Wiązanie wymaga ujęcie nazwy atrybutu elementu HTML w nawiasy kwadratowe: `[value]` definiuje wiązanie własciwości `value` elementu `input`. Efektem końcowym wiązania zademonstrowanego powyżej jest wyświetlenie wartości pola `name` wewnątrz pola edycyjnego formularza HTML.
+
+#### Event binding
+Z każdym elementem DOM modelu powiązana jest pewna ilość zdarzeń, na które można reagować i obsługiwać. Jest to drugi kierunek komunikacji: od DOM modelu do komponentu Angulara. Reagowanie na zdarzenia DOM modelu w Angularze realizowane jest za pomocą wiązań zdarzeniowych (Event Binding). Aby zadeklarować takie wiązanie, należy
+```angular2html
+<div (click)="onDivClicked()">
+  ...
+</div>
+```
+
+```typescript
+@Component()
+export class ValueComponent {
+    
+    onDivClicked() {
+        console.log('div clicked!');
+    }
+}
+```
+
+Możliwe jest przekazanie do funkcji obsługi zdarzenia informacji o zdarzeniu, która zawarta jest w obiekcie `$event`:
+```angular2html
+<div (click)="onDivClicked($event)">
+  ...
+</div>
+```
+
+```typescript
+@Component()
+export class ValueComponent {
+    
+    onDivClicked(eventData: any) {
+        console.log(eventData);
+    }
+}
+```
+
+#### Two way binding
+Kombinacja dwóch powyższych mechanizmów pozwala na stworzenie wiązania dwukierunkowego, szczególnie użytecznego w przypadku pól formularzy i kontrolek `input`:
+
+```typescript
+@Component()
+export class UserFormComponent {
+
+    userName: string;
+    streetName: string;
+}
+```
+
+```angular2html
+<div>
+  <input type="text" [ngModel]="userName" (ngModelChanged)="userName = $event.target.value">
+  <input type="text" [(ngModel)]="streetName">
+</div>
+```
+
+*Uwaga*: użyta w przykładzie dyrektywa `ngModel` dostępna jest po zaimportowaniu modułu `FormsModule`.
+
+Warto zwrócić uwagę na skróconą notację `[( ... )]`, która jest tożsama z `[ngModel]` oraz `(ngModelChanged)`. Można ją stosować wszędzie tam, gdzie możliwe jest bezpośrednie powiązanie wartości z kontroli z polem w komponencie. Możliwe jest także zastosowanie notacji akcesorów:
+
+```typescript
+export class UserFormComponent {
+    private _userName: string;
+    
+    get userName() {
+        return this._userName;
+    }   
+
+    set userName(value: string) {
+        console.log(value);
+        this._userName = value;
+    }
+}
+```
+
+```angular2html
+<div>
+  <input type="text" [(ngModel)]="userName">
+</div>
+```
 
 ### Dyrektywy
 Podstawowe dyrektywy strukturalne Angulara:
