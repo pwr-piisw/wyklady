@@ -1,4 +1,6 @@
  # Wykład 5 (2020-03-30) - SPA, Angular
+Link do wykładów: https://pwr-piisw.github.io/wyklady/angular_1.html#/
+
 ## Wprowadzenie
 Framework Angular jest jednym z dwóch najważniejszych obecnie frameworków wykorzystywanych do implementacji aplikacji SPA w środowisku JavaScript. Jest to kompletne narzędzie w skład którego wchodzą także:
 * Angular Router do obsługi nawigacji międzykomponentowej oraz do interakcji z paskiem adresu.
