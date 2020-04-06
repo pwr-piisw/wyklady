@@ -12,10 +12,12 @@ Dodatkowo, dla Angulara tworzone jest wiele bibliotek, m.in.:
 * NgxBootstrap - inna implementacja biblioteki Bootstrap dla Angulara.
 * NgRX - implementacja wzorca Redux dla Angulara.
 
+<!--
 ## Środowisko developerskie
 ### NodeJS
 ### NPM
 ### Angular CLI
+-->
 
 ## Opis aplikacji Bookstore
 Aplikacja Bookstore dostępna jest w repozytorium [Bookstore](https://github.com/pwr-piisw/bookstore). Jest to referencyjny projekt Angularowy z backendem napisanym w Javie. Jest on podstawą dla listy nr 5, jest też przykładem, w jaki sposób można konstruować proste aplikacje z backendem i frontendem. W tym punkcie przedstawimy podstawowe cechy tego projektu.
@@ -258,8 +260,17 @@ Podstawowe dyrektywy strukturalne Angulara:
 * `ngIf`
 * `ngSwitch`, `ngSwitchCase`, `ngSwitchDefault`
 
+<!--
 ### Serwisy
 ## Angular Router
 ## Techniki komunikacji między komponentowej
 ## Komunikacja z backendem
+-->
+
 ## Bibliografia
+* https://pwr-piisw.github.io/wyklady/angular_1.html#/
+* https://github.com/pwr-piisw/bookstore
+* https://angular.io/cli/generate
+* https://angular.io/guide/ngmodules
+* https://angular.io/guide/displaying-data
+* https://angular.io/guide/user-input
