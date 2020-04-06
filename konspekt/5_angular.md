@@ -246,6 +246,13 @@ export class UserFormComponent {
 ```
 
 ### Dyrektywy
+Dyrektywy to rozszerzenia języka HTML oferowane przez Angular. Mogą być one wykorzystywane w template'ach.
+
+Podstawowe dyrektywy atrybutowe:
+* `ngModel` - (znana nam już dyrektywa dostępna po zaimportowaniu modułu `FormsModule`) pozwala powiązać pola formularza z modelem.
+* `ngClass` - pozwala na dynamiczną modyfikację klas CSS określonych dla danego elementu HTML.
+* `ngStyle` - pozwala na dynamiczne modyfikowanie styli CSS określonych dla danego elementu HTML.
+
 Podstawowe dyrektywy strukturalne Angulara:
 * `ngFor`
 * `ngIf`
