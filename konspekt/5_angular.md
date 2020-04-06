@@ -11,6 +11,9 @@ Dodatkowo, dla Angulara tworzone jest wiele bibliotek, m.in.:
 * NgRX - implementacja wzorca Redux dla Angulara.
 
 ## Środowisko developerskie
+### NodeJS
+### NPM
+### Angular CLI
 
 ## Opis aplikacji Bookstore
 Aplikacja Bookstore dostępna jest w repozytorium [Bookstore](https://github.com/pwr-piisw/bookstore). Jest to referencyjny projekt Angularowy z backendem napisanym w Javie. Jest on podstawą dla listy nr 5, jest też przykładem, w jaki sposób można konstruować proste aplikacje z backendem i frontendem. W tym punkcie przedstawimy podstawowe cechy tego projektu.
@@ -45,6 +48,8 @@ W głównym katalogu aplikacji (`app`) znajdują się także następujące istot
 * `app.component.*` - główny komponent aplikacji - wewnątrz niego osadzone są wszystkie inne komponenty "top level".
 * `app-routing.module.ts` - kod routera dla aplikacji Bookstore.
 
+## Krótka historia Angulara
+
 ## Architektura
 Angular jest realizacją architektury aplikacji "Single Page Application", którą poznaliśmy już na pierwszym wykładzie.
 
@@ -56,6 +61,43 @@ Angular odpowiada za całość implementacji po stronie przeglądarki, łącznie
 
 ## Podstawowe elementy Angulara
 ### Moduły
+Moduł (`NgModule`) to podstawowy mechanizm konstruowania aplikacji Angularowej. Moduł służy do grupowania elementów należących i realizujących wspólną poddomenę. Moduły Angulara pełnią podobną rolę do modułów javaScriptów, nie należy jednak ich mylić ze sobą. Aby uniknąć pomyłek, będziemy używać nazwy NgModule.
+
+Moduły NgModule przechowywane są w osobnych folderach wewnątrz aplikacji. Każdy NgModule opisywany jest przy pomocy pliku `*.module.ts`:
+
+```typescript
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BookListComponent} from './book-list/book-list.component';
+import {BookPanelComponent} from './book-list/book-panel/book-panel.component';
+
+@NgModule({
+  declarations: [
+    BookListComponent,
+    BookPanelComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class BooksModule {
+}
+```
+
+Moduł pozwala zarządzać zależnościami wewnątrz aplikacji, zarówno wewnętrznymi jak i zewnętrznymi. Deklaracja zależności modułowych następuje wewnątrz dekoratora `@NgModule`, znajdują się tam kolekcje o następujących właściwości:
+* `providers` - lista klas obiektów, które będą mogły być wstrzyknięte przez Angular Injector w ramach tego modułu. Wykorzystywane w przypadku np. lokalnych serwisów.
+* `declarations` - lista klas komponentów, które są zadeklarowane w ramach tego modułu.
+* `imports` - lista klas komponentów, które są importowane i mogą być użyte wewnątrz tego modułu. Są to zarówno komponenty pochodzące z innych, zewnętrznych bibliotek (np. Angular Material, ale także biblioteki samego Angulara, np. Angular Forms) ale także komponentów z innych modułów danej aplikacji.
+* `exports` - lista komponentów zadeklarowanych lub zaimportowanych przez dany moduł, które są eksportowane, czyli są dostępne dla innych modułów (można je importować w innych modułach).
+* `entryComponents` - lista komponentów, które mogą być dynamicznie ładowane przez moduł, wykorzystywane np. do deklarowania komponentów okien dialogowych.
+
+Nowy moduł można wygenerować przy pomocy Angular CLI:
+```
+ng generate module <name>
+```
+Więcej szczegółów uzyskać można w dokumentacji Angulara: https://angular.io/cli/generate#module-command
+Więcej informacji na temat samych modułów tamże: https://angular.io/guide/ngmodules
+
 ### Komponenty
 ### Template
 ### Data-binding
