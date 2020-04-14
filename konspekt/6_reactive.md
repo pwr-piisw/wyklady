@@ -32,7 +32,76 @@ Problem pojawia się w momencie, w którym wywołanie asynchroniczne skutkuje ko
 Istnieje kilka mechanizmów - technik usprawnienia programowania asynchroniczego w JavaScripcie / TypeScripcie - opiszemy je w następnych punktach.
 
 ### Promise
+Promise dostępne są w JavaScripcie począwszy od wersji ECMAScript 6.
+
+Obiekt `Promise` posiada wewnątrz callbacki obsługujące sytuację pozytywną i negatywną (błędną). Obiekt `Promise` najczęściej jest zwracany jako wartość funkcji asynchronicznej.
+
+```JavaScript
+const p = new Promise((resolve, reject) => {
+   if (/* condition */) {
+      resolve(/* value */);  // fulfilled successfully
+   }
+   else {
+      reject(/* reason */);  // error, rejected
+   }
+});
+```
+
+Obiekt `Promise` pozwala na rejestrowanie callbacków w prosty sposób:
+
+```JavaScript
+p.then((val) => console.log('fulfilled:' + val),
+       (err) => console.log('rejected: ' + err));
+```
+
+Obiekt `Promise` pozwala także łączyć wywołania asynchroniczne w łańcuchy:
+
+```JavaScript
+p.then((val) => someOtherAsyncFunction(val))
+ .then((val) => someOtherAsyncFunction2(val))
+ .then((val) => console.log('fulfilled:' + val)) ;
+```
 
 ### Async / await
+
+Mechanizm async / await jest cukrem syntaktycznym pozwalającym na ukrycie obiektów `Promise`.
+
+Funkcje typy `async` zawsze zwracają wartość opakowaną w `Promise`: jeśli zwracana wartość nie jest obiektem `Promise`, JavaScript automatycznie opakuje taką wartość w `Promise`.
+
+```JavaScript
+async function someFunction() {
+  return 'foo';
+}
+
+someFunction().then((val) => console.log(val)); // -> 'foo'
+```
+
+Słowo `async` nie jest specjalnie magiczne. Ciekawsze jest słowo `await`. Słowo kluczowe `await` można wywołać jedynie wewnątrz funkcji typu `async`. Poprzedzenie słowem `await` wywołania zwracajacego `Promise` lub wartości `Promise` powoduje, że dalsze instrukcje (poniżej `await`) zostaną wykonane dopiero w momencie pozytywnego rozwiązana promise - funkcja staje się nieblokującą. Kod zaczyna przypominać kod synchroniczny, staje się przez to bardziej czytelny.
+
+```JavaScript
+async function showAvatar() {
+
+  // read our JSON
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+
+  // read github user
+  let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+  let githubUser = await githubResponse.json();
+
+  // show the avatar
+  let img = document.createElement('img');
+  img.src = githubUser.avatar_url;
+  img.className = "promise-avatar-example";
+  document.body.append(img);
+
+  // wait 3 seconds
+  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+
+  img.remove();
+
+  return githubUser;
+}
+```
 
 ### Observables / RxJS
