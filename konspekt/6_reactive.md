@@ -103,5 +103,6 @@ async function showAvatar() {
   return githubUser;
 }
 ```
+(źródło: https://javascript.info/async-await)
 
 ### Observables / RxJS
