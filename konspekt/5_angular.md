@@ -290,6 +290,7 @@ export class BookListComponent {
 ```
 
 Więcej w dokumentacji Angulara: https://angular.io/guide/dependency-injection
+
 <!--
 ## Angular Router
 Więcej informacji w dokumentacji Angulara: https://angular.io/guide/router
