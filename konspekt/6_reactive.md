@@ -14,7 +14,7 @@ Asynchroniczność nie jest pojęciem nowym, ten model programowania wykorzystyw
 ## Asynchroniczność w systemach jednowątkowych
 JavaScript, jak już wiemy, jest językiem jednowątkowym. Sytuacja, w której kod musi poczekać na odpowiedź z zewnętrznego systemu (system plików, sieć komputerowa) powoduje, że JavaScript nie jest w stanie nic wykonać. Nie działałoby wtedy chociażby renderowanie oraz reakcja na jakiekolwiek zdarzenia. Pomocna zatem staje się w JavaScripcie asynchroniczność rozumiana podobnie jak to opisano powyżej: wywołanie zdalnego API wymaga zarejestrowanie funkcji zwrotnej, która zostanie wykonana w dogodnym momencie.
 
-Co ciekawe, w podobny sposób działały pierwsze okienkowe systemy operacyjne, takie jak Microsoft Windows (wersja 3.x i starsze), MacOS firmy Apple.
+Co ciekawe, w podobny sposób działały pierwsze okienkowe systemy operacyjne, takie jak Microsoft Windows (wersja 3.x i starsze), MacOS Classic firmy Apple.
 
 Wracając do JavaScriptu, na następnym diagramie widzimy jego model wykonawczy.
 
