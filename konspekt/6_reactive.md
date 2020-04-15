@@ -106,3 +106,59 @@ async function showAvatar() {
 (źródło: https://javascript.info/async-await)
 
 ### Observables / RxJS
+Observables to technika programowania reaktywnego implementowana przez biblitekę RxJS (istnieją analogiczne implementacje także dla innych niż JavaScript języków). Technika ta opiera się o asynchroniczne strumienie danych. Jest to uogólnienie Promise, które potrafią reagować jedynie na jedno zdarzenie danego typu.
+
+![Async Data Stream](../img/AsyncDataStream1.png)
+
+Strumień danych emituje:
+* wiele zdarzeń - wartości,
+* błędy,
+* sygnał `completed` - po którym nie nadejdą już żadne zdarzenia.
+
+## Korzyści z programowania reaktywnego
+Programowanie reaktywne dobrze jest zestawić z wielowątkowym serwerem HTTP. Klasyczny serwer HTTP oferuje pulę wątków: każde żądanie otrzymuje jeden wątek z puli, który jest zajęty przez cały czas przetwarzania żądania. W tym czasie kod wykonywany w ramach wątku komunikuje się z bazą danych, innymi systemami poprzez sieć itp. W praktyce, większość czasu kod czeka na odpowiedź, co jest marnotrawstwem.
+
+Programowanie reaktywne nie wspiera czekania - czekanie jest w praktyce zabronione w tym modelu. Zamiast czekać - rejestrujemy callback (funkcję zwrotną), w której kontynuujemy pracę po otrzymaniu odpowiedzi. W sytuacji, gdy niezbędna jest kolejna operacja blokująca - rejestrujemy kolejny callback itd.
+
+W praktyce, w typowym przypadku, możliwe jest wykonanie tej samej pracy przy użyciu dużo mniejszej liczby wątków (nawet jeden wątek potrafi obsłużyć zadziwiająco dużą liczbę żądań).
+
+Programowanie reaktywne pozwala także na efektywne wykorzystywanie mocy nowoczesnych procesorów. Aby to zrozumieć, warto rozważyć następujący diagram:
+
+![Latency numbers](../img/latency-numbers.png)
+
+Ukazuje on zależności między czasami wykonywania poszczególnych operacji. W szczególności widać, jak szybko wykonywane są operacje na pamięci podręcznej procesora (cache). Jeśli procesor musi na raz wykonywać większą liczbę wątków i liczba ta jest większa niż ilość rdzeni procesora, to procesor zmuszony jest wywłaszczać wątki i przełączać kontekst. Częste przełączanie wątków czyni mechanizm pamięci podręcznej bezużytecznym, gdyż efektywny czas wykorzystywania danych zgromadzonych w tej pamięci będzie bardzo krótki - po przełączeniu kontekstu pamięć podręczna będzie nadpisana nowymi danymi.
+
+Reaktywne serwery istnieją także w Javie. Przykłady: Ratpack, Spring WebFlux.
+
+Backend dla repozytorium startowego (listy 5) napisany został reaktywnie z użyciem WebFlux: https://github.com/pwr-piisw/bookstore
+
+## ReactiveX i biblioteka RxJS
+Angular 2 i wyżej opiera się na bibliotece programowania reaktywnego RxJS. W przypadku programowania aplikacji angularowych znajomość RxJS, programowania reaktywnego i Observables jest niezbędna.
+```TypeScript
+@Injectable()
+ export class UserService {
+   constructor(private http: HttpClient) {}
+   getAllUsers(): Observable<Array<User>> {
+     return this.http.get<User[]>('services/rest/users');
+   }
+   findUser(id: number): Observable<User> {
+     return this.http.get<User>(`services/rest/users/${id}`);
+   }
+   saveUser(user: User) {
+     return this.http.post<User>('services/rest/users', user);
+   }
+   deleteUser(user:User): Observable<HttpResponse<any>> {
+     return this.http.delete(`services/rest/users/${user.id}`,
+       {observe: 'response'});
+   }
+}
+```
+W przypadku tego podejścia asynchroniczność manifestowana jest poprzez typ `Observable<>`.
+
+Ważną cechą Observables jest stosowanie operatorów, które dokonują reaktywnego przekształcania wartości, scalają strumienie itp. Podstawowe typy operatorów:
+* konstruktory: fromEvent, fromArray, fromPromize, of, timer,
+* transformacje: map, filter, pluck, throttle, take, takeUntil, buffer, merge
+
+Więcej przykładów dostępne jest w prezentacji z wykładu: https://pwr-piisw.github.io/wyklady/reactive.html#/7/3
+
+Kompletna dokumentacja dot. operatorów dostępna jest na stronie: https://rxjs-dev.firebaseapp.com/api
