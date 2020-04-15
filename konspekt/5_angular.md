@@ -12,12 +12,34 @@ Dodatkowo, dla Angulara tworzone jest wiele bibliotek, m.in.:
 * NgxBootstrap - inna implementacja biblioteki Bootstrap dla Angulara.
 * NgRX - implementacja wzorca Redux dla Angulara.
 
-<!--
 ## Środowisko developerskie
+Lokalne środowisko developerskie dla aplikacji angularowych składa się z następujących komponentów: NodeJS, NPM (albo Yarn) oraz Angular CLI. Nie należy także zapominać o narzędziach IDE, w szczególności polecane są IntelliJ Ultimate, WebStorm, Visual Studio Code.
+
 ### NodeJS
+Node JS to środowisko wykonywawcze dla JavaScript, serwer HTTP oraz cały ekosystem narzędzi developerskich, w szczególności zaś repozytorium pakietów / bibliotek jak NPM registry oraz narzędzia zarządzające pakietami jak NPM czy Yarn.
+
+Ponieważ środowisko JavaScriptowe dość swobodnie podchodzi do kwestii kompatybilności, często przydaje się dostęp do wielu różnych wersji narzędzia NodeJS. Zarządzanie wersjami NodeJS bardzo ułatwia NVM (node version manager). NVM dostępny jest tylko dla środowisk Unixowych (Linux, MacOS), ale istnieją porty na system Windows, np: https://github.com/coreybutler/nvm-windows
+
+NVM jest narzędziem CLI z dobrą dokumentacją.
+
 ### NPM
+Podstawowy menedżer pakietów dla Node JS. NPM jest domyślnie instalowany przez NVM (wersja NodeJS determinuje wersję NPM). NPM posiada następujące cechy:
+* umiejętność instalowania pakietów globalnie jak i lokalnie (w ramach projektu),
+* zależności lokalne instalowane są w katalogu `node_modules`,
+* zależności rozumiane są jako bezpośrednie i pośrednie,
+* NPM potrafi przechowywać różne wersje tych samych bibliotek, o ile przechodnie wersje zależności tego wymagają,
+* katalog `node_modules` ma tendencję do osiągania monstrualnych rozmiarów,
+* NPM honoruje zasady semver (semantic versioning),
+* NPM potrafi aktualizować biblioteki stosując tzw. miękkie zależności.
+
 ### Angular CLI
--->
+Angular CLI to narzędzie wspomagające pracę z aplikacjami angularowymi. Angular CLI uruchamiamy komendą `ng`. Angular CLI wygodnie jest zainstalować z pomocą NPM jako globalną zależność. Angular CLI posiada następujące cechy:
+* generowanie nowej aplikacji Angulara,
+* generowanie nowych elementów aplikacji Angulara jak moduł, komponent, serwis,
+* uruchamianie aplikacji w trybie developerskim: `ng serve`,
+* budowanie aplikacji: `ng build`,
+* budowanie wersji produkcyjnej: `ng build --prod`,
+* migracja do nowszej wersji Angulara: `ng upgrade`.
 
 ## Opis aplikacji Bookstore
 Aplikacja Bookstore dostępna jest w repozytorium [Bookstore](https://github.com/pwr-piisw/bookstore). Jest to referencyjny projekt Angularowy z backendem napisanym w Javie. Jest on podstawą dla listy nr 5, jest też przykładem, w jaki sposób można konstruować proste aplikacje z backendem i frontendem. W tym punkcie przedstawimy podstawowe cechy tego projektu.
@@ -291,12 +313,32 @@ export class BookListComponent {
 
 Więcej w dokumentacji Angulara: https://angular.io/guide/dependency-injection
 
-<!--
 ## Angular Router
-Więcej informacji w dokumentacji Angulara: https://angular.io/guide/router
+Angular Router jest opcjonalną biblioteką pełniącą funkcję integratora aplikacji SPA oraz paska URL przeglądarki. Router realizuje następujące funkcjonalności:
+* przekierowuje do odpowiedniego widoku po wpisaniu odpowiedniego adresu w pasku URL,
+* aktualizuje zawartość paska URL w reakcji na zdarzenie nawigacji aplikacji SPA,
+* udostępnia aplikacji zawartość parametrów żądania będących częścią adresu.
 
-## Techniki komunikacji między komponentowej
--->
+Routing inicjujemy tzw. tablicą przejść i konfigurujemy go jako moduł:
+
+![Routing setup](../img/routing-setup-in-app.png)
+
+Tablica przejść jest zwykłą tablicą obiektów o określonej strukturze. Określamy w nim mapowanie ścieżek URL (path) na komponenty (component):
+
+![Route table ](../img/routing-reorganized.png)
+
+Przy przejściu do zadanej ścieżki Angular Router podmienia komponent wewnątrz elementu zwanego router outlet. Por: https://pwr-piisw.github.io/wyklady/angular_1.html#/8/2
+
+Więcej informacji w dokumentacji Angulara: https://angular.io/guide/router
+Wyczerpujący opis zawarto także w książce Victora Savkina: https://leanpub.com/router
+
+## Techniki komunikacji międzykomponentowej
+Dobre praktyki w projektowaniu aplikacji Angularowej obejmują dekompozycję widoków na wiele małych, współpracujących ze sobą komponentów. Współpraca komponentów opiera się na komunikacji: wymianie danych i zdarzeń. Angular oferuje kilka technik komunikacji między komponentami:
+* z wykorzystaniem wiązań (bindings),
+* z wykorzystaniem serwisów,
+* przy wykorzystaniu relacji parent-child.
+
+Więcej informacji: https://angular.io/guide/component-interaction
 
 ## Komunikacja z backendem
 Więcej informacji w dokumentacji Angulara: https://angular.io/guide/http
@@ -311,3 +353,5 @@ Więcej informacji w dokumentacji Angulara: https://angular.io/guide/http
 * https://angular.io/guide/router
 * https://angular.io/guide/http
 * https://angular.io/guide/dependency-injection
+* https://leanpub.com/router
+* https://angular.io/guide/component-interaction
