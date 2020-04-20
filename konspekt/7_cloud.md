@@ -138,7 +138,7 @@ Oto kilka przykładów przedstawiających, jakie rozwiązania dotyczące usług 
  
   Oprogramowanie na żądanie, znane też jako oprogramowanie jako usługa (SaaS), umożliwia oferowanie klientom najnowszych wersji i aktualizacji oprogramowania — zawsze, kiedy go potrzebują, i wszędzie, gdzie się znajdują.
   
- ## Aplikacje natywne dla chmury (cloud native)
+## Aplikacje natywne dla chmury (cloud native)
  
 Aplikacje cloud native są specjalnie przystosowane do architektury cloud computing. Mogą być szybko budowane i wdrażane przez małe dedykowane zespoły deweloperów na platformy, które działają na dowolnym sprzęcie i które można łatwo skalować. Aplikacje chmurowe zapewniają zwinność (tzw. agility) i elastyczność. Można je też łatwo przenosić między chmurami. Oczywiście aplikacje cloud native nie powinny być zależne od środowiska, nie ważne, czy to jest chmura publiczna, chmura prywatna czy maszyna developerska
 
