@@ -4,25 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Wykłady</title>
+    <title>Free your mind with JDBI</title>
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/simple.css">
+    <meta name="description" content="Using explicit SQL mappers in Enterprise Applications">
+    <meta name="author" content="Maciej Małecki">
 
-    <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/github.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>reveal.js</title>
 
-    <!-- Custom -->
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/night.css" id="theme">
     <link rel="stylesheet" href="css/custom.css">
 
-    <!-- Printing and PDF exports -->
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 </head>
 <body>
 <div class="reveal">
@@ -39,13 +36,13 @@
                         <li>Wykład 1
                             <ul>
                                 <li><a href="01_wprowadzenie.html">Wprowadzenie</a></li>
-                                <li><a href="04_html.html">HTML oraz CSS</a></li>
+                                <li><a href="01_html_css.html">HTML oraz CSS</a></li>
                             </ul>
                         </li>
                         <li>Wykład 2
                             <ul>
-                                <li><a href="06_javascript.html">JavaScript</a></li>
-                                <li><a href="07_typescript.html">TypeScript</a></li>
+                                <li><a href="02_javascript.html">JavaScript</a></li>
+                                <li><a href="02_typescript.html">TypeScript</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -54,16 +51,16 @@
                     <ul>
                         <li>Wykład 5/6
                             <ul>
-                                <li><a href="angular_1.html">Angular</a></li>
+                                <li><a href="05_angular.html">Angular</a></li>
                             </ul>
                         <li>Wykład 7
                             <ul>
-                                <li><a href="reactive.html">Programowanie reaktywne</a></li>
+                                <li><a href="06_reactive.html">Programowanie reaktywne</a></li>
                             </ul>
                         </li>
                         <li>Wykład 8
                             <ul>
-                                <li><a href="frontend-testing.html">Testowanie aplikacji webowych</a></li>
+                                <li><a href="08_frontend-testing.html">Testowanie aplikacji webowych</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -116,26 +113,21 @@
     </div>
 </div>
 
-<script src="lib/js/head.min.js"></script>
-<script src="js/reveal.js"></script>
-
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
 <script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
     Reveal.initialize({
-        history: true,
-        dependencies: [
-            {src: 'plugin/markdown/marked.js'},
-            {src: 'plugin/markdown/markdown.js'},
-            {src: 'plugin/notes/notes.js', async: true},
-            {src: 'plugin/livecode/livecode.js', async: true},
-            {
-                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                hljs.initHighlightingOnLoad();
-            }
-            }
-        ]
+        width: 1200,
+        hash: true,
+        navigationMode: 'linear',
+        slideNumber: 'c/t',
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
     });
 </script>
 </body>
