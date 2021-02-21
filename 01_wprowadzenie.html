@@ -44,33 +44,57 @@
 
     <section>
       <h3>Zasady zaliczeń</h3>
-      <p>Podstawą zaliczenia wykładu jest kolokwium:</p>
-      <ul>
-        <li>Pierwszy termin: 2020-04-20 (wykład 7)</li>
-        <li>Drugi termin: 2020-04-27 (wykład 8)</li>
-      </ul>
-
-      <p>Zasady zaliczenia zajęć laboratoryjnych omówione będą na pierwszych zajęciach
-        laboratoryjnych.</p>
-
-      <h4>Konsultacje</h4>
-      <div class="most-text">
+      <section>
+        <p>Podstawą zaliczenia wykładu jest kolokwium:</p>
         <ul>
-          <li>mgr inż. Maciej Małecki - pon 8:00-9:00, 302a, D-2</li>
+          <li>Pierwszy termin: 2021-04-19 (wykład 7)</li>
+          <li>Drugi termin: 2021-04-26 (wykład 8)</li>
+        </ul>
+        <p>Zasady zaliczenia zajęć laboratoryjnych omówione będą na pierwszych zajęciach
+          laboratoryjnych.</p>
+      </section>
+      <section>
+        <p>UWAGA: w przypadku zdalnej formy prowadzenia zajęć zmieniona będzie formuła zaliczeń:</p>
+        <ul>
+          <li>W przypadku uzyskania przez studenta/studentkę oceny minimum 4,0 z laboratorium, z wykładu przepisana
+            zostanie ta
+            ocena pomniejszona o 1.
+          </li>
+          <li>Dla studentów/studentek chcących uzyskać lepszą ocenę zorganizowane zostanie kolokwium w formie ustnej.
+          </li>
+        </ul>
+      </section>
+
+    </section>
+
+    <section>
+      <h3>Konsultacje</h3>
+      <div>
+        <ul>
+          <li>mgr inż. Szymon Jaśniak</li>
+          <li>mgr inż. Maciej Małecki</li>
+          <li>mgr inż. Marcin Nowak</li>
         </ul>
       </div>
     </section>
 
     <section>
       <h3>Materiały</h3>
-      <p>Wszelkie materiały do zajęć (wykłady, laboratorium) dostępne są na GitHub: <a
-          href="https://github.com/pwr-piisw">https://github.com/pwr-piisw</a></p>
-      <p>Slajdy z wykładów dostępne są on-line: <a href="https://pwr-piisw.github.io/wyklady/#/">https://pwr-piisw.github.io/wyklady/#/</a>
-      </p>
+      <div class="r-hstack">
+        <img src="img/qrcode.png" alt="QR">
+        <div>
+          <p>Strona z informacjami na temat kursu:</p>
+          <a href="https://pwr-piisw.github.io/materialy/">https://pwr-piisw.github.io/materialy/</a>
+          <p>Kurs ma własną organizację na GitHubie:</p>
+          <a href="https://github.com/pwr-piisw">https://github.com/pwr-piisw</a>
+          <p>Slajdy z wykładów dostępne są on-line:</p>
+          <a href="https://pwr-piisw.github.io/materialy/#_harmonogram">https://pwr-piisw.github.io/materialy/#_harmonogram</a>
+        </div>
+      </div>
     </section>
 
     <section>
-      <p>Czy są jakieś pytania?</p>
+      <h1>Aplikacje webowe</h1>
     </section>
 
     <section>
@@ -81,12 +105,11 @@
 
     <section>
       <h3>Architektura klient-serwer</h3>
-      <div class="fragment more-text clearfix" data-fragment-index="0">
-        <div class="left col"><img src="img/bbs.gif" alt="BBS" class="no-border" width="320" height="200"></div>
-        <div class="right col"><img src="img/quantum-link.png" alt="BBS" class="no-border" width="320" height="200">
-        </div>
+      <div class="r-hstack">
+        <img src="img/bbs.gif" alt="BBS" class="no-border">
+        <img src="img/quantum-link.png" alt="BBS" class="no-border">
       </div>
-      <div class="fragment most-text" data-fragment-index="0">
+      <div class="most-text">
         <p>Źródło:
           <a href="http://software.bbsdocumentary.com/COMMODORE/C64/CNET64/">http://software.bbsdocumentary.com/COMMODORE/C64/CNET64/</a>
           <a href="http://linkis.com/www.tinytickle.co.uk/cAHPM">http://linkis.com/www.tinytickle.co.uk/cAHPM</a>
@@ -96,9 +119,7 @@
 
     <section>
       <h3>Architektura klient-serwer</h3>
-      <div>
-        <img src="img/client-server.png" alt="Client server" class="no-border">
-      </div>
+      <img src="img/client-server.png" alt="Client server" class="backlight">
       <div class="most-text">
         <ul>
           <li class="fragment">Aplikacje klienckie są instalowane niezależnie na maszynach klienckich.</li>
@@ -115,20 +136,18 @@
 
     <section>
       <h3>Aplikacja webowa</h3>
-      <div class="more-text">
-        <ul>
-          <li>Używa standardów takich jak HTML/CSS oraz Javascript, które mogą być wykonywane przez każdą współczesną
-            przeglądarkę
-            internetową.
-          </li>
-          <li class="fragment">Pozwala na buforowanie kodu po stronie klienta dzięki istnieniu mechanizmów
-            <em>cache</em>.
-          </li>
-          <li class="fragment">Mechanizmy <em>cache</em> można kontrolować, dzięki czemu twórcy aplikacji mają kontrolę
-            nad
-            aktualizacją klienta razem z serwerem.
-          </li>
-        </ul>
+      <div class="r-hstack">
+        <div class="r-vstack">
+          <div class="bcol0 box" style="width: 6em;">HTML</div>
+          <div class="bcol1 box" style="width: 6em;">CSS</div>
+          <div class="bcol2 box" style="width: 6em;">ECMAScript</div>
+        </div>
+        <div class="fragment bcol3 box" style="width: 6em; height: 7em;">
+          Cache przeglądarki
+        </div>
+        <div class="fragment bcol4 box" style="width: 6em; height: 7em;">
+          Kontrola cache - kontrola aktualizacji aplikacji
+        </div>
       </div>
     </section>
 
@@ -138,16 +157,16 @@
         <em>Wczesne lata 90-te:</em> statyczne strony HTML:
       </div>
       <section>
-        <img src="img/msn_webpage.jpg" alt="MSN" class="no-border" height="400">
+        <img src="img/msn_webpage.jpg" alt="MSN"  height="400">
       </section>
       <section>
-        <img src="img/Old-Apple-Website.jpg" alt="Old Apple Website" class="no-border">
+        <img src="img/Old-Apple-Website.jpg" alt="Old Apple Website">
       </section>
       <section>
         <div class="most-text">
           <p>W praktyce struktura adresu strony odzwierciedlała położenie pliku na serwerze.</p>
         </div>
-        <img src="img/Url.png" alt="Url">
+        <img src="img/Url.png" alt="Url" class="backlight">
       </section>
     </section>
 
@@ -287,28 +306,29 @@
       </section>
       <section>
         <h3>AJAX - przykład</h3>
-        <pre class="stretch"><code class="html" data-trim>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;body&gt;
-&lt;div id=&quot;demo&quot;&gt;
-&lt;h2&gt;The XMLHttpRequest Object&lt;/h2&gt;
-&lt;button type=&quot;button&quot; onclick=&quot;loadDoc()&quot;&gt;Change Content&lt;/button&gt;
-&lt;/div&gt;
-&lt;script&gt;
-function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 &amp;&amp; this.status == 200) {
-      document.getElementById(&quot;demo&quot;).innerHTML =
-      this.responseText;
-    }
-  };
-  xhttp.open(&quot;GET&quot;, &quot;ajax_info.txt&quot;, true);
-  xhttp.send();
-}
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+        <pre class="html"><code class="hljs" data-trim data-line-numbers="|5"><script type="text/template">
+          <html>
+            <body>
+              <div id="demo">
+                <h2>The XMLHttpRequest Object</h2>
+                <button type="button" onclick="loadDoc()">Change Content</button>
+              </div>
+            </body>
+          </html>
+        </script></code></pre>
+        <pre class="javascript"><code class="hljs" data-trim data-line-numbers="|2|3-8|9|10"><script type="text/template">
+        function loadDoc() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+              document.getElementById('demo').innerHTML =
+                this.responseText;
+            }
+          };
+          xhttp.open('GET', 'ajax_info.txt', true);
+          xhttp.send();
+        }
+        </script></code></pre>
       </section>
     </section>
 
@@ -322,7 +342,7 @@ function loadDoc() {
     <section>
       <section>
         <h3>Architektura aplikacji Rich Web Application*</h3>
-        <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="no-border">
+        <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="backlight">
         <p class="most-text">* architektura typowa dla Angular</p>
         <aside class="notes">
           <ul>
