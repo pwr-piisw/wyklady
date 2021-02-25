@@ -1,3 +1,46 @@
+.reveal .bcol0 {
+    background-color: cyan;
+    color: black;
+}
+.reveal .bcol1 {
+    background-color: magenta;
+    color: black;
+}
+.reveal .bcol2 {
+    background-color: white;
+    color: black;
+}
+.reveal .bcol3 {
+    background-color: #55ff55;
+    color: black;
+}
+.reveal .bcol4 {
+    background-color: #ff5555;
+    color: black;
+}
+.reveal .bcol5 {
+    background-color: #ffff55;
+    color: black;
+}
+.reveal .box {
+    padding: 0.6em;
+    margin: 0.2em;
+    border-radius: 0.3em;
+}
+.reveal img.backlight {
+    background-color: lightyellow;
+    padding: 0.5em;
+    border-radius: 0.5em;
+}
+
+.reveal .caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.3em;
+    padding: 0.3em;
+    font-size: 0.8em;
+}
+
+/* OLD styles */
 div.col {
     width: 50%;
 }
