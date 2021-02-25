@@ -26,6 +26,7 @@
   <div class="slides">
     <section>
       <h2>Projekt i implementacja systemów webowych</h2>
+      <p>mgr inż. Maciej Małecki</p>
     </section>
 
     <section>
@@ -64,17 +65,6 @@
           </li>
         </ul>
       </section>
-    </section>
-
-    <section>
-      <h3>Konsultacje</h3>
-      <div>
-        <ul>
-          <li>mgr inż. Szymon Jaśniak</li>
-          <li>mgr inż. Maciej Małecki</li>
-          <li>mgr inż. Marcin Nowak</li>
-        </ul>
-      </div>
     </section>
 
     <section>
@@ -156,7 +146,7 @@
         <em>Wczesne lata 90-te:</em> statyczne strony HTML:
       </div>
       <section>
-        <img src="img/msn_webpage.jpg" alt="MSN" height="400">
+        <img src="img/msn_webpage.jpg" alt="MSN" style="height: 400px;">
       </section>
       <section>
         <img src="img/Old-Apple-Website.jpg" alt="Old Apple Website">
@@ -210,7 +200,7 @@
       <section>
         <h3>AJAX</h3>
         <div class="r-vstack">
-          <img src="img/spinner.gif" alt="Spinner" class="no-border fragment">
+          <img src="img/spinner.gif" alt="Spinner">
           <ul>
             <li><em>ok 2005 roku:</em> AJAX - Asynchronous JavaScript and XML
             <li>żądania HTTP "w tle"</li>
@@ -222,7 +212,7 @@
       <section>
         <h3>AJAX - przykład</h3>
         <pre class="html"><code class="hljs" data-trim data-line-numbers="|5"><script type="text/template">
-          <html>
+          <html lang="en">
             <body>
               <div id="demo">
                 <h2>The XMLHttpRequest Object</h2>
@@ -597,62 +587,44 @@
 
     <section>
       <h2>Zarządzanie układem dokumentu HTML</h2>
-      <div class="livecode stretch no-console horizontal">
-                <pre><code class="css" title="styles.css">div {
-  padding: 20px;
-}
-div#first {
-  background-color: yellow;
-}
-div#second {
-  background-color: green;
-}
-/*
-div.col {
-  width: 40%;
-}
-*/
-/*
-div.left {
-  float: left;
-}
-*/
-/*
-div.right {
-  float: right
-}
-*/
-                </code></pre>
-        <pre><code class="html" title="index.html">
-&lt;div id=&quot;first&quot;&gt;
-Foo
-&lt;/div&gt;
-&lt;div id=&quot;second&quot;&gt;
-Bar
-&lt;/div&gt;</code></pre>
+      <a href="https://plnkr.co/plunk/uUrERNhYoAZBxxa8">https://plnkr.co/plunk/uUrERNhYoAZBxxa8</a>
+      <div class="r-hstack">
+      <pre class="css"><code class="hljs" data-trim>
+        div {
+          padding: 20px;
+        }
+        div#first {
+          background-color: yellow;
+        }
+        div#second {
+          background-color: green;
+        }
+        div.col {
+          width: 40%;
+        }
+        div.left {
+          float: left;
+        }
+        div.right {
+          float: right
+        }
+      </code></pre>
+        <span>&nbsp;</span>
+      <pre class="html"><code class="hljs" data-trim><script type="text/template">
+        <div id='first'>
+        Foo
+        </div>
+        <div id='second'>
+        Bar
+        </div>
+      </script></code></pre>
       </div>
-      <aside class="notes">
-                <pre><code class="css">
-div.col {
-  width: 40%;
-}
-div.left {
-  float: left;
-}
-div.right {
-  float: right
-}
-                </code></pre>
-      </aside>
     </section>
-
   </div>
-<!--  <div id="cgLogo" style="background: url(img/cg_small.png);-->
-<!--                        position: absolute;-->
-<!--                        bottom: 20px;-->
-<!--                        left: 20px;-->
-<!--                        width: 250px;-->
-<!--                        height: 44px;"></div>-->
+  <div
+      id="cgLogo"
+      style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+  </div>
 </div>
 
 
