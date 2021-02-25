@@ -1,0 +1,43 @@
+@startuml
+robust "Web Server" as WS
+robust "Web Browser" as B
+concise "User" as U
+
+@0
+U is Acting #palegreen
+B is Idle
+WS is Idle
+@5
+U -> B : click "search"
+U is Waiting #lightgrey
+B is Requesting
+WS is Idle
+@10
+B -> WS : HTTP request
+B is Waiting
+WS is Processing
+@20
+WS -> B : HTTP response
+WS is Idle
+B is Rendering
+@25
+B -> U: display
+B is Idle
+U is Acting #palegreen
+@40
+U -> B : click link
+U is Waiting #lightgrey
+B is Requesting
+@45
+B -> WS: HTTP request
+B is Waiting
+WS is Processing
+@55
+WS -> B : Http response
+B is Rendering
+WS is Idle
+@60
+B -> U: display
+B is Idle
+U is Acting #palegreen
+@enduml

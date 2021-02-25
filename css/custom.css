@@ -33,6 +33,13 @@
     border-radius: 0.5em;
 }
 
+.reveal .caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.3em;
+    padding: 0.3em;
+    font-size: 0.8em;
+}
+
 /* OLD styles */
 div.col {
     width: 50%;

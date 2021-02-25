@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Projekt i implementacja systemów webowych - wykład 1</title>
+
+  <meta name="description" content="Wprowadzenie, HTML5, CSS3">
+  <meta name="author" content="Maciej Małecki">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>reveal.js</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/night.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h2>Projekt i implementacja systemów webowych</h2>
+    </section>
+
+    <section>
+      <h3>Plan zajęć</h3>
+      <ol>
+        <li>Architektura aplikacji webowej. Języki HTML5 i CSS3.</li>
+        <li>Wprowadzenie do języków JavaScript oraz TypeScript.</li>
+        <li>Architektura, backend i Spring.</li>
+        <li>Techniki utrwalania danych, ORM.</li>
+        <li>Wprowadzenie do frameworku Angular.</li>
+        <li>Programowanie asynchroniczne i reaktywne.</li>
+        <li>Cloud computing.</li>
+        <li>Testowanie</li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>Zasady zaliczeń</h3>
+      <section>
+        <p>Podstawą zaliczenia wykładu jest kolokwium:</p>
+        <ul>
+          <li>Pierwszy termin: 2021-04-19 (wykład 7)</li>
+          <li>Drugi termin: 2021-04-26 (wykład 8)</li>
+        </ul>
+        <p>Zasady zaliczenia zajęć laboratoryjnych omówione będą na pierwszych zajęciach
+          laboratoryjnych.</p>
+      </section>
+      <section>
+        <p>UWAGA: w przypadku zdalnej formy prowadzenia zajęć zmieniona będzie formuła zaliczeń:</p>
+        <ul>
+          <li>W przypadku uzyskania przez studenta/studentkę oceny minimum 4,0 z laboratorium, z wykładu przepisana
+            zostanie ta
+            ocena pomniejszona o 1.
+          </li>
+          <li>Dla studentów/studentek chcących uzyskać lepszą ocenę zorganizowane zostanie kolokwium w formie ustnej.
+          </li>
+        </ul>
+      </section>
+    </section>
+
+    <section>
+      <h3>Konsultacje</h3>
+      <div>
+        <ul>
+          <li>mgr inż. Szymon Jaśniak</li>
+          <li>mgr inż. Maciej Małecki</li>
+          <li>mgr inż. Marcin Nowak</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h3>Materiały</h3>
+      <div class="r-hstack">
+        <img src="img/qrcode.png" alt="QR">
+        <div>
+          <p>Strona z informacjami na temat kursu:</p>
+          <a href="https://pwr-piisw.github.io/materialy/">https://pwr-piisw.github.io/materialy/</a>
+          <p>Kurs ma własną organizację na GitHubie:</p>
+          <a href="https://github.com/pwr-piisw">https://github.com/pwr-piisw</a>
+          <p>Slajdy z wykładów dostępne są on-line:</p>
+          <a href="https://pwr-piisw.github.io/materialy/#_harmonogram">https://pwr-piisw.github.io/materialy/#_harmonogram</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h1>Aplikacje webowe</h1>
+    </section>
+
+    <section data-background-image="img/mainframe.jpg">
+      <div style="height: 400px;"></div>
+      <p class="caption">Źródło: <a href="https://www.pinterest.com/buccus3/women-and-retro-computers/">https://www.pinterest.com/buccus3/women-and-retro-computers/</a>
+      </p>
+    </section>
+
+    <section>
+      <h3>Architektura klient-serwer</h3>
+      <div class="r-hstack">
+        <img src="img/bbs.gif" alt="BBS" class="no-border">
+        <img src="img/quantum-link.png" alt="BBS" class="no-border">
+      </div>
+      <div class="most-text">
+        <p>Źródło:
+          <a href="http://software.bbsdocumentary.com/COMMODORE/C64/CNET64/">http://software.bbsdocumentary.com/COMMODORE/C64/CNET64/</a>
+          <a href="http://linkis.com/www.tinytickle.co.uk/cAHPM">http://linkis.com/www.tinytickle.co.uk/cAHPM</a>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h3>Architektura klient-serwer</h3>
+      <img src="img/client-server.png" alt="Client server" class="backlight">
+      <div class="most-text">
+        <ul>
+          <li class="fragment">Aplikacje klienckie są instalowane niezależnie na maszynach klienckich.</li>
+          <li class="fragment">Aktualizacja kodu serwera z reguły pociąga za sobą konieczność aktualizacji kodu
+            klienta.
+          </li>
+          <li class="fragment">Istniały mechanizmy pozwalające na "obejście" tego problemu, jak np.
+            <em>Java Applets</em>, <em>Java Web Start</em>, <em>Flash/ActionScript</em>, wymagały one jednak instalacji
+            dodatkowego oprogramowania (JVM, Pluginy).
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h3>Aplikacja webowa</h3>
+      <div class="r-hstack">
+        <div class="r-vstack">
+          <div class="bcol0 box" style="width: 6em;">HTML</div>
+          <div class="bcol1 box" style="width: 6em;">CSS</div>
+          <div class="bcol2 box" style="width: 6em;">ECMAScript</div>
+        </div>
+        <div class="fragment bcol3 box" style="width: 6em; height: 7em;">
+          Cache przeglądarki
+        </div>
+        <div class="fragment bcol4 box" style="width: 6em; height: 7em;">
+          Kontrola cache - kontrola aktualizacji aplikacji
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Historia aplikacji webowych</h3>
+      <div class="more-text">
+        <em>Wczesne lata 90-te:</em> statyczne strony HTML:
+      </div>
+      <section>
+        <img src="img/msn_webpage.jpg" alt="MSN" height="400">
+      </section>
+      <section>
+        <img src="img/Old-Apple-Website.jpg" alt="Old Apple Website">
+      </section>
+      <section>
+        <div class="most-text">
+          <p>W praktyce struktura adresu strony odzwierciedlała położenie pliku na serwerze.</p>
+        </div>
+        <img src="img/Url.png" alt="Url" class="backlight">
+      </section>
+    </section>
+
+    <section>
+      <h3>Statyczna zawartość nie zawsze wystarczy...</h3>
+      <img src="img/google-search-results.png" alt="Google search results" style="height: 400px;">
+    </section>
+
+    <section>
+      <div>
+        <ul>
+          <li><em>od ok. roku 1993:</em> <span
+              class="fragment">pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
+            <ul class="fragment">
+              <li>CGI</li>
+              <li>PHP (1995)</li>
+              <li>ASP (1996)</li>
+              <li>Java Servlets (1997)</li>
+              <li>JSP (1999)</li>
+            </ul>
+          </li>
+          <li class="fragment"><em>wczesne lata 2000:</em> technologie komponentowe: JSF,
+            ASP.NET
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h3>Klasyczna aplikacja webowa</h3>
+      <div class="r-vstack">
+        <div class="r-hstack">
+          <img src="img/google-empty.png" alt="Google" style="height: 200px;">
+          <span>&rarr;</span>
+          <img src="img/google-search-results.png" alt="Google 2" style="height: 200px;">
+        </div>
+        <img src="img/http-scenario.png" alt="HTTP" class="fragment">
+      </div>
+    </section>
+
+    <section>
+      <section>
+        <h3>AJAX</h3>
+        <div class="r-vstack">
+          <img src="img/spinner.gif" alt="Spinner" class="no-border fragment">
+          <ul>
+            <li><em>ok 2005 roku:</em> AJAX - Asynchronous JavaScript and XML
+            <li>żądania HTTP "w tle"</li>
+            <li>modyfikacja zawartości strony bez przeładowywania</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>AJAX - przykład</h3>
+        <pre class="html"><code class="hljs" data-trim data-line-numbers="|5"><script type="text/template">
+          <html>
+            <body>
+              <div id="demo">
+                <h2>The XMLHttpRequest Object</h2>
+                <button type="button" onclick="loadDoc()">Change Content</button>
+              </div>
+            </body>
+          </html>
+        </script></code></pre>
+        <pre class="javascript"><code class="hljs" data-trim data-line-numbers="|2|3-7|8|9"><script type="text/template">
+        function loadDoc() {
+          const xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+              document.getElementById('demo').innerHTML =  this.responseText;
+            }
+          };
+          xhttp.open('GET', 'ajax_info.txt', true);
+          xhttp.send();
+        }
+        </script></code></pre>
+      </section>
+    </section>
+
+    <section>
+      <p>A gdyby tak każda aplikacja webowa składała się z jednego dokumentu HTML,</p>
+      <p class="fragment more-text">a komunikacja z serwerem odbywała się wyłącznie z użyciem
+        podejścia AJAX?
+      </p>
+    </section>
+
+    <section>
+      <section>
+        <h3>Architektura aplikacji SPA*</h3>
+        <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="backlight">
+        <p class="most-text">* architektura typowa dla Angular</p>
+        <aside class="notes">
+          <ul>
+            <li>Każdy widok aplikacji posiada kontroler, który zarządza jego stanem.</li>
+            <li>Każdy kontroler odpowiada za:
+              <ul>
+                <li>Obsługę akcji (żądań) zainicjowanych przez użytkownika (np naciśnięcie przycisku).</li>
+                <li>Wczytanie danych do zaprezentowania na widoku.</li>
+              </ul>
+            </li>
+            <li>Przejście między widokami realizowane jest przez managera stanów (Router).</li>
+            <li>Manager stanów odpowiada za:
+              <ul>
+                <li>Przekierowanie do odpowiedniego widoku.</li>
+                <li>Przepisanie ścieżki URL w pasku adresu przeglądaki (tak aby możliwe było wysłanie linku
+                  lub dodanie linku do zakładek).
+                </li>
+              </ul>
+            </li>
+            <li>Kontroler komunikuje się z serwerem najczęściej wykorzystując w tym celu protokół
+              HTTP/REST.
+            </li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+          <h2>Odpowiedzialności</h2>
+        <div class="r-hstack">
+          <div>
+            <h4>Klient (przeglądarka WWW)</h4>
+            <ul>
+              <li>Prezentacja danych otrzymanych z serwera.</li>
+              <li>Obsługa żądań użytkownika.</li>
+              <li>Wysyłanie danych na serwer.</li>
+              <li>Warunkowe wyświetlanie elementów HTML.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Serwer (Java, ...)</h4>
+            <ul>
+              <li>Zapis danych.</li>
+              <li>Wczytywanie danych.</li>
+              <li>Komunikacja z innymi systemami.</li>
+              <li>...</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!--
+    HTML i CSS
+    -->
+
+    <section>
+      <h1>Języki HTML i CSS</h1>
+    </section>
+
+    <section>
+      <h2>HTML</h2>
+      <p><strong>HTML</strong> to język bazujący na znacznikach służący to tworzenia stron sieci Web.</p>
+      <p>Przykład <strong>dokumentu HTML</strong>:</p>
+      <pre><code class="html" data-trim><script type="text/template">
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+            <title>Sample page</title>
+        </head>
+        <body>
+            <h1>Sample page</h1>
+            <p>This is a <a href="demo.html">simple</a> sample.</p>
+            <!-- this is a comment -->
+        </body>
+        </html>
+      </script></code></pre>
+    </section>
+
+    <section>
+      <h2>Struktura dokumentu HTML</h2>
+      <ul>
+        <li>Dokument <strong>HTML</strong> składa się ze elementów oraz z tekstu.</li>
+        <li class="fragment">Każdy element zbudowany jest ze <strong>znaczników</strong> (ang. <em>tags</em>), w
+          szczególności ze znacznika <strong>otwierającego</strong> i <strong>zamykającego</strong>.
+        </li>
+        <li class="fragment">Struktura znaczników musi tworzyć <strong>drzewo</strong>.</li>
+        <li class="fragment">W szczególnych przypadkach znacznik zamykający może być pominięty (<code>&lt;img&gt;</code>,
+          <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, itp).
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Atrybuty elementów HTML</h2>
+      <ul>
+        <li>Atrybuty dostarczają dodatkowej informacji dla elementu.</li>
+        <li class="fragment">Atrybuty muszą być umieszczone w znaczniku otwierającym.</li>
+      </ul>
+      <pre class="javascript fragment"><code class="hljs" data-trim><script type="text/template">
+        <input type="number" min="0" max="999" required>
+      </script></code></pre>
+      <aside class="notes">
+        <ul>
+          <li>Wartość atrybutu może być ujęta w cudzysłowy (<code>"</code>) lub apostrofy (<code>'</code>).
+          </li>
+          <li>Jeśli wartość atrybutu nie zawiera spacji (białego znaku), cudzysłowy (apostrofy) nie są
+            wymagane.
+          </li>
+          <li>Jeśli wartością atrybutu jest pusty ciąg znaków, można pominąć przypisanie i wymienić jedynie
+            nazwę (jak np w <code>&lt;input required&gt;</code></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section>
+      <h3>Elementy semantyczne HTML</h3>
+        <pre class="html"><code class="hljs" data-trim data-line-numbers="|3|4-16|17|5|6-11|12-15"><script type="text/template">
+          <html lang="en">
+            <body>
+              <header>Some header</header>
+              <section>
+                <h1>Heading 1</h1>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                  nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi.
+                  Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
+                  Praesent mauris. Fusce nec tellus sed augue semper porta.
+                </p>
+                <figure>
+                  <img src='diagrams/img_sem_elements.gif' alt="Diagram">
+                  <figcaption>Semantic elements of HTML</figcaption>
+                </figure>
+              </section>
+              <footer>Some footer</footer>
+            </body>
+          </html>
+        </script></code></pre>
+    </section>
+
+    <section>
+      <h2>CSS</h2>
+      <ul>
+        <li>Umożliwia opis formy prezentacji dokumentu <code>HTML</code>.</li>
+        <li class="fragment">Aspekty prezentacyjne są odseparowane od treści dokumentu.</li>
+        <li class="fragment">Bardzo duże możliwości formatowania i pozycjonowania treści.</li>
+        <li class="fragment"><code>CSS3</code>: eliminacja konieczności używania <code>JavaScript</code> do
+          bardziej zaawansowanych efektów wizualnych.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>CSS: Stylowanie dokumentu</h3>
+      <a href="https://plnkr.co/plunk/nmkzZZPjBUWvdukf">https://plnkr.co/plunk/nmkzZZPjBUWvdukf</a>
+      <section>
+        <pre class="html"><code class="hljs" data-trim data-line-numbers><script type="text/template">
+          <html lang="en">
+            <!doctype html>
+            <body>
+              <header>Header</header>
+              <section>
+                <h1>Heading 1</h1>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Integer nec odio. Praesent libero. Sed cursus ante dapibus
+                  diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+                  Duis sagittis ipsum. Praesent mauris.
+                </p>
+                <figure>
+                  <img src='diagrams/img_sem_elements.gif' alt="Diagram">
+                  <figcaption>Semantic elements of HTML</figcaption>
+                </figure>
+              </section>
+              <footer>Footer</footer>
+            </body>
+          </html>
+        </script></code></pre>
+      </section>
+      <section>
+        <pre class="css"><code class="hljs" data-trim data-line-numbers="|1-7|8-11|12-14|15-19">
+          header {
+            font-size: large;
+            font-weight: bold;
+            font-family: courier;
+            text-align: center;
+            background-color: lightgreen;
+          }
+          h1 {
+            font-family: tahoma;
+            font-style: italic;
+          }
+          p {
+            text-align: justify;
+          }
+          footer {
+            text-align: right;
+            color: darkblue;
+            font-weight: bold;
+          }
+        </code></pre>
+      </section>
+    </section>
+
+    <section>
+      <h3>Block vs inline</h3>
+      <a href="https://plnkr.co/plunk/EHLtbvjZ4XRHKfNT">https://plnkr.co/plunk/EHLtbvjZ4XRHKfNT</a>
+      <pre class="html"><code class="hljs" data-trim data-line-numbers><script type="text/template">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Integer nec odio.
+            Praesent libero. Sed cursus ante dapibus diam.
+            Sed nisi. Nulla quis sem at nibh elementum
+            imperdiet. <span>Duis sagittis ipsum</span>.
+            Praesent mauris. Fusce nec tellus sed augue semper porta.
+            Mauris massa. Vestibulum lacinia arcu eget nulla.
+        </p>
+      </script></code></pre>
+      <pre class="css"><code class="hljs" data-trim data-line-numbers>
+        .bordered {
+          border-style: solid;
+          border-color: black;
+          border-width: 1px;
+        }
+      </code></pre>
+    </section>
+
+    <section>
+      <section>
+        <h3>Selektory CSS</h3>
+        <a href="https://plnkr.co/plunk/tkCQWT7XuKwThdcl">https://plnkr.co/plunk/tkCQWT7XuKwThdcl</a>
+        <pre class="css"><code class="hljs" data-trim>
+          article p {
+            font-family: Arial;
+          }
+          article#first p {
+            font-size: small;
+          }
+          p.citation {
+            font-size: xx-small;
+            margin-left: 30px;
+          }
+        </code></pre>
+        <pre class="html"><code class="hljs" data-trim><script type="text/template">
+          <h1>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna.</h1>
+          <p>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna. Sed placerat faucibus.
+          Sed gravida gravida sollicitudin, lectus. Curabitur ut nulla. Nunc a lacus. Quisque eu bibendum arcu vitae odio.
+          Nullam viverra sem vestibulum quis, bibendum tellus, condimentum urna, id enim. Aliquam tempus ut, neque. Vestibulum
+          pulvinar. Nulla interdum dapibus eu, dapibus risus. Phasellus in lacus pretium sit amet elit. Pellentesque habitant
+          morbi tristique velit, vitae ornare enim dictum ut, tempus enim quis orci. Nullam vulputate molestie.
+          </p>
+          <article>
+            <h1>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna.</h1>
+            <p>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna. Sed placerat faucibus.
+            Sed gravida gravida sollicitudin, lectus. Curabitur ut nulla. Nunc a lacus. Quisque eu bibendum arcu vitae odio.
+            Nullam viverra sem vestibulum quis, bibendum tellus, condimentum urna, id enim. Aliquam tempus ut, neque. Vestibulum
+            pulvinar. Nulla interdum dapibus eu, dapibus risus. Phasellus in lacus pretium sit amet elit. Pellentesque habitant
+            morbi tristique velit, vitae ornare enim dictum ut, tempus enim quis orci. Nullam vulputate molestie.
+            </p>
+            <p>
+            Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna. Sed placerat faucibus.
+            Sed gravida gravida sollicitudin, lectus. Curabitur ut nulla. Nunc a lacus. Quisque eu bibendum arcu vitae odio.
+            Nullam viverra sem vestibulum quis, bibendum tellus, condimentum urna, id enim. Aliquam tempus ut, neque. Vestibulum
+            pulvinar. Nulla interdum dapibus eu, dapibus risus. Phasellus in lacus pretium sit amet elit. Pellentesque habitant
+            morbi tristique velit, vitae ornare enim dictum ut, tempus enim quis orci. Nullam vulputate molestie.
+            </p>
+          </article>
+          <article>
+            <h1>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna.</h1>
+            <p>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna. Sed placerat faucibus.
+            Sed gravida gravida sollicitudin, lectus. Curabitur ut nulla. Nunc a lacus. Quisque eu bibendum arcu vitae odio.
+            Nullam viverra sem vestibulum quis, bibendum tellus, condimentum urna, id enim. Aliquam tempus ut, neque. Vestibulum
+            pulvinar. Nulla interdum dapibus eu, dapibus risus. Phasellus in lacus pretium sit amet elit. Pellentesque habitant
+            morbi tristique velit, vitae ornare enim dictum ut, tempus enim quis orci. Nullam vulputate molestie.</p>
+            <p>Lorem ipsum dolor sit amet augue imperdiet faucibus non, tristique id, urna. Sed placerat faucibus.
+            Sed gravida gravida sollicitudin, lectus. Curabitur ut nulla. Nunc a lacus. Quisque eu bibendum arcu vitae odio.
+            Nullam viverra sem vestibulum quis, bibendum tellus, condimentum urna, id enim. Aliquam tempus ut, neque. Vestibulum
+            pulvinar. Nulla interdum dapibus eu, dapibus risus. Phasellus in lacus pretium sit amet elit. Pellentesque habitant
+            morbi tristique velit, vitae ornare enim dictum ut, tempus enim quis orci. Nullam vulputate molestie.</p>
+          </article>
+        </script></code></pre>
+      </section>
+
+      <section>
+        <h3>Przykłady</h3>
+        <ul class="more-text">
+          <li><code>.intro</code> - wszystkie elementy o klasie <code>intro</code>.</li>
+          <li><code>#firstname</code> - element o identyfikatorze <code>firstname</code>.</li>
+          <li><code>p</code> - wszystkie elementy typu <code>p</code> (paragraf).</li>
+          <li><code>p,div</code> - wszystkie elementy typu <code>p</code> oraz <code>div</code>.</li>
+          <li><code>div p</code> - wszystkie elementy <code>p</code> zawarte w elemencie <code>div</code> (nie
+            koniecznie bezpośrednio).
+          </li>
+          <li><code>div&gt;p</code> - wszystkie elementy <code>p</code> zawarte bezpośrednio w elemencie
+            <code>div</code>.
+          </li>
+        </ul>
+
+        <p class="most-text align-left">Więcej na: <a href="https://www.w3schools.com/cssref/">www.w3schools.com/cssref/</a></p>
+        <p class="most-text align-left">Także: <a href="https://www.w3schools.com/cssref/trysel.asp">www.w3schools.com/cssref/trysel.asp</a></p>
+      </section>
+    </section>
+
+    <section>
+      <h2>Model pudełkowy</h2>
+      <figure>
+        <img src="diagrams/CSS_Box_Model.png" alt="Box model">
+      </figure>
+    </section>
+
+    <section>
+      <h2>Model pudełkowy</h2>
+      <a href="https://plnkr.co/plunk/F6CU2ecYzwJdy4ou">https://plnkr.co/plunk/F6CU2ecYzwJdy4ou</a>
+      <pre class="css"><code class="hljs" data-trim>
+        p {
+            padding: 10px 15px 20px 25px;
+            border-width: 7px 5px 3px 1px;
+            border-style: solid;
+            border-color: navy;
+            border-radius: 5px 10px 20px 30px;
+            background-color: #f0f0f0;
+            margin: 10px 20px
+        }
+        span {
+          border-width: 2px;
+          border-style: dotted;
+          border-color: brown;
+        }
+      </code></pre>
+      <pre class="html"><code class="hljs" data-trim><script type="text/template">
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea <span>commodo</span> consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </script></code></pre>
+    </section>
+
+    <section>
+      <h2>Zarządzanie układem dokumentu HTML</h2>
+      <div class="livecode stretch no-console horizontal">
+                <pre><code class="css" title="styles.css">div {
+  padding: 20px;
+}
+div#first {
+  background-color: yellow;
+}
+div#second {
+  background-color: green;
+}
+/*
+div.col {
+  width: 40%;
+}
+*/
+/*
+div.left {
+  float: left;
+}
+*/
+/*
+div.right {
+  float: right
+}
+*/
+                </code></pre>
+        <pre><code class="html" title="index.html">
+&lt;div id=&quot;first&quot;&gt;
+Foo
+&lt;/div&gt;
+&lt;div id=&quot;second&quot;&gt;
+Bar
+&lt;/div&gt;</code></pre>
+      </div>
+      <aside class="notes">
+                <pre><code class="css">
+div.col {
+  width: 40%;
+}
+div.left {
+  float: left;
+}
+div.right {
+  float: right
+}
+                </code></pre>
+      </aside>
+    </section>
+
+  </div>
+<!--  <div id="cgLogo" style="background: url(img/cg_small.png);-->
+<!--                        position: absolute;-->
+<!--                        bottom: 20px;-->
+<!--                        left: 20px;-->
+<!--                        width: 250px;-->
+<!--                        height: 44px;"></div>-->
+</div>
+
+
+<script src="dist/reveal.js"></script>
+<script src="plugin/notes/notes.js"></script>
+<script src="plugin/markdown/markdown.js"></script>
+<script src="plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        width: "80%",
+        height: "100%",
+        hash: true,
+        navigationMode: 'linear',
+        slideNumber: 'c/t',
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+</script>
+</body>
+</html>
