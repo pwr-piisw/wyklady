@@ -92,6 +92,9 @@
       </p>
     </section>
 
+    <section data-background-image="img/1920px-Trinity77.jpg">
+    </section>
+
     <section>
       <h3>Architektura klient-serwer</h3>
       <div class="r-hstack">
@@ -126,7 +129,7 @@
     <section>
       <h3>Aplikacja webowa</h3>
       <div class="r-hstack">
-        <div class="r-vstack">
+        <div class="fragment r-vstack">
           <div class="bcol0 box" style="width: 6em;">HTML</div>
           <div class="bcol1 box" style="width: 6em;">CSS</div>
           <div class="bcol2 box" style="width: 6em;">ECMAScript</div>
@@ -165,11 +168,12 @@
     </section>
 
     <section>
+      <h3>Aplikacje webowe - kalendarium</h3>
       <div>
         <ul>
           <li><em>od ok. roku 1993:</em> <span
-              class="fragment">pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
-            <ul class="fragment">
+              >pierwsze skrypty generujące dynamiczne dokumenty HTML</span>
+            <ul>
               <li>CGI</li>
               <li>PHP (1995)</li>
               <li>ASP (1996)</li>
@@ -177,7 +181,7 @@
               <li>JSP (1999)</li>
             </ul>
           </li>
-          <li class="fragment"><em>wczesne lata 2000:</em> technologie komponentowe: JSF,
+          <li><em>wczesne lata 2000:</em> technologie komponentowe: JSF,
             ASP.NET
           </li>
         </ul>
@@ -400,7 +404,6 @@
     <section>
       <h3>CSS: Stylowanie dokumentu</h3>
       <a href="https://plnkr.co/plunk/nmkzZZPjBUWvdukf">https://plnkr.co/plunk/nmkzZZPjBUWvdukf</a>
-      <section>
         <pre class="html"><code class="hljs" data-trim data-line-numbers><script type="text/template">
           <html lang="en">
             <!doctype html>
@@ -425,6 +428,8 @@
         </script></code></pre>
       </section>
       <section>
+        <h3>CSS: Stylowanie dokumentu</h3>
+        <a href="https://plnkr.co/plunk/nmkzZZPjBUWvdukf">https://plnkr.co/plunk/nmkzZZPjBUWvdukf</a>
         <pre class="css"><code class="hljs" data-trim data-line-numbers="|1-7|8-11|12-14|15-19">
           header {
             font-size: large;
@@ -447,7 +452,6 @@
           }
         </code></pre>
       </section>
-    </section>
 
     <section>
       <h3>Block vs inline</h3>
@@ -546,6 +550,32 @@
         <p class="most-text align-left">Więcej na: <a href="https://www.w3schools.com/cssref/">www.w3schools.com/cssref/</a></p>
         <p class="most-text align-left">Także: <a href="https://www.w3schools.com/cssref/trysel.asp">www.w3schools.com/cssref/trysel.asp</a></p>
       </section>
+
+      <section>
+        <h3>Priorytety selektorów</h3>
+        <ol>
+          <li>Selektory typu (<code>&lt;h1&gt;</code>, <code>::before</code>).</li>
+          <li>Selektory klasy (<code>.example</code>, <code>&lt;p class=&quot;example&quot;&gt;&lt;&#47;p&gt;</code>.</li>
+          <li>Selektory ID (<code>#123</code>, <code>&lt;p id=&quot;123&quot;&gt;&lt;&#47;p&gt;</code>).</li>
+          <li>Style inline (<code>&lt;p style=&quot;font-size: large;&quot;&gt;&lt;&#47;p&gt;</code>).</li>
+          <li>&#9760; <code>!important</code> &#9760;</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Przydatne atrybuty</h3>
+        <ul>
+          <li class="fragment"><code style="color: blue;">color: blue;</code></li>
+          <li class="fragment"><code style="background-color: #ff00ff;">background-color: #ff00ff;</code></li>
+          <li class="fragment"><code style="border-color: rgba(255,100,100,0.5); border-width: 4px; border-style: solid;">border-color: rgba(255,100,100,0.5);</code></li>
+          <li class="fragment"><code style="text-align: center; width: 600px; display: inline-block;">text-align: center;</code></li>
+          <li class="fragment"><code style="text-decoration: underline;">text-decoration: underline;</code>
+          <li class="fragment"><code>display: none;</code></li>
+          <li class="fragment"><code>display: block-inline;</code></li>
+          <li class="fragment"><code>position: fixed;</code></li>
+        </ul>
+        <a class="fragment" href="https://www.w3schools.com/css">https://www.w3schools.com/css</a>
+      </section>
     </section>
 
     <section>
@@ -619,6 +649,42 @@
         </div>
       </script></code></pre>
       </div>
+    </section>
+    <section>
+      <h3>FLEX layout & Media query</h3>
+      <div class="h flex">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+      </div>
+      <div class="r-hstack">
+        <pre class="css"><code class="hljs" data-trim data-line-numbers>
+        .flex-container {
+          display: flex;
+          flex-direction: row;
+        }
+
+        @media (max-width: 800px) {
+          .flex-container {
+            flex-direction: column;
+          }
+        }
+        </code></pre>
+        <div class="v flex">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+        </div>
+      </div>
+      <a href="https://www.w3schools.com/css/css3_flexbox.asp">https://www.w3schools.com/css/css3_flexbox.asp</a>
+      <a href="https://www.w3schools.com/css/css3_mediaqueries.asp">https://www.w3schools.com/css/css3_mediaqueries.asp</a>
+    </section>
+    <section>
+      <h1>to wszystko na dzisiaj!</h1>
     </section>
   </div>
   <div

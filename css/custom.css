@@ -40,6 +40,22 @@
     font-size: 0.8em;
 }
 
+.reveal .flex {
+    display: flex;
+}
+.reveal .h {
+    flex-direction: row;
+}
+.reveal .v {
+    flex-direction: column;
+}
+.reveal .flex > div {
+    width: 50px;
+    height: 50px;
+    background-color: magenta;
+    margin: 5px;
+}
+
 /* OLD styles */
 div.col {
     width: 50%;
