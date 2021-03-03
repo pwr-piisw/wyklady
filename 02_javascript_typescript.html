@@ -1,12 +1,12 @@
 <!doctype html>
-<html>
+<html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <title>Free your mind with JDBI</title>
+  <title>Projekt i implementacja systemów webowych - wykład 2</title>
 
-  <meta name="description" content="Using explicit SQL mappers in Enterprise Applications">
+  <meta name="description" content="Javascript i Typescript">
   <meta name="author" content="Maciej Małecki">
 
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,9 +25,11 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h3>Projekt i implementacja systemów webowych</h3>
-          <h1>Język JavaScript</h1>
+          <h2>Projekt i implementacja systemów webowych</h2>
+          <p>Wykład 2: języki Javascript i Typescript</p>
+          <p>mgr inż. Maciej Małecki</p>
         </section>
+
         <section>
           <div class="centered"><h2>Historia</h2>
             <p>JavaScript to język programowania zaprojektowany przez firmę Netscape Communications dla
@@ -37,26 +39,23 @@
             </p>
           </div>
         </section>
+
         <section>
           <p><em>JavaScript: The Good Parts</em>, Douglas Crockford</p>
-          <img data-src="diagrams/js-good-vs-definitive.jpg" height="400px" class="fragment">
-          <aside class="notes">
-            <ul>
-              <li>JavaScript - The Good Parts</li>
-              <li>JavaScript - The Definitive Guide</li>
-            </ul>
-          </aside>
+          <img src="diagrams/js-good-vs-definitive.jpg" class="fragment" alt="Good Parts" style="height: 400px;">
         </section>
+
         <section>
           <section>
             <h3>Javascript łączy w sobie trzy koncepcje:</h3>
             <ul>
-              <li class="fragment">Funkcyjność wzorowana na języku <em>Scheme</em></li>
-              <li class="fragment">Obiektowość wzorowana na języku <em>Smalltalk</em></li>
-              <li class="fragment">Składnię języka <em>Java</em></li>
+              <li class="fragment">funkcyjność wzorowaną na języku <em>Scheme</em>,</li>
+              <li class="fragment">obiektowość wzorowana na języku <em>Smalltalk</em>,</li>
+              <li class="fragment">składnię wzorowaną na języku <em>Java</em>.</li>
             </ul>
             <p class="fragment"><strong>Język Javascript nie jest wariantem języka Java!!!</strong></p>
           </section>
+
           <section>
             <h3>Cechy języka</h3>
             <ul>
@@ -69,6 +68,7 @@
               <li class="fragment"><em>Jednowątkowość</em></li>
             </ul>
           </section>
+
           <section>
             <h3>Dlaczego Javascript jest ważny?</h3>
             <ul>
@@ -88,37 +88,36 @@
             </ul>
           </section>
         </section>
+
         <section>
-          <h2>Najprostszy "przypadek użycia"</h2>
+          <h3>Najprostszy "przypadek użycia"</h3>
           <section>
-            <h3>Osadzenie w stronie HTML</h3>
-            <pre><code class="html" data-trim>
-&lt;html&gt;
-  &lt;body&gt;
-    &lt;script&gt;
-      console.log('Hello world');
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-                </code></pre>
+            <p>Osadzenie w stronie HTML</p>
+            <pre class="html"><code class="hljs" data-trim>
+              &lt;html&gt;
+                &lt;body&gt;
+                  &lt;script&gt;
+                    console.log(&#39;Hello world&#39;);
+                  &lt;&#47;script&gt;
+                &lt;&#47;body&gt;
+              &lt;&#47;html&gt;
+            </code></pre>
           </section>
           <section>
-            <h3>Użycie osobnego pliku źródłowego</h3>
-            <div class="col left">
-              <p>index.html</p>
-              <pre><code class="html" data-trim>
-&lt;html&gt;
-  &lt;body&gt;
-    &lt;script src=&quot;script.js&quot;/&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-                    </code></pre>
-            </div>
-            <div class="col right">
-              <p>script.js</p>
-              <pre><code class="javascript" title="script.js">
-console.log('Hello world');
-                    </code></pre>
+            <p>Użycie osobnego pliku źródłowego</p>
+            <div class="r-vstack">
+              <code>index.html</code>
+              <pre class="html"><code class="hljs" data-trim>
+                &lt;html&gt;
+                  &lt;body&gt;
+                    &lt;script src=&quot;script.js&quot;/&gt;
+                  &lt;/body&gt;
+                &lt;/html&gt;
+              </code></pre>
+              <code>script.js</code>
+              <pre class="javascript"><code class="hljs" data-trim>
+                console.log('Hello world');
+              </code></pre>
             </div>
           </section>
         </section>
@@ -127,43 +126,42 @@ console.log('Hello world');
         <section>
           <section>
             <h2>Zmienne</h2>
-            <p class="fragment" data-fragment-index="1">Zmienne deklarujemy przy użyciu słowa kluczowego
-              <em>var</em>*.</p>
-            </p>
-            <pre class="fragment" data-fragment-index="2"><code class="javascript" data-trim>
-var a = 10, b;   // a -> 10, b -> undefined
-var c = null;    // c -> null
-                </code></pre>
-            <p class="fragment" data-fragment-index="2">Niezainicjowania zmienna przyjmuje wartość
-              <em>undefined</em>.</p>
-            <p class="fragment align-left most-text" data-fragment-index="1">* chwilowo ignorujemy istnienie
-              ECMAScript 6</p>
-            <aside class="notes">
-              <p>Zmienna zadeklarowana poza zasięgiem jakiejkolwiek funkcji staje się automatycznie zmienną
-                globalną.</p>
-              <p>Słowo kluczowe <em>var</em> jest opcjonalne, tj przypisanie wartości do zmiennej bez jej
-                deklaracji także spowoduje utworzenie takiej zmiennej. Zaleca się jednak zawsze używać słowa
-                <em>var</em> (będzie o tym jeszcze w części dotyczącej zasięgu zmiennych).</p>
-            </aside>
+            <p>Zmienne deklarujemy przy użyciu słowa kluczowego <code>var</code>:</p>
+            <pre class="javascript"><code class="hljs" data-trim>
+              var a = 10, b;   // a -> 10, b -> undefined
+              var c = null;    // c -> null
+            </code></pre>
+            <p>lub <code>let</code>:</p>
+            <pre class="javascript"><code class="hljs" data-trim>
+              let a = 10, b;   // a -> 10, b -> undefined
+              let c = null;    // c -> null
+            </code></pre>
+            <ul>
+              <li class="fragment">Niezainicjowania zmienna przyjmuje wartość <code>undefined</code>.</li>
+              <li class="fragment">Słowo kluczowe <code>var|let</code> jest opcjonalne, zaleca się jednak je stosować.</li>
+            </ul>
           </section>
+
           <section>
-            <h2>Typy danych</h2>
-            <div class="centered more-text"><p class="justified"><strong>JavaScript jest językiem dynamicznie
-              typizowanym.</strong> Oznacza to,
-              że typ zmiennej lub wyrażenia nie może być określony podczas kompilacji.</p>
-              <p class="justified fragment">Jednakże podczas wykonywania kodu typ wartości przechowywanej w
-                zmiennej
-                lub będącej wynikiem obliczenia wyrażenia jest dobrze określony.</p></div>
-            <pre class="fragment"><code class="javascript" data-trim>
-var a;
-a = 2 + 2;
-console.log(typeof(a)); // -> number
-a = 'foo';
-console.log(typeof(a)); // -> string
-                </code></pre>
+            <h3>Typy danych</h3>
+
+            <ul>
+              <li><strong>JavaScript jest językiem dynamicznie typizowanym</strong> - typ zmiennej lub wyrażenia nie
+                jest znany podczas kompilacji.</li>
+              <li>Podczas wykonywania kodu typ wartości przechowywanej w zmiennej lub będącej wynikiem wyrażenia jest dobrze określony.</li>
+            </ul>
+
+            <pre class="javascript fragment"><code class="hljs" data-trim data-line-numbers>
+              var a;
+              a = 2 + 2;
+              console.log(typeof(a)); // -> number
+              a = 'foo';
+              console.log(typeof(a)); // -> string
+            </code></pre>
           </section>
+
           <section>
-            <h2>Typy danych</h2>
+            <h3>Typy danych</h3>
             <table>
               <tr>
                 <th>typ</th>
@@ -200,118 +198,118 @@ console.log(typeof(a)); // -> string
 
         <!-- FUNKCJE -->
         <section>
-          <h2>Funkcje</h2>
+          <h3>Funkcje</h3>
           <section>
             <p>Funkcja jest wartością utworzoną przy użyciu literału funkcyjnego:</p>
-            <div class="col left">
-                    <pre class="fragment"><code data-trim class="javascript">
-var add = function(left, right) {
-  return left + right;
-};
-add(2, 2); // -> 4
-                    </code></pre>
-              <pre class="fragment"><code data-trim class="javascript">
-var add = function() {
-  var sum = 0;
-  for (i = 0; i < arguments.length; ++i) {
-    sum += arguments[i];
-  };
-  return sum;
-};
-add(1, 2, 3, 4); // -> 10
-                    </code></pre>
-            </div>
-            <div class="col right">
-              <p class="fragment">a co jeśli...</p>
-              <pre class="fragment"><code class="javascript" data-trim>
-var add = function(left, right) {
-  return
-  left + right;
-};
-add(2, 2); // ?
-                    </code></pre>
-              <pre class="fragment"><code class="javascript" data-trim>
-var add = function(left, right) {
-  left + right;
-};
-add(2, 2); // ?
-                    </code></pre>
+            <div class="r-vstack">
+              <pre class="javascript"><code data-trim class="hljs" data-line-numbers>
+                function add(left, right) {
+                  return left + right;
+                };
+                add(2, 2); // -> 4
+              </code></pre>
+              <pre class="javascript"><code data-trim class="hljs" data-line-numbers>
+                function add() {
+                  var sum = 0;
+                  for (i = 0; i < arguments.length; ++i) {
+                    sum += arguments[i];
+                  };
+                  return sum;
+                };
+                add(1, 2, 3, 4); // -> 10
+              </code></pre>
             </div>
           </section>
 
           <section>
-            <p>Nic nie stoi na przeszkodzie, aby parametrem funkcji była funkcja...</p>
-            <div class="col left">
-                <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
-var map = function(array, fn) {
-  var result = [];
-  for(i = 0; i < array.length; ++i) {
-    result[i] = fn ? fn(array[i]) : array[i];
-  }
-  return result;
-};
-                 </code></pre>
+            <div class="r-vstack">
+              <p>a co jeśli...</p>
+              <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+                function add(left, right) {
+                  return
+                  left + right;
+                };
+                add(2, 2); // ?
+              </code></pre>
+              <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+                function add(left, right) {
+                  left + right;
+                };
+                add(2, 2); // ?
+              </code></pre>
             </div>
-            <div class="col right">
-                <pre class="fragment" data-fragment-index="1"><code class="javascript" data-trim>
-var array = [1,2,3,4,5];
+          </section>
 
-map(array);
-var incrementFn = function(a) { return a + 1; };
+          <section>
+            <p>funkcja to też typ danych...</p>
+            <div class="r-vstack">
+              <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+                function map(array, fn) {
+                  var result = [];
+                  for(i = 0; i < array.length; ++i) {
+                    result[i] = fn ? fn(array[i]) : array[i];
+                  }
+                  return result;
+                };
 
-map(array, incrementFn);
-map(array, function(a) { return a * 2; });
-map(array, incrementFn()); // ?
+                const array = [1,2,3,4,5];
+                const res1 = map(array);
+                const incrementFn = function(a) { return a + 1; };
+
+                map(array, incrementFn);
+                map(array, function(a) { return a * 2; });
+                map(array, incrementFn()); // ?
                 </code></pre>
             </div>
           </section>
 
           <section>
-            <p>...a także, aby wartością funkcji była funkcja.</p>
-            <div class="col left">
-                    <pre><code class="javascript" data-trim>
-var createMultiplier = function(amount) {
-  return function(a) { return a * amount; };
-};
-createMultiplier(5)(2); // -> 10
-                </code></pre>
-              <p class="fragment more-text">Na szczęście funkcja map jest standardowo zdefiniowana dla typu
-                tablicowego:</p>
-              <pre class="fragment"><code class="javascript" data-trim>
-[1,2,3,4,5].map(createMultiplier(2));
-// -> [2,4,5,8,10];
-                </code></pre>
+            <p>wartością funkcji może być funkcja</p>
+            <div class="r-vstack">
+              <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+                function createMultiplier(amount) {
+                  return function(a) { return a * amount; };
+                };
+                createMultiplier(5)(2); // -> 10
+
+                function map(array, fn) {
+                  var result = [];
+                  for(i = 0; i < array.length; ++i) {
+                    result[i] = fn ? fn(array[i]) : array[i];
+                  }
+                  return result;
+                };
+              </code></pre>
             </div>
-            <div class="col right">
-                    <pre><code class="javascript" data-trim>
-var map = function(array, fn) {
-  var result = [];
-  for(i = 0; i < array.length; ++i) {
-    result[i] = fn ? fn(array[i]) : array[i];
-  }
-  return result;
-};
-                 </code></pre>
-            </div>
+
             <aside class="notes">
               <p>Standard ECMAScript 2015 (ES6) wprowadza uproszczoną notację funkcyjną "fat arrow": można pisać
                 <code>(a) => a + 1</code> zamiast <code>function(a) { return a + 1; }</code>.</p>
             </aside>
           </section>
+
+          <section>
+            <p>Na szczęście funkcja map jest standardowo zdefiniowana dla typu tablicowego:</p>
+            <pre class="javascript"><code class="hljs" data-trim>
+                [1,2,3,4,5].map(createMultiplier(2));
+                // -> [2,4,5,8,10];
+            </code></pre>
+          </section>
+
           <section>
             <p>W języku JavaScript funkcję można zadeklarować (stworzyć) na kilka
               sposobów...</p>
             <div class="col left fragment">
               <p>Następujące sposoby są <strong>tożsame</strong>:</p>
-              <pre><code class="javascript" data-trim>
-var add = function(left, right) {
-  return left + right;
-};
-function sub(left, right) {
-  return left - right;
-};
-console.log(add);
-console.log(sub);
+              <pre class="javascript"><code class="hljs" data-trim>
+                const add = function(left, right) {
+                  return left + right;
+                };
+                function sub(left, right) {
+                  return left - right;
+                };
+                console.log(add);
+                console.log(sub);
                 </code></pre>
             </div>
             <div class="col right fragment">
@@ -863,7 +861,10 @@ fibb.forEach(function(val, i) {
         </section>
         <!-- /TABLICE -->
       </div>
-      <div class="footer"><a href="index.html">Indeks</a></div>
+      <div
+          id="cgLogo"
+          style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+      </div>
     </div>
 
 
