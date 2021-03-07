@@ -72,19 +72,9 @@
           <section>
             <h3>Dlaczego Javascript jest ważny?</h3>
             <ul>
-              <li class="fragment">
-                Javascript jest językiem dostępnym w każdej nowoczesnej przeglądarce internetowej.
-              </li>
-              <li class="fragment">
-                Użytkownik nie musi instalować niczego poza przeglądarką.
-              </li>
-              <li class="fragment">
-                Użytkownik nie musi akceptować aktualizacji ani instalacji żadnych dodatkowych pluginów.
-              </li>
-              <li class="fragment">
-                Język Javascript jest aktualizowany wraz z przeglądarką, co z reguły, w dzisiejszych czasach,
-                dokonuje się automatycznie.
-              </li>
+              <li>dostępny wszędzie</li>
+              <li>każdy użytkownik z reguły posiada przeglądarkę</li>
+              <li>automatyczna aktualizacja</li>
             </ul>
           </section>
         </section>
@@ -392,7 +382,7 @@
               zmiennymi <strong>lokalnymi</strong>.</p>
           </section>
           <section>
-            <h3>Wyciąganie zmiennych</h3>
+            <h3>Hoisting</h3>
             <p>Zasięg zmiennych w JavaScripcie jest <strong>funkcyjny a nie blokowy</strong>, chociaż blokowa
               składnia sugeruje coś innego.</p>
             <pre class="fragment"><code class="javascript" data-trim data-line-numbers="1-3|4-8|9-15">
@@ -720,36 +710,24 @@
         <section>
           <h2>Tablice</h2>
           <section>
-            <div class="centered more-text"><p class="align-left">Tablice w języku JavaScript są obiektami o pewnej
+           <p>Tablice w języku JavaScript są obiektami o pewnej
               specjalnej charakterystyce:</p>
-              <ul>
-                <li class="fragment">Właściwości o nazwach będących nieujemną liczbą całkowitą (tzw indeksy
-                  tablicy) zawierają elementy tablicy.
-                </li>
-                <li class="fragment">Istnieje specjalna właściwość <code>length</code>, której wartością jest
-                  najwyższy indeks, jaki był zdefiniowany w danej tablicy.
-                </li>
-                <li class="fragment">Tablice mogą zawierać nieciągłości indeksów.</li>
-                <li class="fragment">Tablice mogą zawierać właściwości nie będące liczbami nieujemnymi (ich
-                  wartość nie wpływa wówczas na wartość <code>length</code>).
-                </li>
-                <li class="fragment">Odczytanie wartości spoza listy zefiniowanych elementów zwraca wartość
-                  <code>undefined</code>.
-                </li>
-              </ul>
-            </div>
-          </section>
-          <section>
-              <p class="align-left">Istnieje dedykowany literał do deklarowania wartości typu tablicowego:</p>
-              <pre class="javascript fragment" data-fragment-index="1"><code class="hljs" data-trim>
+              <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+                const t = [];
+                t[0] = 123; // --> [123]
+                t[5] = 3; // --> [123, 4 empty slots, 5]
+                t[6] = 'foo'; // --> [123, 4 empty slots, 5, 'foo bar']
+                t.foo = 'bar'; // --> [123, 4 empty slots, 5, 'foo bar']
+                console.log(t.foo); // --> bar
+              </code></pre>
+            <pre class="javascript fragment" data-fragment-index="1"><code class="hljs" data-trim>
                 const fibb = [1,2,3,5,8,13];
               </code></pre>
-              <p class="align-left fragment" data-fragment-index="2">JavaScript dopuszcza używania wartości
-                różnych typów w ramach jednej tablicy:</p>
-              <pre class="fragment javascript" data-fragment-index="2"><code class="hljs" data-trim>
+            <pre class="fragment javascript" data-fragment-index="2"><code class="hljs" data-trim>
                 const bag = [1,5,'foo',{}, {name: 'Doe'}, [1,2,3]];
               </code></pre>
           </section>
+
           <section>
               <p class="align-left">Iterowanie klasyczne:</p>
               <pre><code class="javascript" data-trim>
@@ -1007,7 +985,7 @@ color = 'foo'; // transpilation error
 
         <section>
           <h3>W praktyce klasy wykorzystywane są rzadko</h3>
-          <pre class="typescript"><code class="hljs" data-trim data-line-numbers="|">
+          <pre class="typescript"><code class="hljs" data-trim data-line-numbers>
             interface Person {
               name: string;
               surname: string;
@@ -1035,7 +1013,7 @@ color = 'foo'; // transpilation error
             y = true; // <-- błąd kompilacji
           </code></pre>
         </section>
-        
+
         <section>
           <h3>Przecięcia typów (<em>intersection</em>)</h3>
           <pre class="typescript"><code class="hljs" data-trim data-line-numbers>
@@ -1061,7 +1039,6 @@ color = 'foo'; // transpilation error
             <li>Type inference</li>
             <li>Generics</li>
             <li>Getters and setters</li>
-            <li>Conditional types</li>
             <li>Function overloading</li>
             <li>Type guards</li>
           </ul>
