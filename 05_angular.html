@@ -1,12 +1,12 @@
 <!doctype html>
-<html>
+<html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <title>Free your mind with JDBI</title>
+  <title>Projektowanie i implementacja systemów webowych - wykład 5</title>
 
-  <meta name="description" content="Using explicit SQL mappers in Enterprise Applications">
+  <meta name="description" content="Angular">
   <meta name="author" content="Maciej Małecki">
 
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -23,60 +23,79 @@
 </head>
 <body>
 <div class="reveal">
-    <div class="slides">
-        <section>
-            <h3>Projekt i implementacja systemów webowych</h3>
-            <h1>Angular</h1>
-        </section>
-        <section>
-            <h3>Architektura aplikacji Rich Web Application</h3>
-            <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="no-border">
-        </section>
-        <section>
-            <h3>Angular</h3>
-            <img src="img/angular-architecture.png" alt="Angular Architecture" class="no-border">
-            <p class="most-text">Źródło: <a href="https://angular.io/guide/architecture">https://angular.io/guide/architecture</a>
-            </p>
-        </section>
-        <section>
-            <h3>Angular a AngularJS</h3>
-            <div class="more-text">
-                <ul>
-                    <li>AngularJS (wcześniej znany jako Angular 1.x) - pierwsza implementacja od Google.</li>
-                    <li class="fragment">Stworzona "na szybko", niepozbawiona wad.</li>
-                    <li class="fragment">Odniosła duży sukces, dlatego była rozwijana.</li>
-                    <li class="fragment">Angular (2.x +) opiera się na podobnych założeniach, ale nie jest
-                        kompatybilny.
-                    </li>
-                    <li class="fragment">Stąd dwie różne nazwy - należy uważać przeglądając zasoby sieciowe!</li>
-                </ul>
-            </div>
-        </section>
-        <section>
-            <h3>Infrastruktura developerska</h3>
-            <p class="align-left"><strong>Node</strong> - środowisko uruchomieniowe dla JavaScript, może być także
-                wykorzystywane po stronie serwera.</p>
-            <p class="align-left fragment"><strong>NPM</strong> (<em>Node Package Manager</em>) - narzędzie do
-                zarządzania zależnościami bibliotek JS. Współpracuje z repozytorium bibliotek (<em>npm
-                    registry</em>).</p>
-            <p class="align-left fragment"><strong>Yarn</strong> - alternatywny klient to repozytorium npm.</p>
-        </section>
-        <section>
-            <h3>Live coding - przykładowa aplikacja</h3>
-            <a href="https://github.com/pwr-piisw/angular-wyklad">https://github.com/pwr-piisw/angular-wyklad</a>
-        </section>
-        <section>
-            <h3>NgModule</h3>
-            <section>
-                <div class="align-left">
-                    <p>Moduł funkcjonalny aplikacji - sposób organizacji kodu oraz zależności.</p>
-                    <p class="fragment">Jest to mechanizm komplementarny do mechanizmu modułów w JavaScript.</p>
-                    <p class="fragment more-text">Niestety, użyto tej samej nazwy. Dla modułów Angulara używajmy zatem
-                        nazwy <strong>NgModule</strong>.</p>
-                </div>
-            </section>
-            <section>
-                <div class="left col">
+  <div class="slides">
+    <section>
+      <h2>Projekt i implementacja systemów webowych</h2>
+      <p>Wykład 5: Tworzenie aplikacji SPA w Angularze</p>
+      <p>mgr inż. Maciej Małecki</p>
+    </section>
+
+    <section>
+      <h3>Architektura aplikacji SPA</h3>
+      <img src="img/rich-front-architecture.svg" alt="Rich Front Architecture" class="backlight">
+    </section>
+
+    <section>
+      <h3>Popularne frameworki</h3>
+      <div class="r-hstack">
+        <img src="img/React-icon.svg" alt="react">
+        <img src="img/Angular_logo.svg" alt="ng">
+        <img src="img/Vue.js_Logo.svg" alt="vue">
+      </div>
+    </section>
+
+    <section>
+      <h3>Angular: historia</h3>
+      <div class="r-hstack">
+        <img src="img/Angular_logo.svg" alt="ng" style="width: 400px;">
+        <div>
+          <ul>
+            <li>AngularJS - Google, 2010</li>
+            <li>AngularJS: LTS &zigrarr; 2021-12-31</li>
+            <li>Angular 2.0 - Google, 2016</li>
+            <li class="fragment">Brak kompatybilności między Angular i&nbsp;AngularJS</li>
+            <li class="fragment">UWAGA: zwracajcie uwagę na nazwy przeszukując zasoby sieciowe</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Angular: architektura</h3>
+      <img src="img/angular-architecture.png" alt="Angular Architecture" class="backlight white">
+      <p class="most-text">Źródło: <a
+          href="https://angular.io/guide/architecture">https://angular.io/guide/architecture</a>
+      </p>
+    </section>
+
+    <section>
+      <h3>Angular: środowisko developerskie</h3>
+      <ul>
+        <li><code>Node</code> - środowisko uruchomieniowe dla JavaScript</li>
+        <li><code>NPM</code> - ang. <em>Node Package Manager</em> - zarządzanie zależnościami</li>
+        <li><code>NPM registry</code> - repozytorium bibliotek</li>
+        <li class="fragment"><code>TypeScript</code> - podstawowy język programowania dla Angular 2.x+</li>
+        <li class="fragment"><code>Angular CLI</code> - narzędzie linii poleceń wspierające proces tworzenia i budowania</li>
+        <li class="fragment"><code>Karma, Jasmine</code> - środowisko tworzenia testów jednostkowych</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Live coding - przykładowa aplikacja</h3>
+      <a href="https://github.com/pwr-piisw/angular-wyklad">https://github.com/pwr-piisw/angular-wyklad</a>
+    </section>
+    <section>
+      <h3>NgModule</h3>
+      <section>
+        <div class="align-left">
+          <p>Moduł funkcjonalny aplikacji - sposób organizacji kodu oraz zależności.</p>
+          <p class="fragment">Jest to mechanizm komplementarny do mechanizmu modułów w JavaScript.</p>
+          <p class="fragment more-text">Niestety, użyto tej samej nazwy. Dla modułów Angulara używajmy zatem
+            nazwy <strong>NgModule</strong>.</p>
+        </div>
+      </section>
+      <section>
+        <div class="left col">
                         <pre><code class="javascript" data-trim>
 @NgModule({
   imports: [CommonModule],
@@ -88,76 +107,76 @@
 })
 export class MyModule {}
                 </code></pre>
-                </div>
-                <div class="right col most-text">
-                    <ul>
-                        <li class="fragment"><code>declarations</code> - komponenty składowe.
-                        </li>
-                        <li class="fragment"><code>exports</code> - podzbiór komponentów składowych widoczny na
-                            "zewnątrz" modułu.
-                        </li>
-                        <li class="fragment"><code>imports</code> - lista modułów, których używamy.</li>
-                    </ul>
-                </div>
-            </section>
-            <section>
-                <div class="left col">
-                    <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE"
-                         height="420">
-                </div>
-                <div class="right col">
-                    <p class="most-text">Budowa modułu powinna być odzwierciedlona poprzez strukturę katalogów z plikami
-                        źródłowymi.</p>
-                    <img src="img/angular-app-composition.svg" alt="Angular Application Composition" height="300"
-                         class="no-border fragment">
-                </div>
-            </section>
-            <section>
-                <p class="more-text">Przykład modułu funkcjonalnego:</p>
-                <div class="left col">
-                    <img src="img/functional-modules.svg" alt="Functional modules" class="no-border">
-                    <pre class="fragment"><code class="bash" data-trim>
+        </div>
+        <div class="right col most-text">
+          <ul>
+            <li class="fragment"><code>declarations</code> - komponenty składowe.
+            </li>
+            <li class="fragment"><code>exports</code> - podzbiór komponentów składowych widoczny na
+              "zewnątrz" modułu.
+            </li>
+            <li class="fragment"><code>imports</code> - lista modułów, których używamy.</li>
+          </ul>
+        </div>
+      </section>
+      <section>
+        <div class="left col">
+          <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE"
+               height="420">
+        </div>
+        <div class="right col">
+          <p class="most-text">Budowa modułu powinna być odzwierciedlona poprzez strukturę katalogów z plikami
+            źródłowymi.</p>
+          <img src="img/angular-app-composition.svg" alt="Angular Application Composition" height="300"
+               class="no-border fragment">
+        </div>
+      </section>
+      <section>
+        <p class="more-text">Przykład modułu funkcjonalnego:</p>
+        <div class="left col">
+          <img src="img/functional-modules.svg" alt="Functional modules" class="no-border">
+          <pre class="fragment"><code class="bash" data-trim>
 ng generate module user-mgmt
 ng generate module library-mgmt
                     </code></pre>
-                </div>
-                <div class="right col">
-                    <img src="img/import-modules-in-app.png" alt="Import modules" class="fragment" height="280">
-                    <img src="img/import-modules-in-module.png" alt="Import modules in module" class="fragment"
-                         height="150">
-                </div>
-                <p class="most-text">Live coding: step1</p>
-            </section>
-        </section>
-        <section>
-            <h3>Component</h3>
-            <section>
-                <ul>
-                    <li>Komponent jest podstawową jednostką budowania warstwy wizualnej aplikacji.</li>
-                    <li>Komponent może być reużyty.</li>
-                    <li>Komponent komunikuje się ze światem "zewnętrznym" w ściśle określony sposób.</li>
-                </ul>
-            </section>
-            <section>
+        </div>
+        <div class="right col">
+          <img src="img/import-modules-in-app.png" alt="Import modules" class="fragment" height="280">
+          <img src="img/import-modules-in-module.png" alt="Import modules in module" class="fragment"
+               height="150">
+        </div>
+        <p class="most-text">Live coding: step1</p>
+      </section>
+    </section>
+    <section>
+      <h3>Component</h3>
+      <section>
+        <ul>
+          <li>Komponent jest podstawową jednostką budowania warstwy wizualnej aplikacji.</li>
+          <li>Komponent może być reużyty.</li>
+          <li>Komponent komunikuje się ze światem "zewnętrznym" w ściśle określony sposób.</li>
+        </ul>
+      </section>
+      <section>
                 <pre><code class="bash" data-trim>
 ng generate component user-mgmt/user-list
                 </code></pre>
-                <div class="left col">
-                    <img src="img/new-user-list-component.png" alt="User list component" class="fragment">
-                    <img src="img/new-user-list-component-declared.png" alt="User list component declaration"
-                         class="fragment">
-                </div>
-                <div class="col right more-text">
-                    <ul>
-                        <li class="fragment"><em>template (html)</em> - część wizualna komponentu</li>
-                        <li class="fragment"><em>scss</em> - prywatny arkusz styli (opcja)</li>
-                        <li class="fragment"><em>component.ts</em> - kod komponentu pełniący funkcję kontrolera</li>
-                        <li class="fragment"><em>spec.ts</em> - testy jednostkowe komponentu</li>
-                    </ul>
-                </div>
-                <p class="most-text">Live coding: step2</p>
-            </section>
-            <section>
+        <div class="left col">
+          <img src="img/new-user-list-component.png" alt="User list component" class="fragment">
+          <img src="img/new-user-list-component-declared.png" alt="User list component declaration"
+               class="fragment">
+        </div>
+        <div class="col right more-text">
+          <ul>
+            <li class="fragment"><em>template (html)</em> - część wizualna komponentu</li>
+            <li class="fragment"><em>scss</em> - prywatny arkusz styli (opcja)</li>
+            <li class="fragment"><em>component.ts</em> - kod komponentu pełniący funkcję kontrolera</li>
+            <li class="fragment"><em>spec.ts</em> - testy jednostkowe komponentu</li>
+          </ul>
+        </div>
+        <p class="most-text">Live coding: step2</p>
+      </section>
+      <section>
                 <pre><code class="javascript" data-trim>
 export const APP_ROUTES: Routes = [{
     path: 'app',
@@ -173,66 +192,66 @@ export const APP_ROUTES: Routes = [{
   { path: '',
     redirectTo: '/app/books',
     pathMatch: 'full' }];</code></pre>
-                <p class="most-text">Live coding: step3, step4</p>
-            </section>
-        </section>
-        <section>
-            <h3>Routing</h3>
-            <section>
-                <p>Jak działa przeglądarka?
-                <div class="more-text">
-                    <ul>
-                        <li class="fragment">Wyświetla zawartość w zależności od wartości pola adresowego (URL).</li>
-                        <li class="fragment">Przekierowuje użytkownika na inną stronę w wyniku kliknięcia w link.</li>
-                        <li class="fragment">Zapamiętuje historię przeglądania oraz umożliwia poruszanie się po niej.
-                        </li>
-                    </ul>
-                </div>
-                </p>
-                <p class="fragment more-text"><strong>Router jest modułem Angulara, który implementuje podstawowe
-                    funkcje przeglądarki (URL, historia) w aplikacjach typu Single-Page.</strong></p>
-            </section>
-            <section>
-                <div class="col left">
-                    <img src="img/routing-setup-in-app.png" alt="Routing setup" height="380">
-                </div>
-                <div class="col right most-text">
-                    <ul>
-                        <li class="fragment">Router jest modułem Angulara instalowanym jako osobna zależność.</li>
-                        <li class="fragment">Dla każdej aplikacji Angulara potrzebujemy dokładnie jedną instację routera
-                            (singleton, <code>forRoot</code>).
-                        </li>
-                        <li class="fragment">Router inicjujemy tzw. tablicą przejść (ang. <em>routes</em>).</li>
-                        <li class="fragment">Wygodnie jest umieścić tablicę przejść (<code>import {APP_ROUTES}</code>) w
-                            osobnym
-                            pliku źródłowym.
-                        </li>
-                    </ul>
-                </div>
-            </section>
-            <section>
-                <div class="col left">
-                    <img src="img/routing-reorganized.png" alt="Routing reorganized">
-                </div>
-                <div class="col right">
-                    <p class="most-text fragment"><code>router-outlet</code> określa miejsce, w którym Router będzie
-                        "wklejał" nasz komponent.</p>
-                    <img src="img/router-outlet-src.png" alt="Router outlet source" class="fragment">
-                    <img src="img/router-outlet.png" alt="Router outlet" class="fragment">
-                </div>
-                <p class="most-text">Live coding: step5</p>
-            </section>
-            <section>
-                <p> Więcej informacji na <a href="https://angular.io/guide/router">https://angular.io/guide/router</a>.
-                </p>
-            </section>
-        </section>
-        <section>
-            <h3>Template</h3>
-            <section>
-                <p class="most-text">Szablon (ang. <em>template</em>) jest wycinkiem HTML, który definiuje wygląd
-                    komponentu.</p>
-                <pre class="fragment"><code class="javascript" data-trim>
+        <p class="most-text">Live coding: step3, step4</p>
+      </section>
+    </section>
+    <section>
+      <h3>Routing</h3>
+      <section>
+        <p>Jak działa przeglądarka?
+        <div class="more-text">
+          <ul>
+            <li class="fragment">Wyświetla zawartość w zależności od wartości pola adresowego (URL).</li>
+            <li class="fragment">Przekierowuje użytkownika na inną stronę w wyniku kliknięcia w link.</li>
+            <li class="fragment">Zapamiętuje historię przeglądania oraz umożliwia poruszanie się po niej.
+            </li>
+          </ul>
+        </div>
+        </p>
+        <p class="fragment more-text"><strong>Router jest modułem Angulara, który implementuje podstawowe
+          funkcje przeglądarki (URL, historia) w aplikacjach typu Single-Page.</strong></p>
+      </section>
+      <section>
+        <div class="col left">
+          <img src="img/routing-setup-in-app.png" alt="Routing setup" height="380">
+        </div>
+        <div class="col right most-text">
+          <ul>
+            <li class="fragment">Router jest modułem Angulara instalowanym jako osobna zależność.</li>
+            <li class="fragment">Dla każdej aplikacji Angulara potrzebujemy dokładnie jedną instację routera
+              (singleton, <code>forRoot</code>).
+            </li>
+            <li class="fragment">Router inicjujemy tzw. tablicą przejść (ang. <em>routes</em>).</li>
+            <li class="fragment">Wygodnie jest umieścić tablicę przejść (<code>import {APP_ROUTES}</code>) w
+              osobnym
+              pliku źródłowym.
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section>
+        <div class="col left">
+          <img src="img/routing-reorganized.png" alt="Routing reorganized">
+        </div>
+        <div class="col right">
+          <p class="most-text fragment"><code>router-outlet</code> określa miejsce, w którym Router będzie
+            "wklejał" nasz komponent.</p>
+          <img src="img/router-outlet-src.png" alt="Router outlet source" class="fragment">
+          <img src="img/router-outlet.png" alt="Router outlet" class="fragment">
+        </div>
+        <p class="most-text">Live coding: step5</p>
+      </section>
+      <section>
+        <p> Więcej informacji na <a href="https://angular.io/guide/router">https://angular.io/guide/router</a>.
+        </p>
+      </section>
+    </section>
+    <section>
+      <h3>Template</h3>
+      <section>
+        <p class="most-text">Szablon (ang. <em>template</em>) jest wycinkiem HTML, który definiuje wygląd
+          komponentu.</p>
+        <pre class="fragment"><code class="javascript" data-trim>
 @Component({
   selector: 'app-user-list',
   template: `&lt;p&gt;Some fancy component...&lt;/p&gt;`,
@@ -240,7 +259,7 @@ export const APP_ROUTES: Routes = [{
 })
 export class UserListComponent implements OnInit {
             </code></pre>
-                <pre class="fragment"><code class="javascript" data-trim>
+        <pre class="fragment"><code class="javascript" data-trim>
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -248,8 +267,8 @@ export class UserListComponent implements OnInit {
 })
 export class UserListComponent implements OnInit {
             </code></pre>
-            </section>
-            <section>
+      </section>
+      <section>
                 <pre><code class="javascript" data-trim>
 &lt;section class=&quot;container-fluid&quot;&gt;
   &lt;table class=&quot;table table-striped&quot;&gt;
@@ -268,82 +287,82 @@ export class UserListComponent implements OnInit {
   &lt;/table&gt;
 &lt;/section&gt;
                 </code></pre>
-            </section>
-        </section>
-        <section>
-            <h3>DOM model</h3>
-            <section>
-                <p>DOM (<em>Document Object Model</em>) jest to model obiektowy reprezentujący dokument HTML
-                    wyświetlany przez przeglądarkę.</p>
-                <p class="fragment">Przeglądarka buduje DOM w pamięci za każdym razem, gdy wyświetla HTML.</p>
-                <p class="fragment">Każdy skrypt JavaScript (a więc także i każda aplikacja Angular) wchodzi w
-                    interakcję z DOM.</p>
-            </section>
-            <section>
-                <p>Postawowe API elementów DOM:</p>
-                <div class="more-text">
-                    <ul>
-                        <li class="fragment"><strong>atrybut</strong> - dodatkowa wartość definiująca tag (w dokumencie
-                            HTML).
-                        </li>
-                        <li class="fragment"><strong>właściwość</strong> (<em>property</em>) - właściwość obiektu DOM
-                            (zwykła właściwość obiektu w JS).
-                        </li>
-                        <li class="fragment"><strong>metoda</strong> - funkcja obiektu DOM, którą można wywołać.</li>
-                        <li class="fragment"><strong>zdarzenie</strong> (<em>event</em>) - informacja o zaistnieniu
-                            pewnego faktu, np <em>click</em>, <em>focus</em>, <em>blur</em>.
-                        </li>
-                    </ul>
-                </div>
-            </section>
-        </section>
-        <section>
-            <h3>Data binding - wiązanie danych</h3>
-            <p class="more-text"><em>Data binding</em> są to mechanizmy pozwalające na integrację modelu z widokiem.</p>
-            <div class="most-text">
-                <p>
-                    Podstawowe rodzaje wiązań:
-                <ul>
-                    <li class="fragment"><code>{{interpolation}}</code> - wyliczy wyrażenie wewnątrz
-                        <code>{{}}</code> oraz wstawi wartość.
-                    </li>
-                    <li class="fragment"><code>[property_binding]</code> - Angular będzie aktualizował wartość
-                        właściwości na podstawie wyrażenia.
-                    </li>
-                    <li class="fragment"><code>(event_binding)</code> - wywołana zostanie funkcja w reakcji na
-                        zaistnienie zdarzenia.
-                    </li>
-                    <li class="fragment"><code>[(two_way_binding)]</code> - synchronizuje model z widokiem "w obie
-                        strony".
-                    </li>
-                </ul>
-                </p>
-            </div>
-            <p class="most-text">Live coding: step6, step7, step8, step9, step10, step11</p>
-        </section>
-        <section>
-            <h3>Directive</h3>
-            <section><p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za
-                pomocą Angular.</p>
-                <p class="fragment">Istnieją trzy rodzaje dyrektyw:
-                <ul>
-                    <li class="fragment">Komponenty (już je znamy)</li>
-                    <li class="fragment">Dyrektywy atrybutowe</li>
-                    <li class="fragment">Dyrektywy strukturalne</li>
-                </ul>
-                </p>
-            </section>
-            <section>
-                <p>Dyrektywy atrybutowe</p>
-                <div class="more-text">
-                    <ul>
-                        <li class="fragment"><code>ngModel</code> - wiążą pola edycyjne z modelem</li>
-                        <li class="fragment"><code>ngClass</code> - pozwalają dynamicznie modyfikować klasy CSS</li>
-                        <li class="fragment"><code>ngStyle</code> - pozwalają dynamicznie modyfikować style CSS</li>
-                    </ul>
-                </div>
-            </section>
-            <section>
+      </section>
+    </section>
+    <section>
+      <h3>DOM model</h3>
+      <section>
+        <p>DOM (<em>Document Object Model</em>) jest to model obiektowy reprezentujący dokument HTML
+          wyświetlany przez przeglądarkę.</p>
+        <p class="fragment">Przeglądarka buduje DOM w pamięci za każdym razem, gdy wyświetla HTML.</p>
+        <p class="fragment">Każdy skrypt JavaScript (a więc także i każda aplikacja Angular) wchodzi w
+          interakcję z DOM.</p>
+      </section>
+      <section>
+        <p>Postawowe API elementów DOM:</p>
+        <div class="more-text">
+          <ul>
+            <li class="fragment"><strong>atrybut</strong> - dodatkowa wartość definiująca tag (w dokumencie
+              HTML).
+            </li>
+            <li class="fragment"><strong>właściwość</strong> (<em>property</em>) - właściwość obiektu DOM
+              (zwykła właściwość obiektu w JS).
+            </li>
+            <li class="fragment"><strong>metoda</strong> - funkcja obiektu DOM, którą można wywołać.</li>
+            <li class="fragment"><strong>zdarzenie</strong> (<em>event</em>) - informacja o zaistnieniu
+              pewnego faktu, np <em>click</em>, <em>focus</em>, <em>blur</em>.
+            </li>
+          </ul>
+        </div>
+      </section>
+    </section>
+    <section>
+      <h3>Data binding - wiązanie danych</h3>
+      <p class="more-text"><em>Data binding</em> są to mechanizmy pozwalające na integrację modelu z widokiem.</p>
+      <div class="most-text">
+        <p>
+          Podstawowe rodzaje wiązań:
+        <ul>
+          <li class="fragment"><code>{{interpolation}}</code> - wyliczy wyrażenie wewnątrz
+            <code>{{}}</code> oraz wstawi wartość.
+          </li>
+          <li class="fragment"><code>[property_binding]</code> - Angular będzie aktualizował wartość
+            właściwości na podstawie wyrażenia.
+          </li>
+          <li class="fragment"><code>(event_binding)</code> - wywołana zostanie funkcja w reakcji na
+            zaistnienie zdarzenia.
+          </li>
+          <li class="fragment"><code>[(two_way_binding)]</code> - synchronizuje model z widokiem "w obie
+            strony".
+          </li>
+        </ul>
+        </p>
+      </div>
+      <p class="most-text">Live coding: step6, step7, step8, step9, step10, step11</p>
+    </section>
+    <section>
+      <h3>Directive</h3>
+      <section><p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za
+        pomocą Angular.</p>
+        <p class="fragment">Istnieją trzy rodzaje dyrektyw:
+        <ul>
+          <li class="fragment">Komponenty (już je znamy)</li>
+          <li class="fragment">Dyrektywy atrybutowe</li>
+          <li class="fragment">Dyrektywy strukturalne</li>
+        </ul>
+        </p>
+      </section>
+      <section>
+        <p>Dyrektywy atrybutowe</p>
+        <div class="more-text">
+          <ul>
+            <li class="fragment"><code>ngModel</code> - wiążą pola edycyjne z modelem</li>
+            <li class="fragment"><code>ngClass</code> - pozwalają dynamicznie modyfikować klasy CSS</li>
+            <li class="fragment"><code>ngStyle</code> - pozwalają dynamicznie modyfikować style CSS</li>
+          </ul>
+        </div>
+      </section>
+      <section>
                 <pre><code class="javascript">
 divClasses = {};
 ...
@@ -352,28 +371,28 @@ this.divClasses: {
   'highlighted': this.isHighlighted()
 }
                 </code></pre>
-                <pre><code class="html">
+        <pre><code class="html">
 &lt;div [ngClass]=&quot;divClasses&quot;&gt;...&lt;/div&gt;
                 </code></pre>
-                <p class="fragment">W prostszych przypadkach...</p>
-                <pre class="fragment"><code class="html">
+        <p class="fragment">W prostszych przypadkach...</p>
+        <pre class="fragment"><code class="html">
 &lt;div [class.valid]=&quot;isValid()&quot;&gt;...&lt;/div&gt;
             </code></pre>
-            </section>
-            <section>
-                <p>Dyrektywy strukturalne</p>
-                <div class="most-text">
-                    <p class="fragment align-left" data-fragment-index="1"><code>*ngIf</code> - dodaje/usuwa element z
-                        DOM: </p>
-                    <pre class="fragment" data-fragment-index="1"><code class="html">&lt;div *ngIf=&quot;isVisible&quot;&gt;...&lt;/div&gt;</code></pre>
-                    <p class="fragment align-left" data-fragment-index="2"><code>*ngfor</code> - iteruje po liście i
-                        dodaje element DOM dla każdego elementu listy:</p>
-                    <pre class="fragment" data-fragment-index="2"><code class="html">&lt;div *ngFor=&quot;let user of users&quot;&gt;{{user.name}} ({{user.email}})&lt;/div&gt;</code></pre>
-                    <p class="fragment align-left" data-fragment-index="3"><code>ngSwitch, *ngSwitchCase,
-                        *ngSwitchDefault</code> - odpowiednik instrukcji switch/case/default z innych języków
-                        programowania.</p>
-                </div>
-                <aside class="notes">
+      </section>
+      <section>
+        <p>Dyrektywy strukturalne</p>
+        <div class="most-text">
+          <p class="fragment align-left" data-fragment-index="1"><code>*ngIf</code> - dodaje/usuwa element z
+            DOM: </p>
+          <pre class="fragment" data-fragment-index="1"><code class="html">&lt;div *ngIf=&quot;isVisible&quot;&gt;...&lt;/div&gt;</code></pre>
+          <p class="fragment align-left" data-fragment-index="2"><code>*ngfor</code> - iteruje po liście i
+            dodaje element DOM dla każdego elementu listy:</p>
+          <pre class="fragment" data-fragment-index="2"><code class="html">&lt;div *ngFor=&quot;let user of users&quot;&gt;{{user.name}} ({{user.email}})&lt;/div&gt;</code></pre>
+          <p class="fragment align-left" data-fragment-index="3"><code>ngSwitch, *ngSwitchCase,
+            *ngSwitchDefault</code> - odpowiednik instrukcji switch/case/default z innych języków
+            programowania.</p>
+        </div>
+        <aside class="notes">
                     <pre>
 &lt;div [ngSwitch]=&quot;currentHero.emotion&quot;&gt;
   &lt;app-happy-hero *ngSwitchCase=&quot;'happy'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-happy-hero&gt;
@@ -381,30 +400,30 @@ this.divClasses: {
   &lt;app-confused-hero *ngSwitchCase=&quot;'confused'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-confused-hero&gt;
   &lt;app-unknown-hero *ngSwitchDefault [hero]=&quot;currentHero&quot;&gt;&lt;/app-unknown-hero&gt;
 &lt;/div&gt;</pre>
-                </aside>
-            </section>
-        </section>
-        <section>
-            <h3>Komunikacja międzykomponentowa</h3>
-            <section>
-                <div class="more-text">
-                    <p class="align-left">Angular pozwala na stosowanie <em>data bindings</em> we
-                        własnych komponentach.</p>
-                    <p class="fragment" data-fragment-index="1">Dla danych wejściowych:</p></div>
-                <pre class="fragment" data-fragment-index="1"><code class="html">&lt;app-user-details [user]=&quot;user&quot;&gt;&lt;/app-user-details&gt;</code></pre>
-                <pre class="fragment" data-fragment-index="2"><code class="javascript">
+        </aside>
+      </section>
+    </section>
+    <section>
+      <h3>Komunikacja międzykomponentowa</h3>
+      <section>
+        <div class="more-text">
+          <p class="align-left">Angular pozwala na stosowanie <em>data bindings</em> we
+            własnych komponentach.</p>
+          <p class="fragment" data-fragment-index="1">Dla danych wejściowych:</p></div>
+        <pre class="fragment" data-fragment-index="1"><code class="html">&lt;app-user-details [user]=&quot;user&quot;&gt;&lt;/app-user-details&gt;</code></pre>
+        <pre class="fragment" data-fragment-index="2"><code class="javascript">
 export class UserDetailsComponent
 {
    ...
    @Input() user: User;
    ...
 }</code></pre>
-            </section>
-            <section>
-                <div class="more-text">
-                    <p>Dla danych wyjściowych:</p>
-                    <pre><code class="html">&lt;app-user-details (onChanged)=&quot;onChanged($event)&quot;&gt;&lt;/app-user-details&gt;</code></pre>
-                    <pre><code class="javascript">
+      </section>
+      <section>
+        <div class="more-text">
+          <p>Dla danych wyjściowych:</p>
+          <pre><code class="html">&lt;app-user-details (onChanged)=&quot;onChanged($event)&quot;&gt;&lt;/app-user-details&gt;</code></pre>
+          <pre><code class="javascript">
 export class UserDetailsComponent
 {
    ...
@@ -414,26 +433,26 @@ export class UserDetailsComponent
    ...
 }
                     </code></pre>
-                </div>
-            </section>
-            <section>
-                <p><strong>Przykład</strong>: edytor użytkowników</p>
-                <img src="img/component-interaction-example.png" alt="Component interaction example">
-                <p class="most-text">Live coding: step12, step13, step14, step15, step16</p>
-            </section>
-        </section>
-        <section>
-            <h3>Service</h3>
+        </div>
+      </section>
+      <section>
+        <p><strong>Przykład</strong>: edytor użytkowników</p>
+        <img src="img/component-interaction-example.png" alt="Component interaction example">
+        <p class="most-text">Live coding: step12, step13, step14, step15, step16</p>
+      </section>
+    </section>
+    <section>
+      <h3>Service</h3>
 
-            <section>
-                <p>Serwis jest funkcjonalnością aplikacji, która może być reużyta przez inne serwisy lub
-                    komponenty.</p>
-                <p class="fragment more-text">Serwisy, po zaimplementowaniu, są dostępne dzięki mechanizmowi DI (<em>Dependency
-                    Injection</em>) Angulara.</p>
-                <img src="img/service-data-provision-bad.png" alt="Service data provision" class="fragment">
+      <section>
+        <p>Serwis jest funkcjonalnością aplikacji, która może być reużyta przez inne serwisy lub
+          komponenty.</p>
+        <p class="fragment more-text">Serwisy, po zaimplementowaniu, są dostępne dzięki mechanizmowi DI (<em>Dependency
+          Injection</em>) Angulara.</p>
+        <img src="img/service-data-provision-bad.png" alt="Service data provision" class="fragment">
 
-            </section>
-            <section>
+      </section>
+      <section>
                     <pre><code class="javascript">@Injectable()
 export class UserService {
 
@@ -470,12 +489,12 @@ export class UserService {
   }
 }
                     </code></pre>
-                <p class="most-text">Live coding: step17</p>
-            </section>
-        </section>
-        <section>
-            <h3>HttpClient</h3>
-            <pre><code class="javascript">@Injectable()
+        <p class="most-text">Live coding: step17</p>
+      </section>
+    </section>
+    <section>
+      <h3>HttpClient</h3>
+      <pre><code class="javascript">@Injectable()
 export class UserService {
 
   constructor(private http: Http) {
@@ -497,53 +516,53 @@ export class UserService {
 }
 
                 </code></pre>
-            <p class="most-text">Live coding: step18, step19</p>
-        </section>
-        <section>
-            <h3>Bibliografia</h3>
-            <div class="most-text">
-                <ul>
-                    <li>
-                        <a href="https://angular.io/docs">https://angular.io/docs</a>, a w szczególności:
-                        <ul>
-                            <li><a href="https://angular.io/guide/router">https://angular.io/guide/router</a></li>
-                            <li>
-                                <a href="https://angular.io/guide/template-syntax">https://angular.io/guide/template-syntax</a>
-                            </li>
-                            <li><a href="https://angular.io/guide/component-interaction">https://angular.io/guide/component-interaction</a>
-                            </li>
-                            <li><a href="https://angular.io/guide/http">https://angular.io/guide/http</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="https://blog.thoughtram.io/">https://blog.thoughtram.io/</a>, a w szczególności:
-                        <ul>
-                            <li>
-                                <a href="https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html">https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html</a>
-                            </li>
-                            <li>
-                                <a href="https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html">https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </section>
+      <p class="most-text">Live coding: step18, step19</p>
+    </section>
+    <section>
+      <h3>Bibliografia</h3>
+      <div class="most-text">
+        <ul>
+          <li>
+            <a href="https://angular.io/docs">https://angular.io/docs</a>, a w szczególności:
+            <ul>
+              <li><a href="https://angular.io/guide/router">https://angular.io/guide/router</a></li>
+              <li>
+                <a href="https://angular.io/guide/template-syntax">https://angular.io/guide/template-syntax</a>
+              </li>
+              <li><a href="https://angular.io/guide/component-interaction">https://angular.io/guide/component-interaction</a>
+              </li>
+              <li><a href="https://angular.io/guide/http">https://angular.io/guide/http</a></li>
+            </ul>
+          </li>
+          <li><a href="https://blog.thoughtram.io/">https://blog.thoughtram.io/</a>, a w szczególności:
+            <ul>
+              <li>
+                <a href="https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html">https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html</a>
+              </li>
+              <li>
+                <a href="https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html">https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
 
 
-    </div>
-    <div id="cgLogo" style="background: url(img/cg_small.png);
-                        position: absolute;
-                        bottom: 20px;
-                        left: 20px;
-                        width: 250px;
-                        height: 44px;"></div>
-    <div class="footer"><a href="index.html">Indeks</a></div>
+  </div>
+  <div
+      id="cgLogo"
+      style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+  </div>
 </div>
 
 <script src="dist/reveal.js"></script>
 <script src="plugin/notes/notes.js"></script>
 <script src="plugin/markdown/markdown.js"></script>
 <script src="plugin/highlight/highlight.js"></script>
+<script src="plugin/chalkboard/plugin.js"></script>
+<script src="plugin/zoom/zoom.js"></script>
+
 <script>
     // More info about initialization & config:
     // - https://revealjs.com/initialization/
@@ -554,7 +573,7 @@ export class UserService {
         navigationMode: 'linear',
         slideNumber: 'c/t',
         // Learn about plugins: https://revealjs.com/plugins/
-        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealChalkboard, RevealZoom]
     });
 </script>
 </body>
