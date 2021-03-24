@@ -35,6 +35,16 @@
 .reveal img.backlight.white {
     background-color: white;
 }
+.reveal .bigtile {
+    height: 400px;
+    margin-left: 0.6em;
+    margin-right: 0.6em;
+}
+.reveal .midtile {
+    height: 200px;
+    margin-left: 0.6em;
+    margin-right: 0.6em;
+}
 
 .reveal .caption {
     background-color: rgba(0, 0, 0, 0.5);

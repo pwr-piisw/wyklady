@@ -81,101 +81,183 @@
     </section>
 
     <section>
-      <h3>Live coding - przykładowa aplikacja</h3>
-      <a href="https://github.com/pwr-piisw/angular-wyklad">https://github.com/pwr-piisw/angular-wyklad</a>
-    </section>
-    <section>
-      <h3>NgModule</h3>
+      <h3>Środowisko developerskie w praktyce</h3>
+
       <section>
-        <div class="align-left">
-          <p>Moduł funkcjonalny aplikacji - sposób organizacji kodu oraz zależności.</p>
-          <p class="fragment">Jest to mechanizm komplementarny do mechanizmu modułów w JavaScript.</p>
-          <p class="fragment more-text">Niestety, użyto tej samej nazwy. Dla modułów Angulara używajmy zatem
-            nazwy <strong>NgModule</strong>.</p>
+        <p>Instalacja node &zigrarr; <code>nvm</code></p>
+        <p class="fragment" data-fragment-index="1">Instalacja <code>Angular CLI</code></p>
+        <pre class="bash fragment" data-fragment-index="1"><code class="hljs" data-trim>
+            npm install -g @angular/cli
+          </code></pre>
+      </section>
+
+      <section>
+        <p>Wygenerowanie aplikacji Angular</p>
+        <pre class="text"><code class="hljs" data-trim>
+            $ ng new
+            ? What name would you like to use for the new workspace and initial project? foo
+            ? Do you want to enforce stricter type checking and stricter bundle budgets in the workspace?
+            This setting helps improve maintainability and catch bugs ahead of time.
+            For more information, see https://angular.io/strict Yes
+            ? Would you like to add Angular routing? Yes
+            ? Which stylesheet format would you like to use? SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]
+          </code></pre>
+      </section>
+
+      <section>
+        <p>Zbudowanie aplikacji</p>
+        <pre class="text"><code class="hljs" data-trim>
+          ng build --prod
+        </code></pre>
+        <p>Uruchomienie aplikacji</p>
+        <pre class="text"><code class="hljs" data-trim>
+          ng serve -o
+        </code></pre>
+      </section>
+
+      <section>
+        <h1>live demo</h1>
+      </section>
+    </section>
+
+    <section>
+      <h3>Angular: podstawowe elementy</h3>
+      <ul>
+        <li>Moduły</li>
+        <li>Komponenty</li>
+        <li>Dyrektywy</li>
+        <li>Serwisy</li>
+        <li>Router</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Moduł (<code>NgModule</code>)</h3>
+
+      <section>
+        <ul>
+          <li>funkcjonalny blok aplikacji,</li>
+          <li>sposób organizacji kodu,</li>
+          <li>sposób zarządzania zależnościami,</li>
+          <li>tworzenie kodu bibliotecznego,</li>
+          <li><em>lazy-loading</em> w przypadku dużych aplikacji.</li>
+        </ul>
+        <p class="fragment bcol0">Moduł ECMA Script oraz Moduł Angulara to dwie różne rzeczy!</p>
+      </section>
+
+      <section>
+        <div class="r-hstack">
+          <pre class="typescript"><code class="hljs" data-trim data-line-numbers="|2|3-7|8|10-11">
+          @NgModule({
+            imports: [CommonModule],
+            declarations: [
+              MyComponent1,
+              MyComponent2,
+              MyExternalComponent3
+            ],
+            exports: [MyExternalComponent3]
+          })
+          export class MyModule {
+          }
+          </code></pre>
+          <div style="width: 1em;"></div>
+          <div>
+            <ul>
+              <li><code>@NgModule</code> - dekorator TypeScript</li>
+              <li>komponenty "należą" do modułu</li>
+              <li>publiczne elementy modułu należy wyeksportować</li>
+            </ul>
+          </div>
         </div>
       </section>
+
       <section>
-        <div class="left col">
-                        <pre><code class="javascript" data-trim>
-@NgModule({
-  imports: [CommonModule],
-  declarations: [
-    MyComponent1,
-    MyComponent2,
-    MyExternalComponent3],
-  exports: [MyExternalComponent3]
-})
-export class MyModule {}
-                </code></pre>
+        <div class="r-hstack">
+          <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE" class="backlight white bigtile">
+          <img src="img/angular-app-composition.svg" alt="Angular Application Composition" class="backlight bigtile">
         </div>
-        <div class="right col most-text">
+        <div>
           <ul>
-            <li class="fragment"><code>declarations</code> - komponenty składowe.
-            </li>
-            <li class="fragment"><code>exports</code> - podzbiór komponentów składowych widoczny na
-              "zewnątrz" modułu.
-            </li>
-            <li class="fragment"><code>imports</code> - lista modułów, których używamy.</li>
+            <li>Struktura katalogów może odzwierciedlać strukturę modułów.</li>
+            <li>Przydaje się moduł <em>general</em> lub <em>shared</em>.</li>
           </ul>
         </div>
       </section>
-      <section>
-        <div class="left col">
-          <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE"
-               height="420">
-        </div>
-        <div class="right col">
-          <p class="most-text">Budowa modułu powinna być odzwierciedlona poprzez strukturę katalogów z plikami
-            źródłowymi.</p>
-          <img src="img/angular-app-composition.svg" alt="Angular Application Composition" height="300"
-               class="no-border fragment">
-        </div>
-      </section>
-      <section>
-        <p class="more-text">Przykład modułu funkcjonalnego:</p>
-        <div class="left col">
-          <img src="img/functional-modules.svg" alt="Functional modules" class="no-border">
-          <pre class="fragment"><code class="bash" data-trim>
-ng generate module user-mgmt
-ng generate module library-mgmt
-                    </code></pre>
-        </div>
-        <div class="right col">
-          <img src="img/import-modules-in-app.png" alt="Import modules" class="fragment" height="280">
-          <img src="img/import-modules-in-module.png" alt="Import modules in module" class="fragment"
-               height="150">
-        </div>
-        <p class="most-text">Live coding: step1</p>
-      </section>
     </section>
+
     <section>
-      <h3>Component</h3>
+      <h3>Komponent</h3>
+
       <section>
         <ul>
           <li>Komponent jest podstawową jednostką budowania warstwy wizualnej aplikacji.</li>
-          <li>Komponent może być reużyty.</li>
+          <li>Komponent może być wykorzystywany wielokrotnie.</li>
           <li>Komponent komunikuje się ze światem "zewnętrznym" w ściśle określony sposób.</li>
         </ul>
       </section>
+
       <section>
-                <pre><code class="bash" data-trim>
-ng generate component user-mgmt/user-list
-                </code></pre>
-        <div class="left col">
-          <img src="img/new-user-list-component.png" alt="User list component" class="fragment">
-          <img src="img/new-user-list-component-declared.png" alt="User list component declaration"
-               class="fragment">
-        </div>
-        <div class="col right more-text">
-          <ul>
-            <li class="fragment"><em>template (html)</em> - część wizualna komponentu</li>
-            <li class="fragment"><em>scss</em> - prywatny arkusz styli (opcja)</li>
-            <li class="fragment"><em>component.ts</em> - kod komponentu pełniący funkcję kontrolera</li>
-            <li class="fragment"><em>spec.ts</em> - testy jednostkowe komponentu</li>
-          </ul>
-        </div>
-        <p class="most-text">Live coding: step2</p>
+        <pre class="text"><code class="hljs" data-trim>
+          ng generate component user-mgmt/user-list
+        </code></pre>
+
+          <div class="r-hstack">
+            <img src="img/new-user-list-component.png" alt="User list component" class="backlight white midtile">
+            <img src="img/new-user-list-component-declared.png" alt="User list component declaration"
+                   class="backlight white midtile">
+          </div>
+            <ul>
+              <li><code class="bcol0">html</code> - szablon - część wizualna, ang. <em>template</em> (opcja)</li>
+              <li><code class="bcol1">scss</code> - prywatny arkusz styli (opcja)</li>
+              <li><code class="bcol2">component.ts</code> - kod/kontroler komponentu</li>
+              <li><code class="bcol3">spec.ts</code> - testy jednostkowe komponentu (opcja)</li>
+            </ul>
       </section>
+
+      <section>
+          <p>Definicja wyglądu komponentu w HTML:</p>
+          <pre class="typescript"><code class="hljs" data-trim><script type="text/template">
+            @Component({
+              selector: 'app-user-list',
+              template: `<p>Some fancy component...</p>`,
+              styleUrls: ['./user-list.component.scss']
+            })
+            export class UserListComponent implements OnInit {
+          </script>
+          </code></pre>
+          <p class="fragment" data-fragment-index="1">lub z użyciem zewnętrznego pliku:</p>
+          <pre class="typescript fragment" data-fragment-index="1"><code class="hljs" data-trim><script type="text/template">
+            @Component({
+              selector: 'app-user-list',
+              templateUrl: './user-list.component.html',
+              styleUrls: ['./user-list.component.scss']
+            })
+            export class UserListComponent implements OnInit {
+          </script></code></pre>
+        </section>
+
+        <section>
+          <p><code>user-list.component.html</code></p>
+          <pre class="html"><code class="hljs" data-trim data-line-numbers="|10|11-12"><script type="text/template">
+            <section class='container-fluid'>
+              <table class='table table-striped'>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let user of users'>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+           </script></code></pre>
+        </section>
+
       <section>
                 <pre><code class="javascript" data-trim>
 export const APP_ROUTES: Routes = [{
@@ -246,49 +328,7 @@ export const APP_ROUTES: Routes = [{
         </p>
       </section>
     </section>
-    <section>
-      <h3>Template</h3>
-      <section>
-        <p class="most-text">Szablon (ang. <em>template</em>) jest wycinkiem HTML, który definiuje wygląd
-          komponentu.</p>
-        <pre class="fragment"><code class="javascript" data-trim>
-@Component({
-  selector: 'app-user-list',
-  template: `&lt;p&gt;Some fancy component...&lt;/p&gt;`,
-  styleUrls: ['./user-list.component.scss']
-})
-export class UserListComponent implements OnInit {
-            </code></pre>
-        <pre class="fragment"><code class="javascript" data-trim>
-@Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
-})
-export class UserListComponent implements OnInit {
-            </code></pre>
-      </section>
-      <section>
-                <pre><code class="javascript" data-trim>
-&lt;section class=&quot;container-fluid&quot;&gt;
-  &lt;table class=&quot;table table-striped&quot;&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Name&lt;/th&gt;
-      &lt;th&gt;Email&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    &lt;tr *ngFor=&quot;let user of users&quot;&gt;
-      &lt;td&gt;{{user.name}}&lt;/td&gt;
-      &lt;td&gt;{{user.email}}&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
-&lt;/section&gt;
-                </code></pre>
-      </section>
-    </section>
+
     <section>
       <h3>DOM model</h3>
       <section>
@@ -340,6 +380,7 @@ export class UserListComponent implements OnInit {
       </div>
       <p class="most-text">Live coding: step6, step7, step8, step9, step10, step11</p>
     </section>
+
     <section>
       <h3>Directive</h3>
       <section><p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za
