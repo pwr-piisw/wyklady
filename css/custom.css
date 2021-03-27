@@ -46,6 +46,32 @@
     margin-right: 0.6em;
 }
 
+.reveal .midtile > div {
+    height: 200px;
+    width: 300px;
+    margin: 0.6em;
+    border-radius: 0.6em;
+    padding: 0.6em;
+    text-align: center;
+}
+
+.reveal .tile > div {
+    height: 170px;
+    width: 300px;
+    margin: 0.6em;
+    border-radius: 0.6em;
+    padding: 0.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reveal .rounded {
+    margin: 0.6em;
+    border-radius: 0.6em;
+    padding: 0.6em;
+}
+
 .reveal .caption {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 0.3em;

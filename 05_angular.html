@@ -114,21 +114,22 @@
           ng serve -o
         </code></pre>
       </section>
-
-      <section>
-        <h1>live demo</h1>
-      </section>
     </section>
 
     <section>
       <h3>Angular: podstawowe elementy</h3>
-      <ul>
-        <li>Moduły</li>
-        <li>Komponenty</li>
-        <li>Dyrektywy</li>
-        <li>Serwisy</li>
-        <li>Router</li>
-      </ul>
+      <div class="r-vstack">
+        <div class="r-hstack tile">
+          <div class="bcol0">Moduły</div>
+          <div class="bcol1">Komponenty</div>
+          <div class="bcol2">Dyrektywy</div>
+        </div>
+        <div class="r-hstack tile">
+          <div class="bcol3">Serwisy</div>
+          <div class="bcol4">Router</div>
+          <div class="bcol5">Formularze</div>
+        </div>
+      </div>
     </section>
 
     <section>
@@ -257,26 +258,137 @@
             </section>
            </script></code></pre>
         </section>
+    </section>
+
+    <section>
+      <h3>Model DOM</h3>
+      <section>
+        <p class=" rounded bcol3">DOM (<em>Document Object Model</em>) jest to model obiektowy reprezentujący dokument HTML
+          wyświetlany przez przeglądarkę.</p>
+        <div class="r-hstack">
+          <p class="fragment bcol0 rounded">Przeglądarka buduje DOM w pamięci za każdym razem, gdy wyświetla HTML.</p>
+          <p class="fragment bcol1 rounded">Każdy skrypt JavaScript (a więc także i każda aplikacja Angular) wchodzi w
+            interakcję z DOM.</p>
+        </div>
+      </section>
 
       <section>
-                <pre><code class="javascript" data-trim>
-export const APP_ROUTES: Routes = [{
-    path: 'app',
-    children: [
-      { path: 'books',
-        component: BookOverviewComponent },
-      { path: 'book',
-        component: BookDetailsComponent },
-      { path: 'book/:bookId',
-        component: BookDetailsComponent },
-      { path: 'users',
-        component: UserListComponent } ] },
-  { path: '',
-    redirectTo: '/app/books',
-    pathMatch: 'full' }];</code></pre>
-        <p class="most-text">Live coding: step3, step4</p>
+        <p class="bcol2">Postawowe API elementów DOM:</p>
+        <table>
+          <tr>
+            <td><strong>atrybut</strong></td>
+            <td>dodatkowa wartość definiująca tag (w dokumencie
+              HTML)</td>
+          </tr>
+          <tr>
+            <td><strong>właściwość</strong></td>
+            <td>(<em>property</em>), właściwość obiektu DOM
+              (zwykła właściwość obiektu w JS)</td>
+          </tr>
+          <tr>
+            <td><strong>metoda</strong></td>
+            <td>funkcja obiektu DOM, którą można wywołać</td>
+          </tr>
+          <tr>
+            <td><strong>zdarzenie</strong></td>
+            <td>(<em>event</em>) - informacja o zaistnieniu
+              pewnego faktu, np <em>click</em>, <em>focus</em>, <em>blur</em></td>
+          </tr>
+        </table>
       </section>
     </section>
+
+    <section>
+      <h3>Data binding - wiązanie danych</h3>
+      <section>
+        <p><em>Data binding</em> są to mechanizmy pozwalające na integrację modelu z widokiem.</p>
+      </section>
+      <section>
+        <table>
+          <tr>
+            <td><code>{{interpolation}}</code></td>
+            <td>wyliczy wyrażenie wewnątrz <code>{{}}</code> oraz wstawi wartość</td>
+          </tr>
+          <tr>
+            <td><code>[property_binding]</code></td>
+            <td>Angular będzie aktualizował wartość właściwości na podstawie wyrażenia</td>
+          </tr>
+          <tr>
+            <td><code>(event_binding)</code></td>
+            <td>wywołana zostanie funkcja w reakcji na zaistnienie zdarzenia</td>
+          </tr>
+          <tr>
+            <td><code>[(two_way_binding)]</code></td>
+            <td>synchronizuje model z widokiem "w obie strony"</td>
+          </tr>
+        </table>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>Dyrektywy</h3>
+        <p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za pomocą Angular.</p>
+        <p class="fragment" data-fragment-index="1">Istnieją trzy rodzaje dyrektyw:</p>
+        <ul class="fragment" data-fragment-index="1">
+          <li>Komponenty (już je znamy)</li>
+          <li>Dyrektywy atrybutowe</li>
+          <li>Dyrektywy strukturalne</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Dyrektywy atrybutowe</h3>
+        <div>
+          <ul>
+            <li><code>ngModel</code> - wiążą pola edycyjne z modelem</li>
+            <li><code>ngClass</code> - pozwalają dynamicznie modyfikować klasy CSS</li>
+            <li><code>ngStyle</code> - pozwalają dynamicznie modyfikować style CSS</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Dyrektywy atrybutowe</h3>
+        <pre class="typescript"><code class="hljs" data-trim>
+          divClasses = {};
+          ...
+          this.divClasses: {
+            'valid': this.isValid(),
+            'highlighted': this.isHighlighted()
+          }
+        </code></pre>
+
+        <pre class="html"><code class="hljs" data-trim><script type="text/template">
+          <div [ngClass]='divClasses'>...</div>
+        </script></code></pre>
+
+        <p>W prostszych przypadkach...</p>
+        <pre class="html"><code class="hljs" data-trim><script type="text/template">
+          <div [class.valid]='isValid()'>...</div>
+        </script></code></pre>
+      </section>
+
+      <section>
+        <h3>Dyrektywy strukturalne</h3>
+        <div>
+          <p class="align-left"><code>*ngIf</code> - dodaje/usuwa element z
+            DOM: </p>
+          <pre class="html"><code class="hljs" data-trim><script type="text/template">
+            <div *ngIf='isVisible'>...</div>
+          </script></code></pre>
+          <p class="fragment align-left" data-fragment-index="2"><code>*ngfor</code> - iteruje po liście i
+            dodaje element DOM dla każdego elementu listy:</p>
+          <pre class="fragment html" data-fragment-index="2"><code class="hljs" data-trim><script type="text/template">
+            <div *ngFor='let user of users'>{{user.name}} ({{user.email}})</div>
+          </script></code></pre>
+          <p class="fragment align-left" data-fragment-index="3"><code>ngSwitch, *ngSwitchCase,
+            *ngSwitchDefault</code> - odpowiednik instrukcji switch/case/default z innych języków
+            programowania.</p>
+        </div>
+      </section>
+    </section>
+
     <section>
       <h3>Routing</h3>
       <section>
@@ -293,6 +405,7 @@ export const APP_ROUTES: Routes = [{
         <p class="fragment more-text"><strong>Router jest modułem Angulara, który implementuje podstawowe
           funkcje przeglądarki (URL, historia) w aplikacjach typu Single-Page.</strong></p>
       </section>
+
       <section>
         <div class="col left">
           <img src="img/routing-setup-in-app.png" alt="Routing setup" height="380">
@@ -311,6 +424,7 @@ export const APP_ROUTES: Routes = [{
           </ul>
         </div>
       </section>
+
       <section>
         <div class="col left">
           <img src="img/routing-reorganized.png" alt="Routing reorganized">
@@ -329,121 +443,6 @@ export const APP_ROUTES: Routes = [{
       </section>
     </section>
 
-    <section>
-      <h3>DOM model</h3>
-      <section>
-        <p>DOM (<em>Document Object Model</em>) jest to model obiektowy reprezentujący dokument HTML
-          wyświetlany przez przeglądarkę.</p>
-        <p class="fragment">Przeglądarka buduje DOM w pamięci za każdym razem, gdy wyświetla HTML.</p>
-        <p class="fragment">Każdy skrypt JavaScript (a więc także i każda aplikacja Angular) wchodzi w
-          interakcję z DOM.</p>
-      </section>
-      <section>
-        <p>Postawowe API elementów DOM:</p>
-        <div class="more-text">
-          <ul>
-            <li class="fragment"><strong>atrybut</strong> - dodatkowa wartość definiująca tag (w dokumencie
-              HTML).
-            </li>
-            <li class="fragment"><strong>właściwość</strong> (<em>property</em>) - właściwość obiektu DOM
-              (zwykła właściwość obiektu w JS).
-            </li>
-            <li class="fragment"><strong>metoda</strong> - funkcja obiektu DOM, którą można wywołać.</li>
-            <li class="fragment"><strong>zdarzenie</strong> (<em>event</em>) - informacja o zaistnieniu
-              pewnego faktu, np <em>click</em>, <em>focus</em>, <em>blur</em>.
-            </li>
-          </ul>
-        </div>
-      </section>
-    </section>
-    <section>
-      <h3>Data binding - wiązanie danych</h3>
-      <p class="more-text"><em>Data binding</em> są to mechanizmy pozwalające na integrację modelu z widokiem.</p>
-      <div class="most-text">
-        <p>
-          Podstawowe rodzaje wiązań:
-        <ul>
-          <li class="fragment"><code>{{interpolation}}</code> - wyliczy wyrażenie wewnątrz
-            <code>{{}}</code> oraz wstawi wartość.
-          </li>
-          <li class="fragment"><code>[property_binding]</code> - Angular będzie aktualizował wartość
-            właściwości na podstawie wyrażenia.
-          </li>
-          <li class="fragment"><code>(event_binding)</code> - wywołana zostanie funkcja w reakcji na
-            zaistnienie zdarzenia.
-          </li>
-          <li class="fragment"><code>[(two_way_binding)]</code> - synchronizuje model z widokiem "w obie
-            strony".
-          </li>
-        </ul>
-        </p>
-      </div>
-      <p class="most-text">Live coding: step6, step7, step8, step9, step10, step11</p>
-    </section>
-
-    <section>
-      <h3>Directive</h3>
-      <section><p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za
-        pomocą Angular.</p>
-        <p class="fragment">Istnieją trzy rodzaje dyrektyw:
-        <ul>
-          <li class="fragment">Komponenty (już je znamy)</li>
-          <li class="fragment">Dyrektywy atrybutowe</li>
-          <li class="fragment">Dyrektywy strukturalne</li>
-        </ul>
-        </p>
-      </section>
-      <section>
-        <p>Dyrektywy atrybutowe</p>
-        <div class="more-text">
-          <ul>
-            <li class="fragment"><code>ngModel</code> - wiążą pola edycyjne z modelem</li>
-            <li class="fragment"><code>ngClass</code> - pozwalają dynamicznie modyfikować klasy CSS</li>
-            <li class="fragment"><code>ngStyle</code> - pozwalają dynamicznie modyfikować style CSS</li>
-          </ul>
-        </div>
-      </section>
-      <section>
-                <pre><code class="javascript">
-divClasses = {};
-...
-this.divClasses: {
-  'valid': this.isValid(),
-  'highlighted': this.isHighlighted()
-}
-                </code></pre>
-        <pre><code class="html">
-&lt;div [ngClass]=&quot;divClasses&quot;&gt;...&lt;/div&gt;
-                </code></pre>
-        <p class="fragment">W prostszych przypadkach...</p>
-        <pre class="fragment"><code class="html">
-&lt;div [class.valid]=&quot;isValid()&quot;&gt;...&lt;/div&gt;
-            </code></pre>
-      </section>
-      <section>
-        <p>Dyrektywy strukturalne</p>
-        <div class="most-text">
-          <p class="fragment align-left" data-fragment-index="1"><code>*ngIf</code> - dodaje/usuwa element z
-            DOM: </p>
-          <pre class="fragment" data-fragment-index="1"><code class="html">&lt;div *ngIf=&quot;isVisible&quot;&gt;...&lt;/div&gt;</code></pre>
-          <p class="fragment align-left" data-fragment-index="2"><code>*ngfor</code> - iteruje po liście i
-            dodaje element DOM dla każdego elementu listy:</p>
-          <pre class="fragment" data-fragment-index="2"><code class="html">&lt;div *ngFor=&quot;let user of users&quot;&gt;{{user.name}} ({{user.email}})&lt;/div&gt;</code></pre>
-          <p class="fragment align-left" data-fragment-index="3"><code>ngSwitch, *ngSwitchCase,
-            *ngSwitchDefault</code> - odpowiednik instrukcji switch/case/default z innych języków
-            programowania.</p>
-        </div>
-        <aside class="notes">
-                    <pre>
-&lt;div [ngSwitch]=&quot;currentHero.emotion&quot;&gt;
-  &lt;app-happy-hero *ngSwitchCase=&quot;'happy'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-happy-hero&gt;
-  &lt;app-sad-hero *ngSwitchCase=&quot;'sad'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-sad-hero&gt;
-  &lt;app-confused-hero *ngSwitchCase=&quot;'confused'&quot; [hero]=&quot;currentHero&quot;&gt;&lt;/app-confused-hero&gt;
-  &lt;app-unknown-hero *ngSwitchDefault [hero]=&quot;currentHero&quot;&gt;&lt;/app-unknown-hero&gt;
-&lt;/div&gt;</pre>
-        </aside>
-      </section>
-    </section>
     <section>
       <h3>Komunikacja międzykomponentowa</h3>
       <section>
