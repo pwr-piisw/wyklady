@@ -329,12 +329,14 @@
       <section>
         <h3>Dyrektywy</h3>
         <p><em>Dyrektywy</em> to elementy rozszerzające funkcjonalność HTML, które można deklarować za pomocą Angular.</p>
-        <p class="fragment" data-fragment-index="1">Istnieją trzy rodzaje dyrektyw:</p>
-        <ul class="fragment" data-fragment-index="1">
-          <li>Komponenty (już je znamy)</li>
-          <li>Dyrektywy atrybutowe</li>
-          <li>Dyrektywy strukturalne</li>
-        </ul>
+        <div class="rounded bcol0 fragment">
+          <p>Istnieją trzy rodzaje dyrektyw:</p>
+          <ul>
+            <li>Komponenty (już je znamy)</li>
+            <li>Dyrektywy atrybutowe</li>
+            <li>Dyrektywy strukturalne</li>
+          </ul>
+        </div>
       </section>
 
       <section>
@@ -390,52 +392,83 @@
     </section>
 
     <section>
+      <h3>Komunikacja międzykomponentowa</h3>
+      <section>
+          <p>Angular pozwala na stosowanie <em>data bindings</em> we własnych komponentach.</p>
+          <p class="fragment" data-fragment-index="1">Dla danych wejściowych:</p>
+        <pre class="fragment html" data-fragment-index="1"><code class="hljs" data-trim><script type="text/template">
+          <app-user-details [user]='user'></app-user-details>
+        </script></code></pre>
+        <pre class="fragment typescript" data-fragment-index="1"><code class="hljs" data-trim>
+          export class UserDetailsComponent
+          {
+             ...
+             @Input() user: User;
+             ...
+          }
+        </code></pre>
+      </section>
+      <section>
+        <p>Dla danych wyjściowych:</p>
+        <pre class="html"><code class="hljs" data-trim><script type="text/template">
+          <app-user-details (onChanged)='onChanged($event)'></app-user-details>
+        </script></code></pre>
+        <pre class="typescript"><code class="hljs" data-trim>
+          export class UserDetailsComponent
+          {
+             ...
+             @Output() onChanged = new EventEmitter&lt;User&gt;();
+             ...
+             this.onChanged.emit(user);
+             ...
+          }
+        </code></pre>
+      </section>
+      <section>
+        TODO:
+      </section>
+    </section>
+
+    <section>
       <h3>Routing</h3>
       <section>
-        <p>Jak działa przeglądarka?
-        <div class="more-text">
+        <p class="rounded bcol1">Jak działa przeglądarka?</p>
           <ul>
-            <li class="fragment">Wyświetla zawartość w zależności od wartości pola adresowego (URL).</li>
-            <li class="fragment">Przekierowuje użytkownika na inną stronę w wyniku kliknięcia w link.</li>
-            <li class="fragment">Zapamiętuje historię przeglądania oraz umożliwia poruszanie się po niej.
-            </li>
+            <li>Obsługa pola adresowego URL</li>
+            <li>Hiperlinki i przekierowania</li>
+            <li>Historia przeglądania</li>
           </ul>
-        </div>
-        </p>
-        <p class="fragment more-text"><strong>Router jest modułem Angulara, który implementuje podstawowe
-          funkcje przeglądarki (URL, historia) w aplikacjach typu Single-Page.</strong></p>
+        <p class="fragment rounded bcol0">Router jest modułem Angulara, który implementuje podstawowe
+          funkcje przeglądarki (URL, historia) w aplikacjach typu Single-Page.</p>
       </section>
 
       <section>
-        <div class="col left">
-          <img src="img/routing-setup-in-app.png" alt="Routing setup" height="380">
-        </div>
-        <div class="col right most-text">
-          <ul>
-            <li class="fragment">Router jest modułem Angulara instalowanym jako osobna zależność.</li>
-            <li class="fragment">Dla każdej aplikacji Angulara potrzebujemy dokładnie jedną instację routera
-              (singleton, <code>forRoot</code>).
-            </li>
-            <li class="fragment">Router inicjujemy tzw. tablicą przejść (ang. <em>routes</em>).</li>
-            <li class="fragment">Wygodnie jest umieścić tablicę przejść (<code>import {APP_ROUTES}</code>) w
-              osobnym
-              pliku źródłowym.
-            </li>
-          </ul>
+        <div class="r-hstack">
+          <img src="img/routing-setup-in-app.png" alt="Routing setup" class="backlight white">
+          <div style="width: 1em;"></div>
+          <div>
+            <ul>
+              <li>Router to opcjonalny moduł Angulara</li>
+              <li>Jedna instancja routera dla aplikcji</li>
+              <li>Router inicjujemy tzw. tablicą przejść (ang. <em>routes</em>)</li>
+            </ul>
+          </div>
         </div>
       </section>
 
       <section>
-        <div class="col left">
-          <img src="img/routing-reorganized.png" alt="Routing reorganized">
+        <div class="r-hstack">
+          <div class="r-vstack">
+            <img src="img/routing-reorganized.png" alt="Routing reorganized" class="backlight white">
+            <img src="img/router-outlet-src.png" alt="Router outlet source" class="backlight white">
+          </div>
+          <div style="width: 2em;"></div>
+          <div>
+            <p><code>router-outlet</code> określa miejsce, w którym Router będzie
+              "wklejał" nasz komponent.</p>
+            <img src="img/router-outlet.png" alt="Router outlet" class="backlight white">
+          </div>
         </div>
-        <div class="col right">
-          <p class="most-text fragment"><code>router-outlet</code> określa miejsce, w którym Router będzie
-            "wklejał" nasz komponent.</p>
-          <img src="img/router-outlet-src.png" alt="Router outlet source" class="fragment">
-          <img src="img/router-outlet.png" alt="Router outlet" class="fragment">
-        </div>
-        <p class="most-text">Live coding: step5</p>
       </section>
       <section>
         <p> Więcej informacji na <a href="https://angular.io/guide/router">https://angular.io/guide/router</a>.
@@ -444,120 +477,89 @@
     </section>
 
     <section>
-      <h3>Komunikacja międzykomponentowa</h3>
+      <h3>Serwis</h3>
+
       <section>
-        <div class="more-text">
-          <p class="align-left">Angular pozwala na stosowanie <em>data bindings</em> we
-            własnych komponentach.</p>
-          <p class="fragment" data-fragment-index="1">Dla danych wejściowych:</p></div>
-        <pre class="fragment" data-fragment-index="1"><code class="html">&lt;app-user-details [user]=&quot;user&quot;&gt;&lt;/app-user-details&gt;</code></pre>
-        <pre class="fragment" data-fragment-index="2"><code class="javascript">
-export class UserDetailsComponent
-{
-   ...
-   @Input() user: User;
-   ...
-}</code></pre>
+        <p>Serwis to współdzielony kod aplikacji:</p>
+        <ul>
+          <li>może posiadać stan</li>
+          <li>posiada zasięg (<em>scope</em>) oraz cykl życia</li>
+          <li>podlega mechanizmowi DI (<em>dependency injection</em>)</li>
+        </ul>
       </section>
-      <section>
-        <div class="more-text">
-          <p>Dla danych wyjściowych:</p>
-          <pre><code class="html">&lt;app-user-details (onChanged)=&quot;onChanged($event)&quot;&gt;&lt;/app-user-details&gt;</code></pre>
-          <pre><code class="javascript">
-export class UserDetailsComponent
-{
-   ...
-   @Output() onChanged = new EventEmitter&lt;User&gt;();
-   ...
-   this.onChanged.emit(user);
-   ...
-}
-                    </code></pre>
-        </div>
-      </section>
-      <section>
-        <p><strong>Przykład</strong>: edytor użytkowników</p>
-        <img src="img/component-interaction-example.png" alt="Component interaction example">
-        <p class="most-text">Live coding: step12, step13, step14, step15, step16</p>
-      </section>
-    </section>
-    <section>
-      <h3>Service</h3>
 
       <section>
-        <p>Serwis jest funkcjonalnością aplikacji, która może być reużyta przez inne serwisy lub
-          komponenty.</p>
-        <p class="fragment more-text">Serwisy, po zaimplementowaniu, są dostępne dzięki mechanizmowi DI (<em>Dependency
-          Injection</em>) Angulara.</p>
-        <img src="img/service-data-provision-bad.png" alt="Service data provision" class="fragment">
+        <pre class="typescript"><code class="hljs" data-trim data-line-numbers="|4|6-12|14-16|18-25|27-29|31-35">
+          @Injectable()
+          export class UserService {
 
-      </section>
-      <section>
-                    <pre><code class="javascript">@Injectable()
-export class UserService {
+            users: User[] = [];
 
-  users: User[] = [];
+            constructor() {
+              this.users = [
+                {id: 1, name: 'John Doe', email: 'john.doe@email.com'},
+                {id: 2, name: 'Max Rockatansky', email: 'mad.max@email.com'},
+                {id: 3, name: 'Chuck Peddle', email: 'chuck@mos.com'}
+              ];
+            }
 
-  constructor() {
-    this.users = [
-      {id: 1, name: 'John Doe', email: 'john.doe@email.com'},
-      {id: 2, name: 'Max Rockatansky', email: 'mad.max@email.com'},
-      {id: 3, name: 'Chuck Peddle', email: 'chuck@mos.com'}
-    ];
-  }
-  getAllUsers() {
-    return this.users;
-  }
+            getAllUsers() {
+              return this.users;
+            }
 
-  saveUser(user: User) {
-    const found = this.findUser(user.id);
-    if (found) {
-      Object.assign(found, user);
-    } else {
-      this.users.push(user);
-    }
-  }
+            saveUser(user: User) {
+              const found = this.findUser(user.id);
+              if (found) {
+                Object.assign(found, user);
+              } else {
+                this.users.push(user);
+              }
+            }
 
-  findUser(id: number) {
-    return this.users.find((user: User) => user.id === id);
-  }
+            findUser(id: number) {
+              return this.users.find((user: User) => user.id === id);
+            }
 
-  getNextId() {
-    return this.users
-      .map((elem: User) => elem.id)
-      .reduce((prev, curr) => prev > curr ? prev : curr, 0) + 1;
-  }
-}
-                    </code></pre>
-        <p class="most-text">Live coding: step17</p>
+            getNextId() {
+              return this.users
+                .map((elem: User) => elem.id)
+                .reduce((prev, curr) => prev > curr ? prev : curr, 0) + 1;
+            }
+          }
+        </code></pre>
       </section>
     </section>
+
     <section>
       <h3>HttpClient</h3>
-      <pre><code class="javascript">@Injectable()
-export class UserService {
+      <pre class="typescript"><code class="hljs" data-trim data-line-numbers="|6|9-11|13-15|17-19|21-23"><script type="text/template">
+        @Injectable({
+          providedIn: 'root'
+        })
+        export class UserService {
 
-  constructor(private http: Http) {
-  }
+          constructor(private readonly http: HttpClient) {
+          }
 
-  getAllUsers(): Observable&lt;Array&lt;User&gt;&gt; {
-    return this.http.get('services/rest/users')
-      .map(res =>  res.json());
-  }
+          getAllUsers(): Observable<Array<User>> {
+            return this.http.get<Array<User>>('services/rest/users');
+          }
 
-  findUser(id: number): Observable&lt;User&gt; {
-    return this.http.get(`services/rest/users/${id}`)
-      .map(res => res.json());
-  }
+          findUser(id: number): Observable<User> {
+            return this.http.get<User>(`services/rest/users/${id}`);
+          }
 
-  saveUser(user: User) {
-    return this.http.post('services/rest/users', user);
-  }
-}
+          saveUser(user: User) {
+            return this.http.post<User>('services/rest/users', user);
+          }
 
-                </code></pre>
-      <p class="most-text">Live coding: step18, step19</p>
+          deleteUser(id: number): Observable<HttpResponse<any>> {
+            return this.http.delete(services/rest/users/${id}`, { observe: 'body' });
+          }
+        }
+      </script></code></pre>
     </section>
+
     <section>
       <h3>Bibliografia</h3>
       <div class="most-text">
