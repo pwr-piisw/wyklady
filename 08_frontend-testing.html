@@ -1,12 +1,12 @@
 <!doctype html>
-<html>
+<html lang="pl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>Free your mind with JDBI</title>
+    <title>Testowanie</title>
 
-    <meta name="description" content="Using explicit SQL mappers in Enterprise Applications">
+    <meta name="description" content="Testowanie ze szczególnym naciskiem na frontend">
     <meta name="author" content="Maciej Małecki">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,28 +25,37 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h3>Projekt i implementacja systemów webowych</h3>
-            <h2>Testowanie automatyczne aplikacji Angular</h2>
+            <h2>Projekt i implementacja systemów webowych</h2>
+            <p>Testowanie automatyczne</p>
+            <p>(ze szczególnym naciskiem na frontend)</p>
+            <p>mgr inż. Maciej Małecki</p>
         </section>
+
+        <section data-background-image="img/po-co-testowac.jpg">
+        </section>
+
         <section>
             <h3>Automatyzacja testów</h3>
-            <p>Użycie narzędzi (kod, skrypty, itp) do wykonywania testów oprogramowania i ewentualnego
-                wykrywania
-                odchyleń od założononych wyników.</p>
+            <p>Użycie narzędzi (kod, skrypty, itp) do wykonywania testów oprogramowania
+                i ewentualnego  wykrywania odchyleń od założonych wyników.</p>
         </section>
+
         <section>
             <h3>Po co automatyzujemy testy?</h3>
-            <ul>
-                <li class="fragment">Powtarzalność</li>
-                <li class="fragment">Szybka informacja zwrotna</li>
-                <li class="fragment">Koszty</li>
-            </ul>
+            <div class="r-hstack tile">
+                <div class="bcol0">Powtarzalność</div>
+                <div class="bcol1">Szybka informacja zwrotna</div>
+                <div class="bcol2">Koszty</div>
+            </div>
         </section>
+
         <section>
-            <p><i>Tools don't test. Only people test. Tools only perform actions that "help" people test.</i> - James
-                Bach,
-                <a href="http://www.satisfice.com/blog/">http://www.satisfice.com/blog/</a></p>
+            <cite>
+                <em>Tools don't test. Only people test. Tools only perform actions that "help" people test.</em> - James
+                Bach, <a href="http://www.satisfice.com/blog/">http://www.satisfice.com/blog/</a>
+            </cite>
         </section>
+        
         <section>
             <h3>Rodzaje testów automatycznych</h3>
             <ul>
@@ -60,73 +69,91 @@
                 <li class="fragment">Testy E2E - testowanie kompletnej aplikacji.</li>
             </ul>
         </section>
+        
+        <section>
+            <h3>Piramida testów</h3>
+            <div>
+                <img src="img/test-pyramid.png" alt="Test Pyramid" class="backlight">
+            </div>
+            <a href="https://martinfowler.com/articles/practical-test-pyramid.html">https://martinfowler.com/articles/practical-test-pyramid.html</a>
+        </section>
+        
         <section>
             <h2>Testy w aplikacji webowej</h2>
             <section>
-                <img src="img/rich-front-architecture.svg" alt="Rich frontend architecture" height="350">
+                <img src="img/rich-front-architecture.svg" alt="Rich frontend architecture" height="350" class="backlight">
             </section>
             <section>
                 <p>Testy jednostkowe backendu</p>
-                <img src="img/tests/backend-module-test.png" alt="Backend module tests" height="350">
+                <img src="img/tests/backend-module-test.png" alt="Backend module tests" height="350" class="backlight">
             </section>
             <section>
                 <p>Testy integracyjne backendu</p>
-                <img src="img/tests/backend-integration-test.png" alt="Backend integration tests" height="350">
+                <img src="img/tests/backend-integration-test.png" alt="Backend integration tests" height="350" class="backlight">
             </section>
             <section>
                 <p>Testy jednostkowe frontendu</p>
-                <img src="img/tests/frontend-unit-test.png" alt="Frontend unit tests" height="350">
+                <img src="img/tests/frontend-unit-test.png" alt="Frontend unit tests" height="350" class="backlight">
             </section>
             <section>
                 <p>Testy komponentowe frontendu</p>
-                <img src="img/tests/frontend-component-test.png" alt="Frontend component tests" height="350">
+                <img src="img/tests/frontend-component-test.png" alt="Frontend component tests" height="350" class="backlight">
             </section>
             <section>
                 <p>Testy E2E</p>
-                <img src="img/tests/e2e-test.png" alt="E2E tests" height="350">
+                <img src="img/tests/e2e-test.png" alt="E2E tests" height="350" class="backlight">
             </section>
         </section>
+
         <section>
             <h3>Testowanie automatyczne frontendu</h3>
-            <p class="fragment"><strong>Jasmine</strong> framework testujący kod w JavaScript (ale także Ruby i
+            <p><strong>Jasmine</strong> framework testujący kod w JavaScript (ale także Ruby i
                 Python).
             </p>
-            <img class="fragment" src="img/tests/karma-test-files.png" alt="Test files">
+            <img src="img/tests/karma-test-files.png" alt="Test files" class="backlight white">
         </section>
+
         <section>
             <div class="col left">
-                <img src="img/tests/tested-code.png" alt="Tested code" height="400">
+                <img src="img/tests/tested-code.png" alt="Tested code" height="400" class="backlight white">
             </div>
             <div class="col right">
-                <img src="img/tests/spec-code.png" alt="Spec code" height="400">
+                <img src="img/tests/spec-code.png" alt="Spec code" height="400" class="backlight white">
             </div>
         </section>
+
         <section>
             <p>Selenium</p>
-            <img src="img/tests/selenium-webdriver.jpg" alt="Selenium">
+            <img src="img/tests/selenium-webdriver.jpg" alt="Selenium" class="backlight white">
         </section>
+
         <section>
             <h3>Testowanie E2E</h3>
             <p>Protractor - narzędzie do testowania aplikacji Angular z użyciem prawdziwej przeglądarki.</p>
-            <img class="fragment" src="img/tests/protractor-example.png" alt="Protractor" height="350">
+            <img src="img/tests/protractor-example.png" alt="Protractor" height="350" class="backlight white">
         </section>
+
+        <section>
+            <div>
+                <img src="img/cypress_header.png" alt="Cypress" class="backlight white">
+            </div>
+        </section>
+
         <section>
             <h3>Podsumowanie</h3>
             <ul>
-                <li class="fragment">Testy E2E (szczególnie testujące GUI) są bardzo kosztowne.</li>
-                <li class="fragment">Dokładne testowanie całej aplikacji z użyciem E2E jest niepraktyczne.</li>
-                <li class="fragment">Testy niskiego rzędu powinny wykonywać się szybko.</li>
-                <li class="fragment">Uwaga na pułapki "mockowania".</li>
+                <li>Testy E2E (szczególnie testujące GUI) są bardzo kosztowne.</li>
+                <li>Dokładne testowanie całej aplikacji z użyciem E2E jest niepraktyczne.</li>
+                <li>Testy niskiego rzędu powinny wykonywać się szybko.</li>
+                <li>Uwaga na pułapki "mockowania".</li>
             </ul>
         </section>
     </div>
-    <div id="cgLogo" style="background: url(img/cg_small.png);
-                        position: absolute;
-                        bottom: 20px;
-                        left: 20px;
-                        width: 250px;
-                        height: 44px;"></div>
-    <div class="footer"><a href="index.html">Indeks</a></div>
+
+    <div
+        id="cgLogo"
+        style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+    </div>
 </div>
 
 <script src="dist/reveal.js"></script>
