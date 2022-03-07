@@ -916,7 +916,7 @@ color = 'foo'; // transpilation error
           <p>Brak klas w JavaScript jest uciążliwy. ECMAScript 6 i TypeScript wprowadzają pojęcie klasy.</p>
           <pre class="typescript"><code class="hljs" data-trim>
             class Product {
-              constructor(name: string, price: number) {
+              constructor(public name: string, public price: number) {
               }
               getPriceTag() {
                 return `${name} [${price}]`;
