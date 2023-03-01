@@ -131,13 +131,13 @@ div.align-right,p.align-right {
     text-align: right;
 }
 div.more-text,p.more-text {
-    font-size: 80%;
+    font-size: 90%;
 }
 div.most-text,p.most-text {
-    font-size: 65%;
+    font-size: 80%;
 }
 ul.more-text {
-    font-size: 80%;
+    font-size: 90%;
 }
 section img.no-border {
     border-width: 0;
