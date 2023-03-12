@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Projekt i implementacja systemów webowych - wykład 3</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<!-- <link rel="stylesheet" href="dist/theme/night.css"> -->
+		<link rel="stylesheet" href="dist/theme/night.css">
+
+		<!-- Theme used for syntax highlighted code -->
+  		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown data-separator-vertical="^--$">
+					<script type="text/template">
+						## Projekt i implementacja systemów webowych
+						### Wykład 3: backendy systemów webowych
+
+						mgr inż. Maciej Małecki
+
+						---
+
+						## Agenda
+
+						1. Architektura back-endów
+						2. Spring oraz SpringBoot
+						3. Interfejsy RESTful
+						4. Brokery wiadomości
+						5. Narzędzia automatyzacji budowania oprogramowania
+
+						---
+
+						# Co to jest architektura?
+
+						--
+
+						![Design stamina](img/design-stamina.excalidraw.png)
+
+						https://martinfowler.com/bliki/DesignStaminaHypothesis.html
+
+						--
+
+						Architektura w inżynierii oprogramowania to narzędzie pozwalające na <mark>zarządzanie kosztem wprowadzania zmian</mark> w systemie.
+
+						--
+
+						Dobrze dobrana architektura pozwala na <mark>stały</mark> koszt wprowadzania zmian w czasie.
+
+					</script>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: 1200,
+				slideNumber: 'c/t',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
