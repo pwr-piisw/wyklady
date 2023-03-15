@@ -106,77 +106,210 @@
 						_ang. you aren't gonna need it_ <!-- .element class="fragment"-->
 
 						---
-
 						## Architektura w skali makro
 
 						--
-
 						## Modularny monolit
 
 						![Modular monolith](img/backend/modular-monolith.excalidraw.png)
 
 						--
+						## Modularny monolit
 
+						* &#10004; szybki start
+						* &#10004; prosty deployment
+						* &#10004; prosty monitoring
+						* &#10008; złożoność rośnie w czasie
+						* &#10008; kosztowny w migracji technicznej
+						* &#10008; IDE "klęka"
+
+						--
 						## Mikroserwisy
 
 						![Microservices](img/backend/microservices.excalidraw.png)
 
 						--
+						## Mikroserwisy
 
-						### Architektura sterowana zdarzeniami
+						* &#10008; skomplikowany deployment
+						* &#10008; skomplikowany monitoring
+						* &#10004; łatwa migracja techniczna (dziel i rządź)
+						* &#10004; łatwa rozbudowa
+						* &#10004; łatwiej opanować zależności
+						--
 
+						### Architektura "event driven"
 						![Event-driven architecture](img/backend/events.excalidraw.png)
 
 						--
-
-						## Architektura sterowana zdarzeniami
+						## Architektura "event driven"
 
 						* _event_ - przeszłość
 						* _query_ - teraźniejszość
 						* _command_ - przyszłość
 
-						---
+						--
+						## Architektura "event driven"
 
+						* &#10004; "loose coupling"
+						* &#10004; dobra skalowalność
+						* &#10008; mniejsza przejrzystość
+						* &#10008; asynchroniczność (jest to trudne)
+
+						---
 						## Architektura w skali mikro
 
 						--
-
 						## Architektura warstwowa
 
 						![Layered architecture](img/backend/layers.excalidraw.png)
 
 						--
-
 						### Architektura portów i adapterów
 
 						![Hexagonal](img/backend/hexagonal-architecture.excalidraw.png)
 
 						--
-
 						### Architektura portów i adapterów
 
 						![Hexagonal](img/backend/hexagonal-simple.excalidraw.png)
 
 						--
-
 						## Różnice
 
 						![Hexagonal vs layered](img/backend/hex-vs-layers.excalidraw.png)
 
 						---
+						### Spring i SpringBoot
 
-						## Spring i SpringBoot
+						![Spring](img/backend/spring.png)
 
+						--
+						### Spring - podstawowe cechy
+
+						* Wysoka testowalność
+						* Redukcja nadmiarowego kodu
+						* IoC/DI - inversion of control/Dependency injection
+						* Modularność
+
+						--
+						### SpringBoot
+
+						* Automatyczne konfiguracja
+						* Konwencyjność
+						* Niezależność od serwerów aplikacji
+						* Wszystkie funkcje Springa startowane są z funkcji `main`
+
+						--
+						### Dependency injection
+
+						```java[|3-10|12-15]
+						@Service
+						class OrderService {
+							private final OrderRepository orderRepository;
+							private final NotificationService notificationService;
+
+							public OrderService(OrderRepository orderRepository,
+									NotificationService notificationService) {
+								this.orderRepository = orderRepository;
+								this.notificationService = notificationService;
+							}
+
+							public void saveOrder(Order order) {
+								orderRepository.save(order);
+								notificationService.notify(order.getId());
+							}
+						}
+						```
+
+						--
+						### Autowiring
+
+						```java[|1-4|6-14|6|7|8|]
+						interface OrderRepository extends JpaRepository<Order, Long> {}
+
+						@Service
+						class NotificationService {}
+
+						@EnableJpaRepositories(basePackages = {"com.foo.bar.orders.*"})
+						@EntityScan("com.foo.bar.orders.*")
+						@SpringBootApplication(scanBasePackages = {"com.foo.bar.orders"})
+						public class WebApiApplication {
+
+							public static void main(String[] args) {
+								SpringApplication.run(WebApiApplication.class, args);
+							}
+						}
+						```
+						--
+						### Manual wiring
+
+						```java[|1|11-14|3-5|7-9]
+						@Configuration
+						class OrderConfiguration {
+							@Bean OrderRepository orderRepository() {
+								return new OrderRepository();
+							}
+
+							@Bean NotificationService notificationService() {
+								return new NotificationService();
+							}
+
+							@Bean OrderService orderService(OrderRepository orderRepository,
+									NotificationService notificationService) {
+								return new OrderService(orderRepository, notificationService);
+							}
+						}
+						```
+						--
+						### Stary styl programowania
+
+						```java[|3-10|12-15]
+						@Service
+						class OrderService {
+							@Autowired
+							private OrderRepository orderRepository;
+							@Autowired
+							private NotificationService notificationService;
+
+							// ...
+						}
+						```
+
+						...odradzam
+						--
+						### Testowanie z użyciem Junit 5 i Mockito
+
+						```java[|1|4-7|8-9|11-20]
+						@ExtendWith(MockitoExtension.class)
+						class OrderServiceTest {
+
+							@Mock
+							private OrderRepository orderRepository;
+							@Mock
+							private NotificationService notificationService;
+							@InjectMocks
+							private OrderService orderService;
+
+							@Test
+							void shouldSaveOrder() {
+								// given
+								Order order = new Order();
+								// when
+								orderService.saveOrder(order);
+								// then
+								verify(orderRepository).save(order);
+								verify(notificationService).notify(order.getId());
+							}
+						}
+						```
 						---
-
 						## Interfejsy RESTful
 
 						---
-
 						## Brokery wiadomości
 
 						---
-
 						## Automatyzacja budowania oprogramowania
 
 					</script>
