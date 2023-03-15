@@ -294,7 +294,7 @@
 							@Test
 							void shouldSaveOrder() {
 								// given
-								Order order = new Order();
+								var order = new Order(15);
 								// when
 								orderService.saveOrder(order);
 								// then
@@ -303,14 +303,287 @@
 							}
 						}
 						```
+						--
+						### SpringBoot - konfiguracja
+
+						```yaml[|2-6|7-16|17-24|25-30]
+						spring:
+							security:
+								oauth2:
+									resourceserver:
+										jwt:
+											issuer-uri: https://some.url.com/oauth
+							jpa:
+								database: postgresql
+								show-sql: true
+								properties:
+									hibernate.cache.use_second_level_cache: false
+									hibernate.cache.use_query_cache: false
+									hibernate.generate_statistics: false
+									hibernate.default_schema: ${DB_SCHEMA_NAME}
+								hibernate:
+									ddl-auto: validate
+							datasource:
+								type: com.zaxxer.hikari.HikariDataSource
+								hikari:
+									transaction-isolation: TRANSACTION_READ_COMMITTED
+								url: ${DB_URL}?currentSchema=${DB_SCHEMA_NAME}
+								username: ${DB_USER}
+								password: ${DB_PW}
+								driverClassName: org.postgresql.Driver
+							liquibase:
+								change-log: classpath:db/changelog/root.yaml
+								parameters:
+									db-schema-name: ${DB_SCHEMA_NAME}
+								enabled: true
+								label-filter: "!test-data"
+						```
+
+						--
+						### SpringBoot profile
+
+						Profile wprowadzają wariantowość (uszczegółowienie) konfiguracji dla konkretnych środowisk docelowych.
+
+						```[]
+						application.yaml
+						application-dev.yaml
+						application-test.yaml
+						application-prod.yaml
+						```
+
+						```yaml[]
+						spring:
+							jpa:
+								show-sql: false
+						```
 						---
 						## Interfejsy RESTful
+
+						<mark>REST</mark> = Representational State Transfer
+
+						<mark>HATEOS</mark> = Hypermedia as the Engine of Application State
+
+						--
+						## Anatomia REST
+
+						![REST](img/backend/restful.excalidraw.png)
+
+						--
+						### Metody HTTP - operacje REST
+
+						* GET - pobranie zasobu
+						* POST - utworzenie zasobu
+						* PUT - zastąpienie zasobu
+						* PATCH - modyfikacja zasobu
+						* DELETE - usunięcie zasobu
+						* OPTIONS - zapytanie o możliwe metody
+
+						--
+						### Spring MVC
+
+						```java[|1|2|5-8|10-13|15-18|20-23|25-28]
+						@RestController
+						@RequestMapping("/api/orders")
+						class OrderController {
+
+							@GetMapping
+							ResponseEntity<List<Order>> getOrders() {
+								// ...
+							}
+
+							@GetMapping("/{id}")
+							ResponseEntity<Order> getOrder(@PathVariable Long id) {
+								// ...
+							}
+
+							@PostMapping
+							ResponseEntity<Order> createOrder(@RequestBody Order order) {
+								// ...
+							}
+
+							@PutMapping("/{id}")
+							ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
+								// ...
+							}
+
+							@DeleteMapping("/{id}")
+							ResponseEntity deleteOrder(@PathVariable Long id) {
+								// ...
+							}
+						}
+						```
 
 						---
 						## Brokery wiadomości
 
+						ang. _message broker_
+
+						> Wyspecjalizowane narzędzia komunikacyjne, które umożliwiają przesyłanie wiadomości między różnymi systemami.
+
+						### Przykłady
+
+						* Apache Kafka
+						* RabbitMQ
+						* MQTT
+
+						--
+						## Cechy
+
+						* <mark>Asynchroniczność</mark> - pozwala wstawić komunikat do kolejki, bez blokowania wątku.
+						* <mark>Skalowalność</mark> - dzięki asynchroniczności.
+						* <mark>Separacja</mark> - nadawcy i odbiorcy nie muszą o sobie wiedzieć.
+						* <mark>Rozszerzalność</mark> - dodajemy dodatkowych "konsumentów" bez wpływu na resztę systemu.
+
+						--
+						### Kafka & Spring KafkaTemplate
+
+						Producent:
+
+						```java[|4|8-12|14-24]
+						@AllArgsConstructor
+						class NotifyOnDataAdapter {
+
+							private final KafkaTemplate<String, String> kafkaTemplate;
+							private final String topicNamespace;
+							private final String topicSuffix;
+
+							public void notify(List<Data> data) {
+								final var topicName = topicNamespace + "." + topicSuffix;
+								data.stream().map(PayloadMapper.INSTANCE::toPayload).forEach(payload ->
+									sendRecord(topicName, payload));
+							}
+
+							private void sendRecord(String topicName, Payload payload) {
+								try {
+									var objectMapper = new ObjectMapper();
+									objectMapper.findAndRegisterModules();
+									var serializedData = objectMapper.writeValueAsString(payload);
+									var producerRecord = new ProducerRecord<String, String>(topicName, serializedData);
+									kafkaTemplate.send(producerRecord);
+								} catch (JsonProcessingException e) {
+									throw new RuntimeException(e);
+								}
+							}
+						}
+
+						```
+						--
+						### Kafka & Spring KafkaTemplate
+
+						Konsument:
+
+						```java[]
+						@Slf4j
+						class DataListener {
+							@KafkaListener(topics = "com.foo.data.topic.v1")
+							public void listen(Message<String> message) {
+								log.info("Event received: {}.", message.getPayload());
+							}
+						}
+						```
 						---
 						## Automatyzacja budowania oprogramowania
+
+						![Maven](img/backend/maven.png)<!-- .element class="backlight"-->
+
+						![Gradle](img/backend/gradle.png)<!-- .element class="backlight"-->
+
+						--
+
+						> Celem narzędzi automatyzujących jest budowanie oprogramowania wraz z jego testowaniem, pakowaniem, walidacją, a często i instalacją na środowisku docelowym.
+
+						--
+
+						### Podstawowe cechy obu narzędzi
+
+						* Zarządzanie zależnościami zewnętrznymi.
+						* Zarządzanie zależnościami wewnętrznymi (modularyzacja).
+						* Konwencyjność.
+						* Uruchamianie testów.
+						* Rozszerzalność poprzez system pluginów.
+
+						--
+
+						### Maven
+
+						* Bazuje na XML.
+						* Definiuje system faz budowania.
+						* Pliki `pom.xml` (project object model) określają co, a nie jak.
+
+						--
+
+						### Gradle
+
+						* Bazuje na Groovy lub Kotlinie.
+						* Definiuje system tasków.
+						* Pliki `build.gradle` określają zarówno "co" ale pozwalają na zdefiniowanie "jak" (skrypty).
+						* Zadania jak i pluginy można zdefiniować "ad hoc" w pliku `build.gradle`.
+
+						--
+
+						### Gradle - przykład
+
+						```kotlin[|9-13|17|21-30|40-50|51-58]
+						val springBootVersion: String by project
+						val lombokVersion: String by project
+						val junitVersion: String by project
+						val assertJVersion: String by project
+						val archunitVersion: String by project
+						val mockitoVersion: String by project
+						val slf4jVersion: String by project
+
+						plugins {
+							id("java-library")
+							id("com.diffplug.spotless")
+							id("jacoco")
+						}
+
+						java {
+							toolchain {
+								languageVersion.set(JavaLanguageVersion.of(17))
+							}
+						}
+
+						spotless {
+							isEnforceCheck = true
+							java {
+								importOrder()
+								palantirJavaFormat()
+								removeUnusedImports()
+								formatAnnotations()
+								targetExclude("**/generated/**")
+							}
+						}
+
+						tasks.withType<Test> {
+							useJUnitPlatform()
+						}
+
+						repositories {
+							mavenCentral()
+						}
+
+						dependencies {
+							// Slf4J
+							compileOnly("org.slf4j:slf4j-api:$slf4jVersion")
+							// lombok
+							compileOnly("org.projectlombok:lombok:$lombokVersion")
+							annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+							testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+							testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+							// arch unit
+							testImplementation("com.tngtech.archunit:archunit-junit5:$archunitVersion")
+							// junit
+							testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+							testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+							testImplementation("org.assertj:assertj-core:$assertJVersion")
+							// mockito
+							testImplementation("org.mockito:mockito-junit-jupiter:$mockitoVersion")
+							testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion") {
+								exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+							}
+						}
+												```
 
 					</script>
 				</section>
