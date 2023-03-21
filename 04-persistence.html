@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Projekt i implementacja systemów webowych - wykład 4</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+  		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="css/custom.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown data-separator-vertical="^--$">
+					<script type="text/template">
+						## Projekt i implementacja systemów webowych
+						### Wykład 4
+						#### trwałość obiektów w systemach webowych
+
+						mgr inż. Maciej Małecki
+
+						---
+
+						## Agenda
+
+						1. Od obiektowych baz danych do ORM
+						2. JPA - Java Persistence API
+						3. SpringData
+						4. Problemy związane z ORM i narzędzia alternatywne
+
+						---
+
+						![RAM](img/persistence/c64-ram.jpg)
+
+						HM4864-3, 65536x1 bit DRAM
+
+						--
+
+						![Magnetic tape](img/persistence/magtape1.jpg)
+
+						--
+
+						![Hard disk](img/persistence/ibm-2311.png)
+
+						--
+
+						![Disk pack](img/persistence/diskpack.png)
+
+						---
+
+						## Ewolucja systemów utrwalania
+
+						![fs-db](img/persistence/fs-db.excalidraw.png)
+
+						---
+
+						## Klasyfikacja baz danych
+
+						![db types](img/persistence/db-taxonomy.excalidraw.png)
+
+						(przykłady)
+
+						--
+
+						## Dlaczego obiektowe bazy danych przegrały?
+
+						* brak jednolitego standardu
+						* niekompatybilność z systemami relacyjnymi
+						* brak ekspertów
+						* brak skalowalności, wydajność
+						* wysoki koszt
+
+						---
+
+						## ORM - Object Relational Mapping
+
+						![ORM](img/persistence/orm.excalidraw.png)
+
+						---
+
+						# JPA
+						## Java Persistence API
+
+						--
+
+						## JPA - Java Persistence API
+
+						* powszechnie przyjęty standard
+						* wywodzący się z Hibernate
+						* zastąpił EJB Entity Beans, JDO, Toplink
+
+					</script>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: 1200,
+				slideNumber: 'c/t',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
