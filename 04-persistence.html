@@ -95,6 +95,213 @@
 						* wywodzący się z Hibernate
 						* zastąpił EJB Entity Beans, JDO, Toplink
 
+						--
+
+						![JPA](img/persistence/jpa-sql.drawio.png)
+
+						--
+
+						## Entity manager
+
+						```java[|1-3|5-6|8-9|11-12]
+						EntityManagerFactory emf = Persistence.createEntityManagerFactory(
+							"my-persistence-unit");
+						EntityManager em = emf.createEntityManager();
+
+						var article = em.find(Article.class, 123L);
+						em.remove(article);
+
+						var newArticle = new Article(456L, "Gładzie");
+						em.persist(newArticle);
+
+						var existingArticle = em.find(Article.class, 456L);
+						existingArticle.setName("Gładzie i inne");
+						```
+
+						--
+
+						## JPA - cykl życia encji
+
+						![Entity lifecycle](img/persistence/entity-lifecycle.excalidraw.png)
+
+						---
+
+						## Generowanie kluczy głównych
+
+						* GenerationType.IDENTITY
+						* GenerationType.SEQUENCE
+						* GenerationType.TABLE
+						* GenerationType.AUTO	
+
+						--
+
+						## IDENTITY
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							@GeneratedValue(strategy = GenerationType.IDENTITY)
+							private Long id;
+							...
+						}
+						```
+
+						```sql
+						INSERT INTO ARTICLE (ID, NAME) VALUES (DEFAULT, 'Gładzie');
+						```
+
+						--
+
+						## SEQUENCE
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							@GeneratedValue(strategy = GenerationType.SEQUENCE)
+							@SequenceGenerator(name = "article_seq", allocationSize = 10)
+							private Long id;
+							...
+						}
+						```
+
+						```sql
+						CREATE SEQUENCE article_seq START WITH 1 INCREMENT BY 10;
+						```
+
+						--
+
+						albo:
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							private UUID id;
+
+							private String name;
+							
+							public static Article create(String name) {
+								var article = new Article();
+								article.id = UUID.randomUUID();
+								article.name = name;
+								return article;
+							}
+						}
+
+						---
+						## Śledzenie zmian
+
+						```java[]
+						var em = emf.createEntityManager();
+						em.getTransaction().begin();
+
+						var article = em.find(Article.class, 123L);
+						article.setName("Gładzie i inne");
+
+						em.getTransaction().commit();
+						em.close();
+						```
+
+						--
+
+						## Managed vs detached
+
+						```java[|1|3-4|6-8|6-10|10]
+						var em = emf.createEntityManager();
+
+						var article = em.find(Article.class, 123L);
+						em.detach(article);
+
+						article.setName("Gładzie i inne");
+
+						em.flush();
+
+						var updatedArticle = em.merge(article);
+						```
+
+						---
+						## Doprecyzowanie mapowań
+
+						```java[]
+						@Entity
+						@Table(name = "ARTICLE")
+						public class Article {
+							@Id
+							@GeneratedValue(strategy = GenerationType.IDENTITY)
+							private Long id;
+
+							@Column(name = "ARTICLE_NAME", nullable = false), length = 30)
+							private String name;
+						}
+						```
+						---
+						## Dziedziczenie
+
+						* Single table
+						* Table per class
+						* Joined
+						* Mapped super class
+
+						--
+
+						# Single table
+
+						![Single table](img/persistence/single-table.excalidraw.png)
+
+						--
+
+						# Single table
+
+						* &#10004; szybkie i łatwe zapytania polimorficzne
+						* &#10004; brak złączeń (JOIN)
+						* &#10008; wiele pustych miejsc (NULL)
+
+						--
+
+						# Table per class
+
+						![Table per class](img/persistence/table-per-class.excalidraw.png)
+
+						--
+
+						# Table per class
+
+						* &#10004; brak niewykorzystanych miejsc
+						* &#10008; nie ma możliwości wyszukiwania polimorficznego
+
+						--
+
+						# Joined
+						![Joined](img/persistence/joined.excalidraw.png)
+
+						--
+
+						# Joined
+
+						* &#10004; brak niewykorzystanych miejsc
+						* &#10004; możliwość wyszukiwania polimorficznego
+						* &#10008; wiele złączeń (JOIN)
+
+						--
+
+						# Mapped superclass
+
+						> Rodzaj dziedziczenia nie odzwierciedlony w bazie danych.
+
+						* &#10004; brak niewykorzystanych miejsc
+						* &#10008; prak wyszukiwania polimorficznego
+
+						---
+
+						# Asocjacje
+
+						* One-to-one
+						* One-to-many
+						* Many-to-one
+						* Many-to-many
+
 					</script>
 				</section>
 			</div>
