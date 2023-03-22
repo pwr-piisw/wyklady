@@ -302,6 +302,167 @@
 						* Many-to-one
 						* Many-to-many
 
+						--
+
+						## Przykład: One-to-one
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							private Long id;
+
+							@OneToOne
+							private ArticleDetails details;
+						}
+
+						--
+
+						## Przykład: Many-to-one
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							private Long id;
+
+							@ManyToOne
+							@JoinColumn(name = "CATEGORY_ID")
+							private Category category;
+						}
+
+						--
+
+						## Przykład: One-to-many
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							private Long id;
+
+							@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+							@JoinColumn(name = "ARTICLE_ID")
+							private List<Comments> comments;
+						}
+
+						--
+
+						## Przykład: Many-to-many
+
+						```java[]
+						@Entity
+						public class Article {
+							@Id
+							private Long id;
+
+							@ManyToMany
+							@JoinTable(
+								name = "ARTICLE_TAG",
+								joinColumns = @JoinColumn(name = "ARTICLE_ID"),
+								inverseJoinColumns = @JoinColumn(name = "TAG_ID")
+							)
+							private List<Tag> tags;
+						}
+
+						--
+
+						fetch type<!-- .element class="r-fit-text"-->
+
+						* EAGER
+						* LAZY
+
+						--
+
+						A gdzie wady?<!-- .element class="r-fit-text"-->
+
+						--
+
+						## Problem N+1 selectów
+
+						```java[|1-7|9-14|16-22]
+						@Entity
+						public class Tweet {
+							@Id
+							private Long id;
+							@ManyToOne
+							private User author;
+						}
+
+						@Entity
+						public class User {
+							@Id
+							private Long id;
+							private String name;
+						}
+
+						var tweets = em.createQuery(
+							"SELECT t FROM Tweet t WHERE t.retweetCount > 10", Tweet.class)
+							.getResultList();
+
+						for (var tweet : tweets) {
+							System.out.println(tweet.getAuthor().getName());
+						}
+						```
+
+						--
+
+						## N+1 - rozwiązania
+
+						* FetchType.EAGER
+						* `JOIN FETCH`
+						* `@EntityGraph`
+
+						```java[]
+						em.createQuery(
+							"select t from Tweet t join fetch t.author where t.retweetCount > 10", 
+							Tweet.class)
+							.getResultList();
+						```
+
+						Nie używaj asocjacji tam, gdzie nie jest to niezbędne.
+
+						--
+
+						## Do samodzielnego zapoznania:
+
+						* Criteria query
+						* Transaction management
+						* Named queries
+						* Named native queries
+						* Optimistic locking
+						* Pesimistic locking
+
+						---
+
+						# Spring Data
+
+						--
+
+						## Repozytoria
+
+						![Repozytoria](img/persistence/repositories.excalidraw.png)
+
+						--
+
+						<div class="r-hstack">
+							<img src="img/persistence/jpa-repository.png">
+							<img src="img/persistence/jpa-repository-2.png">
+						</div>
+
+						--
+
+						## JPA Repository
+
+						```java[]
+						public interface TweetRepository extends JpaRepository<Tweet, Long> {
+							List<Tweet> findTweetByContentContains(String content);
+							List<Tweet> findByRetweetCountGreaterThan(int count);
+							List<Tweet> findByRetweetCountGreaterThanAndContentContains(
+								int count, String content);
+						}
+						```
+
 					</script>
 				</section>
 			</div>
