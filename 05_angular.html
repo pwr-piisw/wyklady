@@ -185,6 +185,16 @@
           </ul>
         </div>
       </section>
+
+      <section>
+        <h3>Komponenty "standalone"</h3>
+        <ul>
+          <li>Moduły są opcjonalne począwszy od Angulara 14.</li>
+          <li>Komponenty, dyrektywy oraz "pipes" można zadeklarować jako <code>standalone</code>.</li>
+          <li>Komponenty mogą od teraz importować moduły.</li>
+          <li>Komponenty (dyrektywy, "pipes") są self-contained.</li>
+        </ul>
+      </section>
     </section>
 
     <section>
@@ -436,6 +446,22 @@
           }
         </code></pre>
       </section>
+      <section>
+        <h3>Required inputs</h3>
+        <ul>
+          <li>Nowość począwszy od Angulara 16</li>
+          <li><code>@Input({required=true})</code></li>
+          <li>Wiązanie musi być określone, inaczej nastąpi błąd kompilacji.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Input tranforms</h3>
+        <ul>
+          <li>Nowość począwszy od Angulara 16</li>
+          <li><code>@Input({transform: booleanAttribute})</code></li>
+          <li>Funkcja transformująca wartość.</li>
+        </ul>
+      </section>
     </section>
 
     <section>
@@ -606,7 +632,7 @@
 
     <section>
       <h3>Przykładowa aplikacja</h3>
-      <a href="https://github.com/pwr-piisw/ng11-bookstore">https://github.com/pwr-piisw/ng11-bookstore</a>
+      <a href="https://github.com/pwr-piisw/ng-bookstore">https://github.com/pwr-piisw/ng-bookstore</a>
     </section>
 
   </div>
