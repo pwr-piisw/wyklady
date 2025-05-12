@@ -400,6 +400,58 @@
     </section>
 
     <section>
+      <section>
+        <h1>Sygnały</h1>
+        <p>(Angular 16+)</p>
+      </section>
+      <section>
+        <p>
+          Sygnały to lekki mechanizm wspierający programowanie reaktywne w prostszy sposób
+          niż RxJS.
+        </p>
+      </section>
+      <section>
+        <h3>Sygnały "writable"</h3>
+        <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+          import { signal } from '@angular/core';
+
+          const count = signal(0);
+
+          count.set(3);
+
+          count.update((x) => x + 1);
+        </code></pre>
+      </section>
+      <section>
+        <h3>Sygnały wyliczane</h3>
+        <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+          const count: WritableSignal&lt;number> = signal(0);
+          const doubleCount: Signal&lt;number> = computed(() => count() * 2);
+        </code></pre>
+
+        <p>
+          Sygnał wyliczany jest "leniwie", jest też memoizowany.
+        </p>
+      </section>
+      <section>
+        <h3>Efekty</h3>
+
+        <pre class="javascript"><code class="hljs" data-trim data-line-numbers>
+        @Component({...})
+        export class EffectiveCounterComponent {
+          readonly count = signal(0);
+          constructor() {
+            // Register a new effect.
+            effect(() => {
+              console.log(`The count is: ${this.count()}`);
+            });
+          }
+        }
+        </code></pre>
+      </section>
+    </section>
+
+    <section>
       <h3>Bibliografia</h3>
       <div class="most-text">
         <ul>
