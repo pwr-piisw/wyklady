@@ -157,9 +157,10 @@
             Zmienne typu funkcyjnego mogą być dokładnie wyspecyfikowane:<!-- .element class="fragment more-text"-->
 
             ```typescript
-            const addFn: (left: number, right: number) => number;
-            addFn = (left: number, right: number) => left + right; // OK
-            addFn = () => "Foo"; // błąd kompilacji
+            type BinaryOp = (left: number, right: number) => number;
+
+            const addFn: BinaryOp = (left, right) => left + right; // OK
+            const badFn: BinaryOp = () => "Foo";                   // błąd kompilacji
             ```
             <!-- .element class="fragment"-->
             ---
@@ -185,6 +186,27 @@
             };
             const totalPrice = (items: Priceable[]) => ...
             ```
+            --
+            ### Interfejs jako kontrakt z backendem
+
+            Interfejsy w TS świetnie nadają się do opisania kształtu DTO przesyłanych przez REST API.
+
+            ```typescript
+            export interface Course {
+              id: number;
+              title: string;
+              lecturer: string;
+              ects: number;
+            }
+
+            export interface CreateCourseRequest {
+              title: string;
+              lecturer: string;
+              ects: number;
+            }
+            ```
+
+            W praktyce produkcyjnej te typy generuje się automatycznie z OpenAPI — niedopasowanie kontraktu staje się błędem kompilacji, nie błędem runtime'u.<!-- .element class="fragment more-text"-->
             ---
             # Klasy
             --
@@ -197,10 +219,12 @@
               constructor(public name: string, public price: number) {
               }
               getPriceTag() {
-                return `${name} [${price}]`;
+                return `${this.name} [${this.price}]`;
               }
             };
             ```
+
+            Parametry konstruktora z modyfikatorem dostępu (`public`, `private`, `readonly`) są automatycznie promowane do pól klasy — *parameter properties*.<!-- .element class="fragment more-text"-->
             --
             ## Modyfikatory dostępu
 
@@ -216,7 +240,7 @@
               constructor(private name: string, private price: number) {
               }
               getPriceTag() {
-                return `${name} [${price}]`;
+                return `${this.name} [${this.price}]`;
               }
             };
             ```
@@ -431,6 +455,256 @@
             };
             ```
             ---
+            # Generyczność (*generics*)
+            --
+            ### Funkcje generyczne
+
+            Generyki pozwalają pisać kod, który działa dla wielu typów, **bez** rezygnacji z typowania.
+
+            ```typescript
+            function identity<T>(value: T): T {
+              return value;
+            }
+
+            const a = identity<number>(42);  // T = number
+            const b = identity('foo');       // T inferred = 'foo'
+            ```
+
+            Bez generyków musielibyśmy użyć `any` — i stracić informację o typie zwracanym.<!-- .element class="fragment more-text"-->
+            --
+            ### Generyczne struktury danych
+
+            ```typescript [data-line-numbers]
+            interface ApiResponse<T> {
+              data: T;
+              timestamp: string;
+              error?: string;
+            }
+
+            const courseResponse: ApiResponse<Course> = {
+              data: { id: 1, title: 'PIiSW', lecturer: 'Małecki', ects: 4 },
+              timestamp: '2026-04-26T12:00:00Z',
+            };
+
+            const listResponse: ApiResponse<Course[]> = {
+              data: [/* ... */],
+              timestamp: '2026-04-26T12:00:00Z',
+            };
+            ```
+            --
+            ### Ograniczenia generyków (*constraints*)
+
+            ```typescript
+            interface HasId { id: number; }
+
+            function findById<T extends HasId>(items: T[], id: number): T | undefined {
+              return items.find((item) => item.id === id);
+            }
+
+            findById([{ id: 1, title: 'PIiSW' }], 1);  // OK
+            findById([{ name: 'foo' }], 1);            // błąd: brak 'id'
+            ```
+
+            `T extends HasId` mówi: "T może być dowolnym typem, **pod warunkiem** że ma pole `id: number`".
+            ---
+            # Typy narzędziowe (*utility types*)
+            --
+            ### `Partial<T>` i `Required<T>`
+
+            ```typescript
+            interface Course {
+              id: number;
+              title: string;
+              lecturer: string;
+              ects: number;
+            }
+
+            // wszystkie pola opcjonalne — przydatne dla PATCH-y
+            type CourseUpdate = Partial<Course>;
+
+            const patch: CourseUpdate = { ects: 5 }; // OK
+
+            // odwrotność: wymusza wszystkie pola
+            type StrictCourse = Required<CourseUpdate>;
+            ```
+            --
+            ### `Pick<T, K>` i `Omit<T, K>`
+
+            ```typescript
+            interface Course {
+              id: number;
+              title: string;
+              lecturer: string;
+              ects: number;
+            }
+
+            // tylko wybrane pola
+            type CourseSummary = Pick<Course, 'id' | 'title'>;
+            // { id: number; title: string }
+
+            // wszystko poza wybranymi polami
+            type CreateCourseRequest = Omit<Course, 'id'>;
+            // { title: string; lecturer: string; ects: number }
+            ```
+
+            Idiomatyczny sposób tworzenia DTO bez powielania definicji pól.<!-- .element class="fragment more-text"-->
+            --
+            ### `Readonly<T>` i tablice tylko-do-odczytu
+
+            ```typescript
+            const course: Readonly<Course> = {
+              id: 1, title: 'PIiSW', lecturer: 'Małecki', ects: 4
+            };
+            course.title = 'foo'; // błąd kompilacji
+
+            const ids: ReadonlyArray<number> = [1, 2, 3];
+            ids.push(4); // błąd: 'push' nie istnieje w ReadonlyArray
+            ```
+            --
+            ### `ReturnType<T>` i `Parameters<T>`
+
+            Wyciąganie typów z istniejących sygnatur funkcji.
+
+            ```typescript
+            function loadCourse(id: number): Course {
+              return { id, title: 'PIiSW', lecturer: 'Małecki', ects: 4 };
+            }
+
+            type LoadResult = ReturnType<typeof loadCourse>; // Course
+            type LoadArgs = Parameters<typeof loadCourse>;   // [number]
+            ```
+
+            `Awaited<T>` rozpakowuje typ z `Promise`:
+
+            ```typescript
+            async function fetchCourse(): Promise<Course> { /* ... */ }
+            type FetchResult = Awaited<ReturnType<typeof fetchCourse>>; // Course
+            ```
+            ---
+            # Bezpieczna obsługa wartości
+            --
+            ### `unknown` zamiast `any`
+
+            `any` wyłącza system typów. `unknown` mówi "nie wiem co to" — i zmusza do **zawężenia typu** przed użyciem.
+
+            ```typescript
+            function handle(value: any) {
+              value.foo.bar; // OK dla kompilatora, runtime error
+            }
+
+            function handleSafely(value: unknown) {
+              value.foo.bar;          // błąd kompilacji
+              if (typeof value === 'string') {
+                console.log(value.length); // OK — zawężone do string
+              }
+            }
+            ```
+
+            **Zasada:** używaj `unknown` na granicach systemu (parsowanie JSON, `fetch`), `any` tylko jako ostatnia deska ratunku.<!-- .element class="fragment more-text"-->
+            --
+            ### Optional chaining `?.`
+
+            ```typescript
+            interface User {
+              name: string;
+              address?: { city?: string };
+            }
+
+            const user: User = { name: 'Jan' };
+
+            // bez ?.
+            const city = user.address && user.address.city;
+
+            // z ?.
+            const city2 = user.address?.city; // undefined, bez błędu
+
+            // działa też dla wywołań i indeksowania
+            user.address?.city?.toUpperCase();
+            arr?.[0];
+            callback?.(arg);
+            ```
+            --
+            ### Nullish coalescing `??`
+
+            Operator `??` zwraca prawą stronę **tylko** gdy lewa to `null` lub `undefined` — w odróżnieniu od `||`, który łapie też `0`, `''`, `false`.
+
+            ```typescript
+            const port = config.port ?? 8080;
+
+            // pułapka klasycznego ||
+            const a = 0 || 100;   // 100  ❌ — '0' to nie błąd
+            const b = 0 ?? 100;   // 0    ✅
+
+            // przypisanie z fallbackiem
+            options.timeout ??= 5000; // ustaw tylko jeśli null/undefined
+            ```
+            ---
+            # `satisfies` — TypeScript 4.9
+            --
+            ### Problem: adnotacja typu *psuje* inferencję
+
+            ```typescript
+            type Config = Record<string, string | number>;
+
+            const config: Config = {
+              port: 8080,
+              host: 'localhost',
+            };
+
+            config.port.toFixed(2); // błąd: port może być string!
+            ```
+
+            Adnotacja `: Config` **walidowała** kształt, ale jednocześnie **rozszerzyła** typy pól do `string | number`.<!-- .element class="fragment more-text"-->
+            --
+            ### Rozwiązanie: `satisfies`
+
+            ```typescript
+            const config = {
+              port: 8080,
+              host: 'localhost',
+            } satisfies Config;
+
+            config.port.toFixed(2); // OK — TS wie, że to number
+            config.host.toUpperCase(); // OK — TS wie, że to string
+            ```
+
+            **`satisfies` waliduje, że wartość pasuje do typu, ale zachowuje precyzyjny typ wyrażenia.**<!-- .element class="fragment more-text"-->
+
+            Idealne dla obiektów konfiguracyjnych, route'ów, mapowań — wszędzie tam, gdzie chcesz obu rzeczy naraz.<!-- .element class="fragment more-text"-->
+            --
+            ### `as const` — literały zamiast szerokich typów
+
+            ```typescript
+            const role1 = 'admin';              // typ: string
+            const role2 = 'admin' as const;     // typ: 'admin'
+
+            const roles = ['admin', 'user'];                    // string[]
+            const roles2 = ['admin', 'user'] as const;          // readonly ['admin', 'user']
+
+            // praktyczne zastosowanie:
+            const HTTP_METHODS = ['GET', 'POST', 'PUT', 'DELETE'] as const;
+            type HttpMethod = typeof HTTP_METHODS[number];
+            // 'GET' | 'POST' | 'PUT' | 'DELETE'
+            ```
+            ---
+            # Template literal types
+            --
+            ### Typy z szablonów stringów
+
+            TypeScript potrafi typować *kształt* stringów — analogicznie do template literals w runtime.
+
+            ```typescript
+            type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+            type ApiPath = `/api/${string}`;
+            type Endpoint = `${HttpMethod} ${ApiPath}`;
+
+            const e1: Endpoint = 'GET /api/courses';   // OK
+            const e2: Endpoint = 'PATCH /api/courses'; // błąd: PATCH nie pasuje
+            const e3: Endpoint = 'GET /courses';       // błąd: brak /api/
+            ```
+
+            Stosowane m.in. w typowaniu route'ów, kluczy CSS, zdarzeń DOM (`on${EventName}`).<!-- .element class="fragment more-text"-->
+            ---
             ## Destrukturyzacja
             --
             ### Destrukturyzacja obiektu
@@ -490,7 +764,9 @@
             console.log(safeLength(undefined)); // 0
             ```
             --
-            ### Zaawansowany smart casting
+            ### Discriminated unions
+
+            Unia typów + wspólne pole-dyskryminator (`kind`) pozwala TS-owi automatycznie zawęzić typ w gałęzi `if`/`switch`.
 
             ```typescript [1-12|13-20]
             type Shape =
@@ -512,6 +788,47 @@
             console.log(area(rectangle)); // 200
             ```
             --
+            ### Zawężanie operatorem `in`
+
+            Gdy nie ma dyskryminatora, można sprawdzić obecność pola.
+
+            ```typescript
+            type Dog = { bark: () => void };
+            type Cat = { meow: () => void };
+
+            function speak(animal: Dog | Cat) {
+              if ('bark' in animal) {
+                animal.bark(); // zawężone do Dog
+              } else {
+                animal.meow(); // zawężone do Cat
+              }
+            }
+            ```
+            --
+            ### Wyczerpujące sprawdzanie (*exhaustiveness*)
+
+            Trick z `never` — kompilator wymusza obsłużenie wszystkich wariantów unii.
+
+            ```typescript
+            type Shape =
+              | { kind: 'circle'; radius: number }
+              | { kind: 'rectangle'; width: number; height: number }
+              | { kind: 'triangle'; base: number; height: number };
+
+            function area(shape: Shape): number {
+              switch (shape.kind) {
+                case 'circle':    return Math.PI * shape.radius ** 2;
+                case 'rectangle': return shape.width * shape.height;
+                // brak case 'triangle' →
+                default:
+                  const _exhaustive: never = shape; // błąd kompilacji!
+                  return _exhaustive;
+              }
+            }
+            ```
+
+            Dodanie nowego wariantu do unii **automatycznie** wskaże miejsca w kodzie, które trzeba zaktualizować.<!-- .element class="fragment more-text"-->
+            --
             ### Type guards
 
             ```typescript
@@ -530,6 +847,33 @@
               animal.meow(); // Error
             }
             ```
+            ---
+            ## Moduły i `import type`
+            --
+            ### Type-only imports
+
+            Importy *tylko typów* są usuwane podczas kompilacji — nie powodują żadnego efektu w runtime.
+
+            ```typescript
+            import type { Course } from './models';
+            import { CourseApi } from './course-api';
+
+            // alternatywnie, mieszane:
+            import { CourseApi, type Course } from './course-api';
+            ```
+
+            **Po co?** Eliminacja cyklicznych zależności runtime, mniejsze bundle, jasna intencja.<!-- .element class="fragment more-text"-->
+            ---
+            ## TypeScript w naszym stosie
+
+            - **Backend (Spring Boot)** wystawia REST API → opis w **OpenAPI**.
+            - Generator (`openapi-generator`) tworzy z OpenAPI **typy TS i serwisy Angulara**.
+            - Każda zmiana DTO po stronie backendu = błąd kompilacji TS przed deployem.
+            - `interface`, `Pick`, `Omit`, `Partial` — buduj typy frontu z DTO, nie powielaj ręcznie.
+            - `unknown` na granicach (`fetch`, `JSON.parse`), nigdy `any`.
+            - `satisfies` dla konfiguracji, `as const` dla list dozwolonych wartości.
+
+            > Typy są kontraktem. Im silniejszy kontrakt, tym mniej bugów na styku warstw.
             ---
             [https://www.typescriptlang.org/docs](https://www.typescriptlang.org/docs)
           </script>
