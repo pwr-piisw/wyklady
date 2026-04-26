@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Projekt i implementacja systemów webowych - AI w inżynierii oprogramowania</title>
+
+  <meta name="description" content="AI w inżynierii oprogramowania">
+  <meta name="author" content="Maciej Małecki">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator-vertical="^--$">
+          <script type="text/template">
+            ## Projekt i implementacja systemów webowych
+
+            Wykład: AI w inżynierii oprogramowania
+
+            mgr inż. Maciej Małecki
+            ---
+            ## Plan wykładu
+
+            - Krótka historia: od autouzupełniania do agentów
+            - Anatomia nowoczesnych narzędzi AI dla programistów
+            - *Vibe coding* — co to jest i dlaczego bywa kłopotliwe
+            - Bardziej zdyscyplinowane podejścia: *plan & execute*, SDD
+            ---
+            ## Dlaczego ten temat?
+
+            - W ciągu ~3 lat AI stało się stałym elementem warsztatu programisty.
+            - Zmienia się sposób pisania kodu, ale też **sposób myślenia** o projekcie.
+            - Inżynieria oprogramowania uczy nas, jak pracować z **niedeterministycznym**
+              współpracownikiem — to nowa kompetencja.
+            ---
+            ## Krótka historia
+            --
+            ### Era przed-LLM (do ~2020)
+
+            - Autouzupełnianie typu IntelliSense — oparte o analizę składniową.
+            - TabNine (2018) — pierwsze próby wykorzystania modeli językowych
+              do autouzupełniania kodu.
+            - Modele małe, działające lokalnie, nieporównywalne z dzisiejszymi.
+            --
+            ### GitHub Copilot (czerwiec 2021)
+
+            - Pierwszy szeroko dostępny *AI pair programmer*.
+            - Pod spodem **Codex** — model OpenAI dostrojony na publicznym kodzie
+              z GitHuba.
+            - Działa jako rozszerzenie do edytora; podpowiada **całe linie i bloki**.
+            - Interakcja: piszesz komentarz lub zaczynasz funkcję, model dopisuje resztę.
+            --
+            ### ChatGPT i kontrowersje (listopad 2022)
+
+            - ChatGPT pokazuje, że LLM-y nadają się do **rozmowy o kodzie**, nie tylko
+              do podpowiadania.
+            - Programiści zaczynają pracować w **dwóch oknach**: edytor + chat.
+            - Pojawiają się pytania o licencje, prawa autorskie, halucynacje.
+            --
+            ### Copilot Chat, Cursor, Continue (2023)
+
+            - Chat **wewnątrz IDE**, ze świadomością otwartego pliku i projektu.
+            - **Cursor** (2023) — fork VS Code zbudowany wokół AI; nie dodatek,
+              lecz fundament edytora.
+            - Pojawia się pojęcie *context window* jako ograniczenia praktycznego.
+            --
+            ### Agenci kodujący (2024–2025)
+
+            - **Devin** (Cognition, 2024) — pierwsza głośna demonstracja
+              autonomicznego agenta inżynierskiego.
+            - **Claude Code** (Anthropic, 2025) — agent terminalowy: czyta repo,
+              uruchamia testy, edytuje pliki, robi commity.
+            - **GitHub Copilot Workspace / Agents** — agenci po stronie GitHuba,
+              pracujący na issue i PR-ach.
+            - Skok jakościowy: z **autouzupełniania** do **wykonawcy zadań**.
+            ---
+            ## Anatomia nowoczesnych narzędzi
+            --
+            ### Wspólny model
+
+            Niezależnie od narzędzia (Cursor, Claude Code, Copilot, Aider, …) widać
+            podobne **klocki**:
+
+            - instrukcje / reguły projektu
+            - własne agenty i sub-agenty
+            - umiejętności (*skills*)
+            - protokół MCP do podłączania narzędzi zewnętrznych
+            - mechanizm uprawnień i hooków
+
+            Warto poznać te pojęcia raz — przenoszą się między narzędziami.
+            --
+            ### Instrukcje / reguły
+
+            Plik wczytywany **automatycznie do każdej rozmowy** — definiuje kontekst
+            projektu i preferencje.
+
+            - Cursor: `.cursor/rules/*.mdc`
+            - Claude Code: `CLAUDE.md` (root + zagnieżdżone)
+            - Copilot: `.github/copilot-instructions.md`
+
+            Typowa zawartość: stack technologiczny, konwencje, polecenia build/test,
+            "czego nie ruszać".
+            --
+            ### Po co reguły?
+
+            Bez nich asystent **zgaduje** konwencje na podstawie kodu, który widzi.
+
+            Z nimi:
+
+            - mniej powtarzających się tłumaczeń
+            - mniej "dryfu" stylu kodu w PR-ach
+            - jawne miejsce, gdzie nowy członek zespołu (człowiek lub agent)
+              dostaje pakiet startowy
+            --
+            ### Własne agenty
+
+            *Agent* = LLM + zestaw narzędzi + pętla wykonawcza.
+
+            Możemy definiować **swoje** agenty z konkretnym profilem:
+
+            - prompt systemowy ("jesteś code reviewerem skupionym na bezpieczeństwie")
+            - ograniczony zestaw narzędzi (np. tylko czytanie plików)
+            - konkretne wyzwalacze ("uruchamiaj na każdym PR")
+            --
+            ### Sub-agenty
+
+            Sub-agent = agent uruchamiany **z poziomu innego agenta**, w osobnym
+            kontekście.
+
+            Po co?
+
+            - **izolacja kontekstu** — sub-agent nie zaśmieca głównej rozmowy
+            - **specjalizacja** — różne profile do różnych zadań
+              (Explore, Plan, Review, …)
+            - **równoległość** — kilka sub-agentów w tle naraz
+            --
+            ### Skills
+
+            Skill = **przepis na wykonanie konkretnej czynności**, ładowany na żądanie.
+
+            ```
+            .claude/skills/
+              reveal-md-converter/
+                SKILL.md
+                templates/
+                ...
+            ```
+
+            - SKILL.md zawiera opis ("kiedy użyć") + instrukcje krok po kroku.
+            - Asystent czyta skill **dopiero gdy go potrzebuje** — nie zajmuje
+              kontekstu zawsze.
+            - Mechanizm bardzo zbliżony do "uruchom procedurę X".
+            --
+            ### MCP — Model Context Protocol
+
+            Otwarty protokół (Anthropic, 2024) — **standard podłączania narzędzi**
+            do LLM-ów.
+
+            - Serwer MCP udostępnia *tools*, *resources*, *prompts*.
+            - Klient (Claude Code, Cursor, …) podłącza dowolny serwer.
+            - Przykłady: GitHub, Jira, baza danych, Figma, własna firmowa wiki.
+
+            Cel: **jeden protokół zamiast N integracji** per narzędzie.
+            --
+            ### Hooki i uprawnienia
+
+            Mechanizmy "okołosystemowe", ale bardzo praktyczne:
+
+            - **Permissions** — co agent może robić bez pytania
+              (np. `npm test` tak, `git push` nie).
+            - **Hooks** — komendy uruchamiane na zdarzeniach
+              (np. zawsze formatuj kod po edycji).
+
+            Pozwalają **uzgodnić zachowanie agenta z polityką zespołu**.
+            ---
+            ## Vibe coding
+            --
+            ### Skąd ten termin?
+
+            > "There's a new kind of coding I call **vibe coding**, where you fully
+            > give in to the vibes, embrace exponentials, and forget that the code
+            > even exists."
+            >
+            > — Andrej Karpathy, luty 2025
+
+            Hasło, które przyjęło się błyskawicznie — bo **opisuje to,
+            co ludzie i tak już robili**.
+            --
+            ### Co to znaczy w praktyce?
+
+            - Programista **opisuje cel** w języku naturalnym.
+            - Akceptuje sugestie modelu **bez czytania ich linia po linii**.
+            - Iteruje przez "działa / nie działa", nie przez przegląd kodu.
+            - Kod traktowany jak **artefakt jednorazowy** — ważny jest efekt.
+            --
+            ### Kiedy vibe coding ma sens?
+
+            - **Prototypy** i eksploracja pomysłu.
+            - **Skrypty jednorazowe** — coś zrobić raz, pożegnać.
+            - **Małe projekty osobiste** — koszt błędu jest niski.
+            - Nauka przez "rozmowę" z kodem, którego się jeszcze nie zna.
+            --
+            ### Dlaczego to ryzykowne na produkcji?
+
+            - **Brak modelu mentalnego** — gdy coś przestaje działać,
+              programista nie wie, gdzie szukać.
+            - **Dług techniczny** rośnie szybciej niż kiedykolwiek.
+            - **Bezpieczeństwo** — modele chętnie generują podatne wzorce
+              (SQL injection, brak walidacji, sekrety w repo).
+            - **Halucynacje** — wymyślone API, nieistniejące biblioteki,
+              fałszywe importy.
+            --
+            ### Studium przypadku
+
+            Wystarczy przeszukać Twittera/X pod hasłem *"vibe coded"*:
+
+            - aplikacje, które po tygodniu padają pod ułamkową obciążeniem,
+            - publicznie wystawione klucze API,
+            - bazy danych otwarte na świat,
+            - autorzy nie potrafią naprawić własnego produktu.
+
+            Nie znaczy to, że narzędzia są złe — znaczy, że **proces był zły**.
+            --
+            ### Inżynierski problem z *vibe codingiem*
+
+            Inżynieria oprogramowania od dekad uczy:
+
+            - rozumienia wymagań,
+            - świadomego projektowania,
+            - testowalności i utrzymywalności.
+
+            *Vibe coding* **omija większość tego dorobku**. To dobre przy szkicu,
+            złe przy systemie, który ma żyć latami.
+            ---
+            ## Bardziej zdyscyplinowane podejścia
+            --
+            ### Spektrum, nie wybór 0/1
+
+            Praca z AI nie jest binarna ("vibe" vs "ręcznie"). To **spektrum**:
+
+            ```
+            vibe coding  →  plan & execute  →  spec-driven development  →  klasyczne SDLC
+            ```
+
+            Im wyższe ryzyko i dłuższe życie kodu, tym dalej w prawo.
+            --
+            ### Plan & execute
+
+            Najprostsze ulepszenie nad *vibe codingiem*: **rozdziel myślenie od pisania**.
+
+            1. **Plan** — agent (lub my z agentem) ustala plan zmian:
+               co edytujemy, dlaczego, w jakiej kolejności.
+            2. **Review** — człowiek czyta plan, akceptuje lub poprawia.
+            3. **Execute** — dopiero teraz powstaje kod, według zatwierdzonego planu.
+            --
+            ### Plan & execute — dlaczego działa
+
+            - Plan jest **krótki** — łatwo go zrecenzować.
+            - Łatwo zauważyć **złe założenia** zanim powstanie kod.
+            - Plan staje się **jednostką commita** / opisem PR.
+            - Wiele narzędzi ma to wbudowane: Claude Code *plan mode*,
+              Cursor *agent plan*, Aider *architect mode*.
+            --
+            ### Plan & execute — przykład
+
+            ```
+            > Dodaj endpoint /api/users/:id/avatar do uploadu zdjęcia.
+
+            Plan:
+            1. Dodać DTO AvatarUploadRequest (multipart, max 2MB, jpeg/png).
+            2. Dodać endpoint w UserController — auth wymagany.
+            3. Service zapisuje plik w S3, aktualizuje User.avatarUrl.
+            4. Test integracyjny: 200 dla poprawnego pliku, 413 dla > 2MB.
+
+            Akceptujesz? [tak / popraw]
+            ```
+
+            Dopiero **po akceptacji** agent zaczyna edytować pliki.
+            --
+            ### Spec-Driven Development (SDD)
+
+            Pomysł: **specyfikacja jest pierwszym artefaktem**, nie kod.
+
+            - Specyfikacja po polsku/angielsku, ustrukturyzowana
+              (cel, wymagania, kryteria akceptacji, edge case'y).
+            - Z niej **agent generuje plan implementacji**.
+            - Z planu — kod i testy.
+            - Specyfikacja **żyje w repo**, jest wersjonowana razem z kodem.
+            --
+            ### SDD — narzędzia i konwencje
+
+            - **GitHub Spec Kit** (2025) — open-sourcowy szkielet SDD.
+            - **Kiro** (AWS, 2025) — IDE skupione wokół spec → plan → kod.
+            - W praktyce wystarczy `specs/feature-x.md` + dyscyplina zespołu.
+
+            Niezależnie od narzędzia: pojawia się **rozdzielenie warstw**
+
+            ```
+            spec  →  plan  →  task list  →  diff
+            ```
+
+            i **każda warstwa jest recenzowalna osobno**.
+            --
+            ### SDD — co zyskujemy
+
+            - **Audytowalność** — wiadomo, *dlaczego* coś powstało.
+            - **Łatwiejszy onboarding** — nowy człowiek czyta specy, nie tylko kod.
+            - **Powtarzalność** — z tej samej spec można wygenerować implementację
+              w innym stacku.
+            - **Mniej halucynacji** — agent ma jasne ramy, nie improwizuje.
+            --
+            ### SDD — koszty
+
+            - Trzeba **umieć pisać specyfikacje** — to inna umiejętność niż kodowanie.
+            - Dla małych zmian SDD jest **przerostem formy nad treścią**.
+            - Specy mogą zgnić tak samo jak komentarze, jeśli nie są utrzymywane.
+
+            SDD ≠ srebrna kula. To narzędzie **dla projektów, które mają żyć długo**.
+            ---
+            ## Dobre praktyki na co dzień
+            --
+            ### Kontekst > prompt
+
+            Lepszy efekt da:
+
+            - dobrze przygotowane `CLAUDE.md` / reguły,
+            - jasna struktura repo,
+            - czytelne nazwy plików i funkcji,
+
+            niż **pojedynczy "magiczny" prompt**. Model i tak przeczyta tylko to,
+            co mu damy.
+            --
+            ### Małe kroki, częste commity
+
+            - Pojedynczy task = pojedynczy diff = pojedynczy commit.
+            - Łatwo cofnąć, gdy agent "zboczy z kursu".
+            - Łatwo zrecenzować — AI lub człowiek.
+            --
+            ### Testy są dla agenta nawet ważniejsze niż dla Ciebie
+
+            - Testy to **mechaniczna informacja zwrotna** dla agenta.
+            - Bez testów agent nie wie, czy zmiana była dobra — i Ty też nie wiesz.
+            - TDD odżywa: najpierw test (z agentem), potem implementacja (z agentem).
+            --
+            ### Recenzja kodu się nie zmienia
+
+            - Każdy commit od agenta to commit od **stażysty, który nie zna firmy**.
+            - Czytaj diff. Pytaj "dlaczego tak?".
+            - Bezpieczeństwo, walidacja, brzegi — sprawdzaj, nie ufaj.
+            ---
+            ## Podsumowanie
+
+            - Od Copilota (2021) do agentów (2025) — to były ~4 lata, nie 40.
+            - Klocki są wszędzie podobne: **reguły, agenty, skille, MCP**.
+            - **Vibe coding** to legalne narzędzie do prototypów,
+              **nie do produkcji**.
+            - **Plan & execute** i **SDD** to próba pogodzenia AI
+              z dorobkiem inżynierii oprogramowania.
+            - Najważniejsza umiejętność: **świadomy wybór poziomu dyscypliny**
+              do zadania.
+            ---
+            ## Materiały
+
+            - Karpathy, *Vibe coding* (X, 02-2025)
+            - Anthropic, *Model Context Protocol* — modelcontextprotocol.io
+            - GitHub, *Spec Kit* — github.com/github/spec-kit
+            - Anthropic, *Claude Code best practices*
+            - Cursor, *Rules for AI* — docs.cursor.com
+            ---
+            ## Dziękuję
+
+            Pytania?
+          </script>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            width: 1200,
+            hash: true,
+            navigationMode: 'linear',
+            slideNumber: 'c/t',
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+  </body>
+</html>
