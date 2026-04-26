@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Projekt i implementacja systemów webowych - wykład 8.1</title>
+
+  <meta name="description" content="JavaScript">
+  <meta name="author" content="Maciej Małecki">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>reveal.js</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator-vertical="^--$">
+          <script type="text/template">
+            ## Projekt i implementacja systemów webowych
+
+            Wykład 8.1: język JavaScript
+
+            mgr inż. Maciej Małecki
+            ---
+            ### JavaScript łączy w sobie trzy koncepcje:
+
+            - funkcyjność wzorowaną na języku *Scheme*,<!-- .element class="fragment"-->
+            - obiektowość wzorowana na języku *Smalltalk*,<!-- .element class="fragment"-->
+            - składnię wzorowaną na języku *Java*.<!-- .element class="fragment"-->
+
+            **Język JavaScript nie jest wariantem języka Java!!!**<!-- .element class="fragment"-->
+            --
+            ### Cechy języka
+
+            - *Przenośność* - identyczne działanie niezależnie od platformy sprzętowej.<!-- .element class="fragment"-->
+            - *Dynamiczna typizacja* - typ nie jest ściśle przypisany do konkretnej zmiennej lub wyrażenia.<!-- .element class="fragment"-->
+            - *Jednowątkowość*<!-- .element class="fragment"-->
+            --
+            ### Dlaczego JavaScript jest ważny?
+
+            - dostępny wszędzie
+            - każdy użytkownik z reguły posiada przeglądarkę
+            - automatyczna aktualizacja
+            ---
+            ### Najprostszy "przypadek użycia"
+            --
+            Osadzenie w stronie HTML
+
+            ```html
+            &lt;html&gt;
+              &lt;body&gt;
+                &lt;script&gt;
+                  console.log('Hello world');
+                &lt;/script&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+            ```
+            --
+            Użycie osobnego pliku źródłowego
+
+            <div class="r-vstack">
+
+            `index.html`
+
+            ```html
+            &lt;html&gt;
+              &lt;body&gt;
+                &lt;script src="script.js"/&gt;
+              &lt;/body&gt;
+            &lt;/html&gt;
+            ```
+
+            `script.js`
+
+            ```javascript
+            console.log('Hello world');
+            ```
+
+            </div>
+            ---
+            ## Zmienne
+
+            Zmienne deklarujemy przy użyciu słowa kluczowego `var`:
+
+            ```javascript
+            var a = 10, b;   // a -> 10, b -> undefined
+            var c = null;    // c -> null
+            ```
+
+            lub `let`:
+
+            ```javascript
+            let a = 10, b;   // a -> 10, b -> undefined
+            let c = null;    // c -> null
+            ```
+
+            - Niezainicjowania zmienna przyjmuje wartość `undefined`.<!-- .element class="fragment"-->
+            - Słowo kluczowe `var|let` jest opcjonalne, zaleca się jednak je stosować.<!-- .element class="fragment"-->
+            --
+            ### Typy danych
+
+            - **JavaScript jest językiem dynamicznie typizowanym** - typ zmiennej lub wyrażenia nie jest znany podczas kompilacji.
+            - Podczas wykonywania kodu typ wartości przechowywanej w zmiennej lub będącej wynikiem wyrażenia jest dobrze określony.
+
+            ```javascript [data-line-numbers]
+            var a;
+            a = 2 + 2;
+            console.log(typeof(a)); // -> number
+            a = 'foo';
+            console.log(typeof(a)); // -> string
+            ```
+            <!-- .element class="fragment"-->
+            --
+            ### Typy danych
+
+            <table>
+              <tr>
+                <th>typ</th>
+                <th>przykłady</th>
+              </tr>
+              <tr>
+                <td><code>number</code></td>
+                <td><code>0, 1, 0.5, 2E-10</code></td>
+              </tr>
+              <tr>
+                <td><code>boolean</code></td>
+                <td><code>true, false</code></td>
+              </tr>
+              <tr>
+                <td><code>string</code></td>
+                <td><code>'', 'foo'</code></td>
+              </tr>
+              <tr>
+                <td><code>function</code></td>
+                <td><code>function(a) { return a + 1; }</code></td>
+              </tr>
+              <tr>
+                <td><code>array</code></td>
+                <td><code>[], ['apple', 'orange']</code></td>
+              </tr>
+              <tr>
+                <td><code>object</code></td>
+                <td><code>{}, {id: 5, value: 'foo'}</code></td>
+              </tr>
+            </table>
+            ---
+            ### Funkcje
+            --
+            Funkcja jest wartością utworzoną przy użyciu literału funkcyjnego:
+
+            <div class="r-vstack">
+
+            ```javascript
+            function add(left, right) {
+              return left + right;
+            };
+            add(2, 2); // -> 4
+            ```
+
+            ```javascript
+            function add() {
+              var sum = 0;
+              for (i = 0; i < arguments.length; ++i) {
+                sum += arguments[i];
+              };
+              return sum;
+            };
+            add(1, 2, 3, 4); // -> 10
+            ```
+
+            </div>
+            --
+            <div class="r-vstack">
+
+            a co jeśli...
+
+            ```javascript
+            function add(left, right) {
+              return
+              left + right;
+            };
+            add(2, 2); // ?
+            ```
+
+            ```javascript
+            function add(left, right) {
+              left + right;
+            };
+            add(2, 2); // ?
+            ```
+
+            </div>
+            --
+            funkcja to też typ danych...
+
+            ```javascript
+            function map(array, fn) {
+              var result = [];
+              for(i = 0; i < array.length; ++i) {
+                result[i] = fn ? fn(array[i]) : array[i];
+              }
+              return result;
+            };
+
+            const array = [1,2,3,4,5];
+            const res1 = map(array);
+            const incrementFn = function(a) { return a + 1; };
+
+            map(array, incrementFn);
+            map(array, function(a) { return a * 2; });
+            map(array, incrementFn()); // ?
+            ```
+            --
+            wartością funkcji może być funkcja
+
+            ```javascript
+            function createMultiplier(amount) {
+              return function(a) { return a * amount; };
+            };
+            createMultiplier(5)(2); // -> 10
+
+            function map(array, fn) {
+              var result = [];
+              for(i = 0; i < array.length; ++i) {
+                result[i] = fn ? fn(array[i]) : array[i];
+              }
+              return result;
+            };
+            ```
+
+            <aside class="notes">
+              <p>Standard ECMAScript 2015 (ES6) wprowadza uproszczoną notację funkcyjną "fat arrow": można pisać
+                <code>(a) => a + 1</code> zamiast <code>function(a) { return a + 1; }</code>.</p>
+            </aside>
+            --
+            Na szczęście funkcja map jest standardowo zdefiniowana dla typu tablicowego:
+
+            ```javascript
+            [1,2,3,4,5].map(createMultiplier(2));
+            // -> [2,4,5,8,10];
+            ```
+            --
+            W języku JavaScript funkcję można zadeklarować (stworzyć) na kilka sposobów...
+
+            ```javascript [|1-7|9-10|11-14|15-16]
+            var add = function(left, right) {
+              return left + right;
+            };
+            function sub(left, right) {
+              return left - right;
+            };
+            const mul = (left, right) => left * right;
+
+            // w konsekwencji...
+            add(2, 2); // -> 4
+            function add(left, right) {
+              return 0;
+            }
+            add(2, 2); // -> 0
+            add = null;
+            add(2, 2); // -> Uncaught TypeError: add is not a function
+            ```
+            ---
+            ### Zmienne globalne
+
+            Użycie zmiennej wewnątrz ciała funkcji bez wcześniejszej deklaracji z użyciem słowa *var* spowoduje użycie lub stworzenie zmiennej globalnej.
+
+            **Jest to fatalny błąd projektowy, który popełnili twórcy języka JavaScript!**<!-- .element class="fragment"-->
+
+            <div class="col left fragment">
+
+            ```javascript
+            var a = 10;
+            var f = function() {
+              console.log(a); // -> 10 !
+              a = 99;
+            };
+            f();
+            console.log(a); // -> 99 !!!
+            ```
+
+            </div>
+            <div class="col right fragment">
+
+            ```javascript
+            var f = function() {
+              a = 99;
+            };
+            f();
+            console.log(a); // -> 99 !!!
+            ```
+
+            </div>
+            --
+            ### Zmienne globalne
+
+            Szczególnie groźne jest błędne użycie zmiennej indeksującej w pętli *for*:
+
+            ```javascript [data-line-numbers]
+            function processRow(row) {
+              for (i = 0; i < row.length; ++i) {
+                console.log(row[i]);
+              }
+            }
+            function processMatrix(matrix) {
+              for (i = 0; i < matrix.length; ++i) {
+                processRow(matrix[i]);
+              }
+            };
+            processMatrix([[1,2,3], [4,5,6], [7,8,9]]);
+            ```
+
+            `-> 1 2 3`<!-- .element class="fragment"-->
+            --
+            ### Zmienne globalne
+
+            ```javascript [data-line-numbers]
+            function processRow(row) {
+              for (var i = 0; i < row.length; ++i) {
+                console.log(row[i]);
+              }
+            }
+            function processMatrix(matrix) {
+              for (var i = 0; i < matrix.length; ++i) {
+                processRow(matrix[i]);
+              }
+            };
+            processMatrix([[1,2,3], [4,5,6], [7,8,9]]);
+            ```
+
+            `-> 1 2 3 4 5 6 7 8 9`<!-- .element class="fragment"-->
+            --
+            ### Zmienne lokalne
+
+            Wewnątrz funkcji zawsze deklarujemy zmienne z użyciem słowa *var* (*let*, *const*), gdyż wtedy stają się one zmiennymi **lokalnymi**.
+            --
+            ### Hoisting
+
+            Zasięg zmiennych w JavaScripcie jest **funkcyjny a nie blokowy**, chociaż blokowa składnia sugeruje coś innego.
+
+            ```javascript [1-3|4-8|9-15]
+            function f1() {
+              console.log(a); // -> Uncaught ReferenceError: a is not defined
+            };
+            function f2() {
+              console.log(a); // -> undefined
+              var a = 10;
+              console.log(a); // -> 10
+            };
+            function f3() {
+              console.log(a); // -> undefined
+              { // <- to nie ma znaczenia dla widzialności
+                var a = 10;
+                console.log(a); // -> 10
+              }
+            };
+            ```
+            <!-- .element class="fragment"-->
+            --
+            ### Domknięcia
+
+            ```javascript [data-line-numbers]
+            const nextValue = function () {
+              let cntr = 0;
+              return function() {
+                ++cntr;
+                return cntr;
+              };
+            }();
+            console.log(nextValue()); // -> 1
+            console.log(nextValue()); // -> 2
+            ```
+
+            <div class="more-text fragment">
+
+            - Funkcja ma dostęp do parametrów i zmiennych widocznych w miejscu, w którym owa funkcja została zadeklarowana.*
+            - Owe parametry i zmienne są dostępne nawet wówczas, gdy funkcja wewnętrzna ma dłuższy czas życia niż funkcja zewnętrzna.
+            - Mechanizm ten nazywamy domknięciem (ang. *closure*).
+
+            \* <small>Wyjątkiem są zmienne *this* oraz *arguments*.</small>
+            <!-- .element class="align-left"-->
+
+            </div>
+            ---
+            ## Instrukcje kontrolne
+            --
+            ### Instrukcja warunkowa
+
+            ```javascript
+            if(a === 3) {
+               ...
+            } else {
+               ...
+            }
+            ```
+
+            <div class="centered">
+
+            - Składnia jest identyczna jak w języku C lub Javie.<!-- .element class="fragment"-->
+            - Wyrażenie nie musi być typu *boolean*.<!-- .element class="fragment"-->
+            - Dla każdego wyrażenia w instrukcji *if* JavaScript określa czy jest ono *truthy* czy też *falsy*.<!-- .element class="fragment"-->
+            - Do porównywania tożsamościowego stosujemy wyłącznie operatory `===` oraz `!==`.<!-- .element class="fragment"-->
+
+            </div>
+            --
+            ### Wartości *falsy* i *truthy*
+
+            Następujące wartości są *falsy*:
+
+            - `false`
+            - `null`
+            - `undefined`
+            - Pusty napis: `''`
+            - Liczba `0`
+            - Liczba `NaN`
+
+            Pozostałe wartości są *truthy* wliczając w to `true`, napis `'false'` oraz dowolną wartość obiektową.<!-- .element class="fragment"-->
+            --
+            ### Instrukcje pętli
+
+            ```javascript
+            while (expression) {
+               ...
+            };
+            do {
+               ...
+            } while (expression);
+            for (let i = 0; i < size; ++i) {
+               ...
+            };
+            ```
+
+            - Wyrażenie `expression` podobnie jak w przypadku instrukcji warunkowej obliczane jest do wartości *falsy* i *truly*.<!-- .element class="fragment"-->
+            - Koniecznie należy pamiętać o deklarowaniu zmiennej indeksującej w pętli *for*.<!-- .element class="fragment"-->
+            ---
+            ## Obiekty
+            --
+            JavaScript oferuje bardzo wygodną formę deklarowania obiektów przy użyciu tzw *literału obiektowego*:
+
+            ```javascript [data-line-numbers]
+            const person = {
+               name: 'John',
+               surname: 'Doe',
+               age: 30
+            };
+            ```
+            <!-- .element class="fragment"-->
+
+            ```javascript [data-line-numbers]
+            person.name;                            // -> 'John'
+            person['age'];                          // -> 30
+            person.email;                           // -> undefined
+            person.email || ''                      // -> ''
+            person.address.street                   // -> TypeError
+            person.address && person.address.street // -> undefined
+            ```
+            <!-- .element class="fragment"-->
+            --
+            Obiekty są strukturami dynamicznymi, można dodawać i usuwać właściwości "w locie":
+
+            ```javascript [data-line-numbers]
+            const item = {};            // obiekt "pusty"
+            item.name = 'ATmega1284';
+            item.price = 199.90;
+            console.log(item);        // {name: "ATmega1284", price: 199.9}
+
+            delete item.name;
+            console.log(item);        // {price: 199.9}
+            ```
+            <!-- .element class="fragment"-->
+            --
+            Możliwe jest wyliczenie wszystkich właściwości obiektu przy użyciu specjalnej składni `for in`.
+
+            ```javascript [data-line-numbers]
+            const obj = {
+               name: 'John',
+               age: 30,
+               sayHello: function() { console.log('Hello ' + this.name); }
+            };
+            for(let property in obj) {
+               console.log(property + ':' + typeof obj[property]);
+            };
+            ```
+            <!-- .element class="fragment"-->
+            ---
+            ## Metody
+
+            Obiekty mogą posiadać właściwości typu funkcyjnego. Tak zdefiniowane funkcje nazywamy metodami.
+
+            ```javascript [|2|3-12|13-19]
+            const account = {
+              balance: 0,
+              debit: function(amount) {
+                if (amount < 0) {
+                  throw new Error('Illegal amount');
+                }
+                if (this.balance < amount) {
+                  throw new Error('Insufficient account balance');
+                }
+                this.balance -= amount;
+                return this.balance;
+              },
+              credit: function(amount) {
+                if (amount < 0) {
+                  throw new Error('Illegal amount');
+                }
+                this.balance += amount;
+                return this.balance;
+              }
+            };
+            ```
+            <!-- .element class="fragment"-->
+            ---
+            ## Zagadka
+
+            <div class="col left">
+
+            ```javascript
+            const account = {
+              balance: 199,
+              printBalance: function() {
+                    console.log(this.balance);
+              }
+            };
+            ```
+
+            -> 199<!-- .element class="fragment"-->
+
+            </div>
+            <div class="col right">
+
+            ```javascript
+            const account = {
+              balance: 199,
+              printBalance: function() {
+                    function inner() {
+                        console.log(this.balance);
+                    };
+                    inner();
+              }
+            };
+            ```
+            <!-- .element class="fragment"-->
+
+            -> undefined <span class="fragment"><img src="img/troll.gif" class="no-border" height="100"></span>
+            <!-- .element class="fragment"-->
+
+            </div>
+            ---
+            ## Bezklasowość
+
+            JavaScript do wersji ES5 włącznie był językiem obiektowym, w którym nie istniało pojęcie klasy ani konstruktora.
+
+            Ponieważ istnieje tylko jeden typ obiektowy (wszystkie obiekty są tego samego typu), pojęcie klasy nie ma sensu.<!-- .element class="fragment"-->
+
+            Klasy są jednak także użyteczne jako wzorce do tworzenia obiektów, JavaScript oferuje inne mechanizmy wzorców.<!-- .element class="fragment"-->
+            ---
+            ## Tworzenie obiektów
+            --
+            ### Sposób 1: literał obiektowy
+
+            ```javascript [|2-4|5-7|9]
+            var employee = {
+              name: 'John',
+              surname: 'Doe',
+              age: 30,
+              sayHello: function() {
+                console.log('Hello ' + this.name + ' ' + this.surname);
+              }
+            };
+            employee.sayHello();
+            ```
+            --
+            ### Sposób 2: funkcja fabrykująca
+
+            ```javascript
+            function makeEmployee(name, surname, age) {
+              return {
+                name: name,
+                surname: surname,
+                age: age,
+                sayHello: function() {
+                  console.log(`Hello ${this.name} ${this.surname}`);
+                }
+              };
+            };
+            makeEmployee('John', 'Doe', 30).sayHello();
+            ```
+            --
+            ...lub bardziej elegancko przy użyciu obiektu specyfikującego
+
+            ```javascript
+            function makeEmployee(spec) {
+              return {
+                name: spec.name,
+                surname: spec.surname,
+                age: spec.age,
+                sayHello: function() {
+                  console.log(`Hello ${this.name} ${this.surname}`);
+                }
+              };
+            };
+            makeEmployee({name: 'John', surname: 'Doe', age: 30}).sayHello();
+            ```
+            --
+            ### Sposób 3: dziedziczenie prototypiczne
+
+            ```javascript [data-line-numbers]
+            const employee = {
+              name: '',
+              surname: '',
+              sayHello: function() {
+                console.log(`Hello ${this.name} ${this.surname}`);
+              }
+            };
+            const john = Object.create(employee);
+            john.name = 'John';
+            john.surname = 'Doe';
+            john.sayHello(); // -> Hello John Doe
+            ```
+
+            Każda zmiana w prototypie jest natychmiast widoczna w obiektach dziedziczących.<!-- .element class="fragment" data-fragment-index="1"-->
+
+            ```javascript [data-line-numbers]
+            employee.sayHello = function() {
+              console.log('Hello ' + this.name);
+            };
+            john.sayHello(); // -> Hello John
+            ```
+            <!-- .element class="fragment" data-fragment-index="1"-->
+            --
+            ### Sposób 4: funkcja fabrykująca i pola prywatne
+
+            W obiektach JavaScriptowych nie ma pól (a więc i metod) prywatnych, ale można ukryć pola stosując technikę domknięć (*closure*).
+
+            ```javascript [data-line-numbers]
+            function makeEmployee(spec) {
+              const name = spec.name;
+              const surname = spec.surname;
+              return {
+                sayHello: function() {
+                  console.log(`Hello ${name} ${surname}`);
+                }
+              };
+            };
+            var john = makeEmployee({name: 'John', surname: 'Doe'});
+            john.sayHello(); // -> Hello John Doe
+            john.name; // undefined
+            john.surname; // undefined
+            ```
+            ---
+            ## Tablice
+            --
+            Tablice w języku JavaScript są obiektami o pewnej specjalnej charakterystyce:
+
+            ```javascript [data-line-numbers]
+            const t = [];
+            t[0] = 123; // --> [123]
+            t[5] = 3; // --> [123, 4 empty slots, 5]
+            t[6] = 'foo'; // --> [123, 4 empty slots, 5, 'foo bar']
+            t.foo = 'bar'; // --> [123, 4 empty slots, 5, 'foo bar']
+            console.log(t.foo); // --> bar
+            ```
+
+            ```javascript
+            const fibb = [1,2,3,5,8,13];
+            ```
+            <!-- .element class="fragment" data-fragment-index="1"-->
+
+            ```javascript
+            const bag = [1,5,'foo',{}, {name: 'Doe'}, [1,2,3]];
+            ```
+            <!-- .element class="fragment" data-fragment-index="2"-->
+            --
+            Iterowanie klasyczne:<!-- .element class="align-left"-->
+
+            ```javascript
+            const fibb = [1,2,3,5,8,13];
+            for(var i = 0; i < fibb.length; ++i) {
+              console.log(`${i}: ${fibb[i]}`);
+            };
+            ```
+
+            Iterowanie funkcyjne:<!-- .element class="align-left"-->
+
+            ```javascript
+            const fibb = [1,2,3,5,8,13];
+            fibb.forEach(function(val, i) {
+              console.log(`${i}: ${val}`);
+            });
+            ```
+          </script>
+        </section>
+      </div>
+      <div
+          id="cgLogo"
+          style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+      </div>
+    </div>
+
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            width: 1200,
+            hash: true,
+            navigationMode: 'linear',
+            slideNumber: 'c/t',
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Projekt i implementacja systemów webowych - wykład 8.2</title>
+
+  <meta name="description" content="TypeScript">
+  <meta name="author" content="Maciej Małecki">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>reveal.js</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator-vertical="^--$">
+          <script type="text/template">
+            ## Projekt i implementacja systemów webowych
+
+            Wykład 8.2: język TypeScript
+
+            mgr inż. Maciej Małecki
+            ---
+            ## Wiemy już, że JavaScript to świetny język, ale...
+
+            - brakuje w nim deklaracji typów
+            - typy obiektowe są nieodróżnialne
+            - brakuje klas przez co tworzenie wielu instancji podobnych obiektów jest utrudnione
+            ---
+            ## TypeScript
+
+            - Język kompilowany do JavaScript stworzony i rozwijany przez Microsoft.
+            - Język ten obecnie jest oficjalnym "poligonem doświadczalnym" dla JavaScriptu.
+            - Duża część elementów TS przeszła do JS w ramach (ES2015).
+            - Dzięki kompilacji można korzystać z rozszerzeń ECMA na przeglądarkach, które tej wersji JS jeszcze nie wspierają.
+            ---
+            [https://www.typescriptlang.org/play/index.html](https://www.typescriptlang.org/play/index.html)
+            ---
+            ### Deklaracja zmiennych i stałych
+
+            ```typescript
+            let price = 100.99;
+            ```
+
+            podobnie jak `var`, ale zasięg blokowy zamiast funkcyjnego
+
+            ```typescript
+            const multiplier = 3;
+            ```
+
+            podobnie jak `let`, lecz raz przypisanej wartości nie można zmienić
+            ---
+            ## Typy danych
+            --
+            ### Specyfikacja typów
+
+            ```typescript
+            const price: number = 99; // ok
+            const price: number = 'foo'; // błąd kompilacji
+            ```
+            --
+            ### Podstawowe typy
+
+            - `boolean`
+            - `number`
+            - `string`
+            - `number[]`, `string[]` - typ tablicowy
+            - `Array<number>`, `Array<string>` - także typ tablicowy
+            - `[string, number, number, boolean]` - krotka
+            --
+            ### Enumeracje
+
+            ```typescript
+            enum Color {Red, Green, Blue};
+            let color: Color = Color.Green;
+            console.log(Color[1]);       // -> "Green"
+            console.log(Color["Green"]); // -> 1
+            ```
+
+            Typ enumeracyjny jest kompilowany do tablicy zawierającej mapowanie liczb na nazwy i na odwrót.
+
+            ```typescript
+            enum Color {Red, Green, Blue};
+            console.log(Color); // -> {"0": "Red", "1": "Green", "2": "Blue", Red: 0, Green: 1, Blue: 2}
+            ```
+            --
+            ### Bieda-enumeracje
+
+            Typescript pozwala na deklarowania typów jako unii wartości
+
+            ```typescript
+            type Color = 'Red' | 'Green' | 'Blue';
+            let color: Color;
+            color = 'Red'; // ok
+            color = 'foo'; // transpilation error
+            ```
+            --
+            ### Type inference
+
+            W wielu miejscach stosowanie specyfikatorów typów nie jest konieczne. TypeScript zawiera mechanizm *type inference*.
+
+            ```typescript
+            let price = 0; // wnioskowanie -> number
+            price = 'foo'; // błąd kompilacji
+            ```
+            ---
+            ### Fat arrow
+
+            Funkcje można obecnie specyfikować zwięźlej stosująć notację "strzałkową" (*fat arrow*).
+
+            ```typescript [data-line-numbers]
+            const add = function(left, right) {
+              return left + right;
+            };
+            const add2 = (left, right) => {
+              return left + right;
+            };
+            // lub zwięźlej
+            const add3 = (left, right) => left + right;
+            ```
+
+            Znacząco zwiększa to czytelność kodu funkcyjnego:
+
+            ```typescript
+            [1,2,3,4,5].map((value) => 2 * value);    // [2,4,6,8,10]
+            [1,2,3,4,5].filter((value) => value < 4); // [1,2,3]
+            ```
+
+            Notacja fat arrow zmienia sposób wyliczania zmiennej `this`!<!-- .element class="fragment"-->
+            ---
+            ## Specyfikacja sygnatury funkcji
+
+            Parametry oraz rezultat mogą być typizowane.<!-- .element class="more-text"-->
+
+            ```typescript
+            const add = function(left: number, right: number): number {
+              return left + right;
+            };
+            const add2 = (left: number, right: number): number => {
+              return left + right;
+            };
+            // lub zwięźlej
+            const add3 = (left: number, right: number) => left + right;
+            ```
+
+            Zmienne typu funkcyjnego mogą być dokładnie wyspecyfikowane:<!-- .element class="fragment more-text"-->
+
+            ```typescript
+            const addFn: (left: number, right: number) => number;
+            addFn = (left: number, right: number) => left + right; // OK
+            addFn = () => "Foo"; // błąd kompilacji
+            ```
+            <!-- .element class="fragment"-->
+            ---
+            ## Interfejsy i typy obiektów
+
+            ```typescript
+            const totalPrice = (items: {price: number}[]) => {
+              let sum = 0;
+              items.forEach((item) => sum += item.price);
+              return sum;
+            };
+            totalPrice([{price: 4.99, name: 'Bread'},
+              {price: 12.99, name: 'Butter'}]); // -> 17.98
+            totalPrice([{name: 'Apple'}, {name: 'Orange'}]); // -> błąd kompilacji
+            ```
+
+            Interfejs m.in. pozwala unikać redundantnych deklaracji:
+
+            ```typescript
+            interface Priceable {
+              price: number; // pole obowiązkowe
+              name?: string; // pole opcjonalne
+            };
+            const totalPrice = (items: Priceable[]) => ...
+            ```
+            ---
+            # Klasy
+            --
+            ## Klasy
+
+            Brak klas w JavaScript jest uciążliwy. ECMAScript 6 i TypeScript wprowadzają pojęcie klasy.
+
+            ```typescript
+            class Product {
+              constructor(public name: string, public price: number) {
+              }
+              getPriceTag() {
+                return `${name} [${price}]`;
+              }
+            };
+            ```
+            --
+            ## Modyfikatory dostępu
+
+            Dostępne są następujące modyfikatory dostępu stosowane zarówno do metod jak i pól:
+
+            - `public`
+            - `protected`
+            - `private`
+            - (brak) - przyjmuje się dostęp jak w `public`
+
+            ```typescript
+            class Product {
+              constructor(private name: string, private price: number) {
+              }
+              getPriceTag() {
+                return `${name} [${price}]`;
+              }
+            };
+            ```
+            --
+            ## Dziedziczenie
+
+            ```typescript [1-9|11-19|21-27|29-32]
+            class Animal {
+              name: string;
+              constructor(theName: string) {
+                this.name = theName;
+              }
+              move(distanceInMeters: number = 0) {
+                console.log(`${this.name} moved ${distanceInMeters}m.`);
+              }
+            }
+
+            class Snake extends Animal {
+              constructor(name: string) {
+                super(name);
+              }
+              move(distanceInMeters = 5) {
+                console.log("Slithering...");
+                super.move(distanceInMeters);
+              }
+            }
+
+            class Horse extends Animal {
+              constructor(name: string) { super(name); }
+              move(distanceInMeters = 45) {
+                console.log("Galloping...");
+                super.move(distanceInMeters);
+              }
+            }
+
+            const sam = new Snake("Sammy the Python");
+            const tom: Animal = new Horse("Tommy the Palomino");
+            sam.move();
+            tom.move(34);
+            ```
+            --
+            ### Getters, Setters, Parameter properties
+
+            ```typescript [1-12|14-16|18-20]
+            class Osoba {
+              constructor(private _name: string) {
+              }
+
+              get name(): string {
+                  return this._name;
+              }
+
+              set name(value: string) {
+                  this._name = value;
+              }
+            }
+
+            const osoba = new Osoba('Jan');
+
+            console.log(osoba.name); // Output: Jan
+
+            osoba.name = 'Janek';
+
+            console.log(osoba.name); // Output: Janek
+            ```
+            --
+            ### Read-only parameter properties
+
+            ```typescript
+            class Osoba {
+              constructor(private readonly name: string) {
+              }
+            }
+
+            const osoba = new Osoba('Jan');
+
+            console.log(osoba.name); // Output: Jan
+
+            osoba.name = 'Janek'; // Error: Cannot assign to 'name'
+                                  // because it is a read-only property.
+            ```
+            --
+            ### W praktyce klasy wykorzystywane są rzadko
+
+            ```typescript [data-line-numbers]
+            interface Person {
+              name: string;
+              surname: string;
+              age: number;
+            }
+
+            const johnDoe: Person = {
+              name: 'John',
+              surname: 'Doe',
+              age: 44
+            };
+            ```
+            ---
+            # Typy zaawansowane
+            --
+            ### Unie typów (*union*)
+
+            ```typescript [data-line-numbers]
+            let x: 'foo' | 'bar';
+            x = 'foo';
+            x = 'some other value'; // <-- błąd kompilacji
+
+            let y: string | number;
+            y = 'foo';
+            y = 123;
+            y = true; // <-- błąd kompilacji
+            ```
+            --
+            ### Przecięcia typów (*intersection*)
+
+            ```typescript [data-line-numbers]
+            interface Person {
+              name: string;
+              age: number;
+            }
+            interface Employee {
+              employeeNumber: string;
+            }
+
+            const johnDoe: Person & Employee = {
+              name: 'John Doe',
+              age: 44,
+              employeeNumber: '123-234-456'
+            };
+            ```
+            --
+            ### Duck typing
+
+            > Skoro wygląda jak kaczka i kwacze jak kaczka, to jest kaczką
+
+            ```typescript [1-3|5-7|9-14|16-20]
+            class Pigeon {
+              sound = "coos";
+            }
+
+            class Owl {
+              sound = "hoots";
+            }
+
+            class Penguin {
+              sound = "peeps";
+              swim() {
+                console.log("I'm a bird and i can swim");
+              }
+            }
+
+            let pigeon: Pigeon = new Owl();      // Works
+            let owl: Owl = new Pigeon();         // Works
+            let pigeon2: Pigeon = new Penguin(); // Works
+            let penguin: Penguin = new Pigeon(); // Compile time error
+            ```
+            --
+            ### Typ Record
+
+            Typ narzędziowy `Record<K,V>`, który tworzy typ o odpowiednich typach kluczy i wartości.
+
+            ```typescript
+            // Define a record with string keys and number values
+            type NumberByString = Record<string, number>;
+
+            const scores: NumberByString = {
+              "Alice": 95,
+              "Bob": 87,
+              "Carol": 92
+            };
+            ```
+            --
+            ### Duck typing - pułapki
+
+            ```typescript [1-3|4|6-9|11-16|18|20]
+            export type Data = {
+              values?: number[];
+            };
+            export type DataByString = Record<string, Data>;
+
+            export const consume = (data: Data): string => {
+                if (data.values) return JSON.stringify(data.values);
+                else return 'no values';
+            };
+
+            const dataByString: DataByString = {
+                a: { values: [1, 2, 3] },
+                b: { values: [4, 5, 6] },
+            };
+
+            const data: Data = { values: [1, 2, 3] };
+
+            consume(data); // compiles
+
+            consume(dataByString); // compiles!!!
+            ```
+            --
+            ### Index signature
+
+            Bardziej zwięzła i uproszczona forma deklaracji `Record`
+
+            ```typescript
+            // Define a record with string keys and number values
+            type NumberByString = {
+              [key: string]: number;
+            };
+
+            const scores: NumberByString = {
+              "Alice": 95,
+              "Bob": 87,
+              "Carol": 92
+            };
+            ```
+            ---
+            ## Destrukturyzacja
+            --
+            ### Destrukturyzacja obiektu
+
+            ```typescript
+            const person = {
+              name: 'John',
+              age: 30,
+            };
+
+            const { name, age } = person;
+            console.log(name); // John
+            console.log(age);  // 30
+            ```
+            --
+            ### Destrukturyzacja tablicy
+
+            ```typescript
+            const numbers = [1, 2, 3, 4, 5];
+
+            const [first, second] = numbers;
+            console.log(first); // 1
+            console.log(second); // 2
+
+            const [, second, ...rest] = numbers;
+            console.log(second); // 2
+            console.log(rest);   // [3, 4, 5]
+            ```
+            --
+            ### Spread operator
+
+            ```typescript
+            const numbers = [1, 2, 3];
+            const newNumbers = [...numbers, 4, 5];
+            console.log(newNumbers); // [1, 2, 3, 4, 5]
+
+            const person = { name: 'John', age: 30 };
+            const newPerson = { ...person, city: 'New York' };
+            console.log(newPerson); // { name: 'John', age: 30, city: 'New York' }
+            ```
+            ---
+            ## Type guards
+            ## Smart casting
+            --
+            ### "Usuwanie" wartości pustej
+
+            ```typescript
+            const safeLength = (value: string | undefined): number => {
+              if (value) {
+                return value.length;
+              } else {
+                return 0;
+              }
+            }
+
+            console.log(safeLength("foo")); // 3
+            console.log(safeLength(undefined)); // 0
+            ```
+            --
+            ### Zaawansowany smart casting
+
+            ```typescript [1-12|13-20]
+            type Shape =
+              | { kind: 'circle'; radius: number }
+              | { kind: 'rectangle'; width: number; height: number };
+
+            function area(shape: Shape): number {
+              if (shape.kind === 'circle') {
+                return Math.PI * shape.radius ** 2;
+              } else {
+                return shape.width * shape.height;
+              }
+            }
+
+            const circle: Shape = { kind: 'circle', radius: 5 };
+            const rectangle: Shape = { kind: 'rectangle', width: 10, height: 20 };
+
+            console.log(area(circle)); // 78.53981633974483
+            console.log(area(rectangle)); // 200
+            ```
+            --
+            ### Type guards
+
+            ```typescript
+            type Dog = { bark: () => void };
+            type Cat = { meow: () => void };
+
+            function isDog(animal: Dog | Cat): animal is Dog {
+              return (animal as Dog).bark !== undefined;
+            }
+
+            const animal: Dog | Cat = { bark: () => console.log("Woof!") };
+
+            if (isDog(animal)) {
+              animal.bark(); // OK
+            } else {
+              animal.meow(); // Error
+            }
+            ```
+            ---
+            [https://www.typescriptlang.org/docs](https://www.typescriptlang.org/docs)
+          </script>
+        </section>
+      </div>
+      <div
+          id="cgLogo"
+          style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+      </div>
+    </div>
+
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            width: 1200,
+            hash: true,
+            navigationMode: 'linear',
+            slideNumber: 'c/t',
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+  </body>
+</html>
