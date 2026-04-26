@@ -21,5 +21,6 @@ The skill that maintains this log lives at [`.claude/skills/meta-changelog/SKILL
 <!-- Newest first. Group by date heading. Each entry: indented bullet linking to the file. -->
 
 ### 2026-04-26
+- [20:17 — Document HTML-in-code-fence escaping rule in reveal-md-converter](2026-04-26-2017-reveal-md-converter-html-escape-rule.md)
 - [20:04 — Add reveal-md-converter skill](2026-04-26-2004-add-reveal-md-converter-skill.md)
 - [19:57 — Add meta change-log skill](2026-04-26-1957-add-meta-changelog-skill.md)
