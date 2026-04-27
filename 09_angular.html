@@ -617,7 +617,7 @@
       <h3>Signals (Angular 16+)</h3>
 
       <section>
-        <p class="rounded bcol2"><em>Signals</em> to nowy prymityw reaktywny — lżejsza alternatywa dla <code>zone.js</code> w zarządzaniu stanem komponentu i detekcją zmian.</p>
+        <p class="rounded bcol2"><em>Signals</em> to nowy prymityw reaktywny wprowadzający precyzyjną, opartą na grafie zależności detekcję zmian — krok ku odejściu od <code>Zone.js</code>.</p>
         <ul>
           <li class="fragment"><code>signal(value)</code> — reaktywna wartość powiadamiająca o zmianie</li>
           <li class="fragment"><code>computed(() => ...)</code> — wartość wyliczana automatycznie z innych sygnałów</li>
@@ -643,6 +643,71 @@
           <p>Podwójny: {{ doubled() }}</p>
           <button (click)="increment()">+1</button>
         </script></code></pre>
+      </section>
+
+      <section>
+        <h3>Signals a Zone.js</h3>
+        <div class="r-hstack" style="gap: 1em; align-items: stretch;">
+          <div class="bcol4 rounded" style="padding: 0.8em; flex: 1;">
+            <p><strong>Zone.js (tradycyjny)</strong></p>
+            <ul>
+              <li>monkey-patchuje globalne API (<code>setTimeout</code>, <code>fetch</code>, <code>Promise</code>&hellip;)</li>
+              <li>po każdej operacji async: detekcja zmian <em>całego</em> drzewa komponentów</li>
+              <li>działa automatycznie, ale nieefektywnie przy dużych aplikacjach</li>
+              <li>ok. 100 KB dodatkowego bundle'a</li>
+            </ul>
+          </div>
+          <div class="bcol1 rounded" style="padding: 0.8em; flex: 1;">
+            <p><strong>Signals (nowy)</strong></p>
+            <ul>
+              <li>zmiany propagowane przez graf zależności (śledzenie w czasie kompilacji)</li>
+              <li>aktualizowany <em>tylko</em> widok, który faktycznie zależy od zmienionego sygnału</li>
+              <li>deterministyczna i "leniwa" detekcja zmian</li>
+              <li>mniejszy bundle, lepsza wydajność przy skalowalnych aplikacjach</li>
+            </ul>
+          </div>
+        </div>
+        <p class="fragment bcol0 rounded" style="margin-top: 0.5em;">
+          Signals to <strong>nie</strong> gotowe zastąpienie Zone.js &mdash; Angular 18 wprowadza tryb eksperymentalny:
+          <code>provideExperimentalZonelessChangeDetection()</code>. Zone.js nadal jest domyślny.
+        </p>
+      </section>
+
+      <section>
+        <h3>Reaktywność w popularnych frameworkach</h3>
+        <table>
+          <thead>
+            <tr><th>Framework</th><th>Sygnał / stan</th><th>Wartość wyliczana</th><th>Efekt uboczny</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Angular</strong></td>
+              <td><code>signal()</code></td>
+              <td><code>computed()</code></td>
+              <td><code>effect()</code></td>
+            </tr>
+            <tr>
+              <td><strong>Vue 3</strong></td>
+              <td><code>ref()</code> / <code>reactive()</code></td>
+              <td><code>computed()</code></td>
+              <td><code>watchEffect()</code></td>
+            </tr>
+            <tr>
+              <td><strong>React</strong></td>
+              <td><code>useState()</code></td>
+              <td><code>useMemo()</code></td>
+              <td><code>useEffect()</code></td>
+            </tr>
+            <tr>
+              <td><strong>Solid.js</strong></td>
+              <td><code>createSignal()</code></td>
+              <td><code>createMemo()</code></td>
+              <td><code>createEffect()</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="fragment bcol2 rounded">Signals to nie wynalazek Angular &mdash; Vue 3 i Solid.js stosują je od lat.
+          Kluczowa różnica: React re-renderuje <em>cały</em> komponent przy każdej zmianie stanu; frameworki sygnałowe aktualizują tylko zależne fragmenty DOM.</p>
       </section>
 
       <section>
