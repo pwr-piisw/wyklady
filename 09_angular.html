@@ -31,8 +31,74 @@
     </section>
 
     <section>
-      <h3>Architektura aplikacji SPA</h3>
-      <img src="img/angular/rich-front-architecture.drawio.svg" alt="Rich Front Architecture" class="backlight">
+      <section>
+        <h3>Tradycyjna architektura aplikacji webowych</h3>
+        <div class="r-hstack" style="gap: 1em; align-items: stretch;">
+          <div class="bcol0 rounded" style="padding: 0.8em; flex: 1;">
+            <p><strong>Przeglądarka</strong></p>
+            <ol>
+              <li>użytkownik klika</li>
+              <li>żądanie HTTP</li>
+              <li>oczekiwanie&hellip;</li>
+              <li>renderowanie <em>całej</em> nowej strony</li>
+            </ol>
+          </div>
+          <div class="bcol3 rounded" style="padding: 0.8em; flex: 1;">
+            <p><strong>Serwer</strong></p>
+            <ol>
+              <li>odbiór żądania</li>
+              <li>logika biznesowa</li>
+              <li>pobranie danych z bazy</li>
+              <li>wygenerowanie HTML</li>
+            </ol>
+          </div>
+        </div>
+        <p class="fragment bcol4 rounded" style="margin-top: 0.5em;">Przykłady: PHP + Smarty, JSP, Ruby on Rails, ASP.NET Web Forms</p>
+      </section>
+
+      <section>
+        <h3>Problemy tradycyjnej architektury</h3>
+        <ul>
+          <li class="fragment">Każda interakcja = pełne przeładowanie strony &mdash; migotanie ekranu, opóźnienie</li>
+          <li class="fragment">Redundantne przesyłanie HTML przy każdym żądaniu (nagłówek, menu, stopka)</li>
+          <li class="fragment">Duże obciążenie serwera &mdash; renderowanie widoków po stronie serwera</li>
+          <li class="fragment">Trudna implementacja bogatego UI (walidacja na żywo, drag&amp;drop, animacje)</li>
+          <li class="fragment">Ścisłe powiązanie frontendu z backendem &mdash; każda zmiana wpływa na obie warstwy</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Single-Page Application</h3>
+        <ul>
+          <li class="fragment">Aplikacja pobierana <strong>jednorazowo</strong> (HTML + CSS + JS bundle)</li>
+          <li class="fragment">Nawigacja obsługiwana przez JavaScript &mdash; <strong>bez przeładowania strony</strong></li>
+          <li class="fragment">Backend dostarcza tylko <strong>dane</strong> (JSON przez REST API lub GraphQL)</li>
+          <li class="fragment">Przeglądarka renderuje widoki dynamicznie &mdash; natychmiastowa reakcja na akcje</li>
+        </ul>
+        <div class="fragment r-hstack" style="gap: 0.5em; margin-top: 0.8em;">
+          <div class="bcol1 rounded" style="padding: 0.5em; flex: 1;">
+            <p><strong>Zalety</strong></p>
+            <ul>
+              <li>płynne UX (brak migotania)</li>
+              <li>wyraźna separacja backend/frontend</li>
+              <li>możliwość trybu offline (PWA)</li>
+            </ul>
+          </div>
+          <div class="bcol4 rounded" style="padding: 0.5em; flex: 1;">
+            <p><strong>Wyzwania</strong></p>
+            <ul>
+              <li>czas pierwszego ładowania (TTI)</li>
+              <li>złożona obsługa SEO</li>
+              <li>JavaScript niezbędny do działania</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3>Architektura aplikacji SPA</h3>
+        <img src="img/angular/rich-front-architecture.drawio.svg" alt="Rich Front Architecture" class="backlight">
+      </section>
     </section>
 
     <section>
