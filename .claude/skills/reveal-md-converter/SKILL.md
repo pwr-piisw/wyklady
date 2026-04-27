@@ -110,13 +110,11 @@ reveal.js's Markdown plugin allows raw HTML inside the template. Keep these as H
 
 When keeping raw HTML, indent it consistently with the surrounding Markdown but do not wrap it in code fences.
 
-### HTML *inside* fenced code blocks (CRITICAL)
+### HTML *inside* fenced code blocks
 
-Code listings whose content is HTML — slides that show `<html>`, `<body>`, `<script>` tags as example source — must have **every `<` escaped to `&lt;` and every `>` escaped to `&gt;`** inside the fence.
+Prefer **literal `<` / `>`** inside code fences. The deck's Markdown lives inside `<script type="text/template">…</script>`, where the browser parser is in script-data state — it does not tokenize tags, so `<html>`, `<body>`, `<div>`, etc. are read as plain text. The Markdown plugin then hands the code-fence content to `marked`, which HTML-escapes `<` / `>` / `&` when rendering the `<pre><code>` block, so the listing displays correctly.
 
-The reason: the deck's Markdown lives inside `<script type="text/template">…</script>`. The browser's HTML parser runs first and reads the template's `textContent`; only afterwards does the reveal.js Markdown plugin parse the Markdown. The HTML parser does not know that `<script>` inside a code fence is "just text" — it sees a real `<script>` open tag, and worse, an unescaped `</script>` closes the surrounding template prematurely, truncating the entire deck. Fenced ```` ```html ```` blocks do **not** protect the content from the browser's parser; only HTML entities do.
-
-The source HTML deck stores these listings already escaped (`&lt;html&gt;…`). Preserve that escaping verbatim in the Markdown output — do not "helpfully" decode entities back to literal `<` / `>`.
+Use literal characters because they read more naturally and round-trip cleanly. If the source already has `&lt;` / `&gt;` inside a `<pre><code>` (because it had to escape for raw-HTML rendering), **decode them back to literal `<` / `>`** in the Markdown output.
 
 Worked example. Source:
 
@@ -124,39 +122,43 @@ Worked example. Source:
 <pre class="html"><code class="hljs" data-trim>
   &lt;html&gt;
     &lt;body&gt;
-      &lt;script&gt;console.log('hi');&lt;/script&gt;
+      &lt;p&gt;hi&lt;/p&gt;
     &lt;/body&gt;
   &lt;/html&gt;
 </code></pre>
 ```
 
-Correct Markdown output:
-
-````markdown
-```html
-&lt;html&gt;
-  &lt;body&gt;
-    &lt;script&gt;console.log('hi');&lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-```
-````
-
-Wrong (will truncate the deck at the inner `</script>` and the browser will eat the tags):
+Markdown output:
 
 ````markdown
 ```html
 <html>
   <body>
-    <script>console.log('hi');</script>
+    <p>hi</p>
   </body>
 </html>
 ```
 ````
 
-Other characters (`&amp;` for `&`, `&quot;` for `"`) are also already escaped in the source — keep them. The reveal.js Markdown plugin and highlight.js render the entities back into displayable code.
+#### The one exception: `</script>`
 
-This rule applies only to **HTML/XML/JSX-like** code listings. JavaScript, TypeScript, CSS, SQL, Java, etc. listings do not contain `<…>` tags that the HTML parser would consume, so they can be written with literal characters as normal.
+There is exactly one sequence the browser parser still reacts to inside `<script type="text/template">`: the literal string `</script>`. It closes the surrounding template prematurely and truncates the entire deck.
+
+If a code listing genuinely contains `</script>` (e.g. an HTML example with an inline script tag), escape **just that token** to `&lt;/script&gt;` — leave the other tags literal:
+
+````markdown
+```html
+<html>
+  <body>
+    <script>console.log('hi');&lt;/script&gt;
+  </body>
+</html>
+```
+````
+
+The reveal.js Markdown plugin also accepts the placeholder `__SCRIPT_END__` and rewrites it back to `</script>` after reading the template; entity-escaping is fine too. Either way, the rest of the listing stays as literal `<…>`.
+
+This guidance applies to HTML, XML, and JSX listings. JavaScript, TypeScript, CSS, SQL, Java, etc. don't contain HTML tags and were never affected — write them with literal characters as normal. TypeScript generics like `Observable<User>` go in literally; `marked` escapes them for display.
 
 ### Author indentation inside the template
 
@@ -208,7 +210,7 @@ Note: the second top-level slide had nested sections, so its outer `<h3>` become
 2. **Read `examples/cbm-deck.html`** if you do not already have it in context, to anchor on the target style.
 3. **Plan the slide structure.** Walk the `<section>` tree and decide where each slide lands. Count: top-level slides, vertical sub-slides, slides that will keep raw HTML.
 4. **Build the Markdown template** as a single string, slide by slide, applying the conversion and class-preservation rules above.
-5. **Audit code fences for HTML content.** Before writing the file, scan for fenced ```` ```html ```` (or any block that shows tags as example source) and confirm `<` / `>` are escaped as `&lt;` / `&gt;`. An unescaped `</script>` anywhere in the template will silently truncate the entire deck — this check is mandatory.
+5. **Audit code fences for `</script>`.** Before writing the file, search the template for the literal token `</script>`. If any code listing contains one, escape it to `&lt;/script&gt;` (or `__SCRIPT_END__`). Other `<…>` tags can stay literal — only `</script>` truncates the deck. This check is mandatory.
 6. **Write the output file** as `<source-stem>-md.html`. Preserve the source's `<head>`, decorative absolute-positioned elements, and the `Reveal.initialize` block. Replace only the `<div class="reveal"><div class="slides">...</div></div>` body.
 7. **Report** to the user: output path, slide counts (top-level, vertical, raw-HTML), and any constructs you intentionally kept as raw HTML so they can review.
 
@@ -219,5 +221,5 @@ Note: the second top-level slide had nested sections, so its outer `<h3>` become
 - **Slides containing custom JavaScript or `<script>` tags inside the slide body.** Keep as raw HTML and warn the user — these may interact badly with the Markdown plugin's parsing.
 - **Source uses `data-markdown` already on some sections.** Those sections are already in Markdown; lift their template content directly without re-converting.
 - **Source's `Reveal.initialize` plugin list differs from cbm-deck.** Keep the source's plugin list as-is; do not add `RevealMarkdown` if it is missing — instead, warn the user, because the converted deck will not render without it.
-- **Mixed-language code blocks (e.g. ```` ```js ````).** Preserve fenced code blocks verbatim; do not unwrap them. For **HTML / XML / JSX** listings, keep `<` and `>` escaped as `&lt;` / `&gt;` — see "HTML *inside* fenced code blocks" above; this is non-optional.
-- **Slide containing both `<script type="text/template">` and a code listing that itself shows `</script>`.** The browser closes the outer template at the first literal `</script>` token in the source. Always escape `</script>` to `&lt;/script&gt;` inside code fences. The reveal.js Markdown plugin also accepts the placeholder string `__SCRIPT_END__` (it rewrites the placeholder back to `</script>` after reading the template), but entity-escaping is preferred because it is also what highlight.js expects.
+- **Mixed-language code blocks (e.g. ```` ```js ````).** Preserve fenced code blocks verbatim; do not unwrap them. Inside fences, write tags with literal `<` / `>` — see "HTML *inside* fenced code blocks" above. The only token that must be escaped is `</script>`.
+- **Slide containing a code listing that itself shows `</script>`.** The browser closes the outer template at the first literal `</script>` in the source. Escape that token to `&lt;/script&gt;` (or use the `__SCRIPT_END__` placeholder, which the Markdown plugin rewrites back). Other tags in the same listing can remain literal.
