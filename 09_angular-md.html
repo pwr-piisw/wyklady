@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Projektowanie i implementacja systemów webowych - wykład 5</title>
+
+  <meta name="description" content="Angular">
+  <meta name="author" content="Maciej Małecki">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>reveal.js</title>
+
+  <link rel="stylesheet" href="dist/reset.css">
+  <link rel="stylesheet" href="dist/reveal.css">
+  <link rel="stylesheet" href="dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+</head>
+<body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator-vertical="^--$">
+          <script type="text/template">
+            ## Projekt i implementacja systemów webowych
+
+            Wykład 5: Tworzenie aplikacji SPA w Angularze
+
+            mgr inż. Maciej Małecki
+            ---
+            ### Tradycyjna architektura aplikacji webowych
+
+            <div class="r-hstack" style="gap: 1em; align-items: stretch;">
+              <div class="bcol0 rounded" style="padding: 0.8em; flex: 1;">
+                <p><strong>Przeglądarka</strong></p>
+                <ol>
+                  <li>użytkownik klika</li>
+                  <li>żądanie HTTP</li>
+                  <li>oczekiwanie…</li>
+                  <li>renderowanie <em>całej</em> nowej strony</li>
+                </ol>
+              </div>
+              <div class="bcol3 rounded" style="padding: 0.8em; flex: 1;">
+                <p><strong>Serwer</strong></p>
+                <ol>
+                  <li>odbiór żądania</li>
+                  <li>logika biznesowa</li>
+                  <li>pobranie danych z bazy</li>
+                  <li>wygenerowanie HTML</li>
+                </ol>
+              </div>
+            </div>
+
+            <p class="fragment bcol4 rounded" style="margin-top: 0.5em;">Przykłady: PHP + Smarty, JSP, Ruby on Rails, ASP.NET Web Forms</p>
+            --
+            ### Problemy tradycyjnej architektury
+
+            - Każda interakcja = pełne przeładowanie strony — migotanie ekranu, opóźnienie<!-- .element class="fragment"-->
+            - Redundantne przesyłanie HTML przy każdym żądaniu (nagłówek, menu, stopka)<!-- .element class="fragment"-->
+            - Duże obciążenie serwera — renderowanie widoków po stronie serwera<!-- .element class="fragment"-->
+            - Trudna implementacja bogatego UI (walidacja na żywo, drag&drop, animacje)<!-- .element class="fragment"-->
+            - Ścisłe powiązanie frontendu z backendem — każda zmiana wpływa na obie warstwy<!-- .element class="fragment"-->
+            --
+            ### Single-Page Application
+
+            - Aplikacja pobierana **jednorazowo** (HTML + CSS + JS bundle)<!-- .element class="fragment"-->
+            - Nawigacja obsługiwana przez JavaScript — **bez przeładowania strony**<!-- .element class="fragment"-->
+            - Backend dostarcza tylko **dane** (JSON przez REST API lub GraphQL)<!-- .element class="fragment"-->
+            - Przeglądarka renderuje widoki dynamicznie — natychmiastowa reakcja na akcje<!-- .element class="fragment"-->
+
+            <div class="fragment r-hstack" style="gap: 0.5em; margin-top: 0.8em;">
+              <div class="bcol1 rounded" style="padding: 0.5em; flex: 1;">
+                <p><strong>Zalety</strong></p>
+                <ul>
+                  <li>płynne UX (brak migotania)</li>
+                  <li>wyraźna separacja backend/frontend</li>
+                  <li>możliwość trybu offline (PWA)</li>
+                </ul>
+              </div>
+              <div class="bcol4 rounded" style="padding: 0.5em; flex: 1;">
+                <p><strong>Wyzwania</strong></p>
+                <ul>
+                  <li>czas pierwszego ładowania (TTI)</li>
+                  <li>złożona obsługa SEO</li>
+                  <li>JavaScript niezbędny do działania</li>
+                </ul>
+              </div>
+            </div>
+            --
+            ### Architektura aplikacji SPA
+
+            ![Rich Front Architecture](img/angular/rich-front-architecture.drawio.svg)<!-- .element class="backlight"-->
+            ---
+            ### Popularne frameworki
+
+            <div class="r-hstack">
+              <img src="img/React-icon.svg" alt="react">
+              <img src="img/Angular_logo.svg" alt="ng">
+              <img src="img/Vue.js_Logo.svg" alt="vue">
+            </div>
+            ---
+            ### Architektura komponentowa
+
+            ![](img/angular/component-architecture.excalidraw.png)
+            ---
+            ### Angular: historia
+
+            <div class="r-hstack">
+              <img src="img/Angular_logo.svg" alt="ng" style="width: 400px;">
+              <div>
+                <ul>
+                  <li>AngularJS - Google, 2010</li>
+                  <li>AngularJS: LTS ⇝ 2021-12-31</li>
+                  <li class="fragment" data-fragment-index="1">Angular 2.0 - Google, 2016</li>
+                  <li class="fragment" data-fragment-index="1">Brak kompatybilności między Angular i&nbsp;AngularJS</li>
+                  <li class="fragment" data-fragment-index="2"><span class="bcol4">UWAGA:</span> zwracajcie uwagę na nazwy przeszukując zasoby sieciowe</li>
+                </ul>
+              </div>
+            </div>
+            ---
+            ### Angular: architektura
+
+            ![Angular Architecture](img/angular/angular-architecture.excalidraw.png)
+            ---
+            ```typescript
+            @Component({
+              standalone: true,
+              selector:    'app-hero-list',
+              templateUrl: './hero-list.component.html',
+              imports:     [ NgFor, NgIf, HeroDetailComponent ],
+              providers:  [ HeroService ]
+            })
+            export class HeroListComponent implements OnInit {
+              /* . . . */
+            }
+            ```
+            --
+            ```html
+            <h2>Hero List</h2>
+
+            <p><em>Select a hero from the list to see details.</em></p>
+            <ul>
+              <li *ngFor="let hero of heroes">
+                <button type="button" (click)="selectHero(hero)">
+                  {{hero.name}}
+                </button>
+              </li>
+            </ul>
+
+            <app-hero-detail *ngIf="selectedHero" [hero]="selectedHero"></app-hero-detail>
+            ```
+            ---
+            ### Angular: środowisko developerskie
+
+            - `Node` - środowisko uruchomieniowe dla JavaScript
+            - `NPM` - ang. *Node Package Manager* - zarządzanie zależnościami
+            - `NPM registry` - repozytorium bibliotek
+            - `TypeScript` - podstawowy język programowania dla Angular 2.x+<!-- .element class="fragment"-->
+            - `Angular CLI` - narzędzie linii poleceń wspierające proces tworzenia i budowania<!-- .element class="fragment"-->
+            - `Karma, Jasmine, JEST, Protractor, Cypress` - środowisko tworzenia testów<!-- .element class="fragment"-->
+            ---
+            ### Środowisko developerskie w praktyce
+            --
+            Instalacja node ⇝ `nvm`
+
+            Instalacja `Angular CLI`<!-- .element class="fragment" data-fragment-index="1"-->
+
+            ```bash
+            npm install -g @angular/cli
+            ```
+            <!-- .element class="fragment" data-fragment-index="1"-->
+            --
+            ![Angular CLI](img/angular/angular-cli.excalidraw.png)
+            --
+            Wygenerowanie aplikacji Angular
+
+            ```text
+            $ ng new
+            ? What name would you like to use for the new workspace and initial project? foo
+            ? Do you want to enforce stricter type checking and stricter bundle budgets in the workspace?
+            This setting helps improve maintainability and catch bugs ahead of time.
+            For more information, see https://angular.io/strict Yes
+            ? Would you like to add Angular routing? Yes
+            ? Which stylesheet format would you like to use? SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]
+            ```
+            --
+            Zbudowanie aplikacji
+
+            ```text
+            ng build
+            ```
+
+            Uruchomienie aplikacji
+
+            ```text
+            ng serve -o
+            ```
+            ---
+            ### Angular: podstawowe elementy
+
+            <div class="r-vstack">
+              <div class="r-hstack tile">
+                <div class="bcol0">Moduły</div>
+                <div class="bcol1">Komponenty</div>
+                <div class="bcol2">Dyrektywy</div>
+              </div>
+              <div class="r-hstack tile">
+                <div class="bcol3">Serwisy</div>
+                <div class="bcol4">Router</div>
+                <div class="bcol5">Formularze</div>
+              </div>
+            </div>
+            ---
+            ### Moduł (`NgModule`)
+            --
+            - funkcjonalny blok aplikacji,
+            - sposób organizacji kodu,
+            - sposób zarządzania zależnościami,
+            - tworzenie kodu bibliotecznego,
+            - *lazy-loading* w przypadku dużych aplikacji.
+
+            Moduł ECMA Script oraz Moduł Angulara to dwie różne rzeczy!<!-- .element class="fragment bcol0"-->
+            --
+            <div class="r-hstack">
+              <pre class="typescript"><code class="hljs" data-trim data-line-numbers="|2|3-7|8|10-11">
+              @NgModule({
+                imports: [CommonModule],
+                declarations: [
+                  MyComponent1,
+                  MyComponent2,
+                  MyExternalComponent3
+                ],
+                exports: [MyExternalComponent3]
+              })
+              export class MyModule {
+              }
+              </code></pre>
+              <div style="width: 1em;"></div>
+              <div>
+                <ul>
+                  <li><code>@NgModule</code> - dekorator TypeScript</li>
+                  <li>komponenty "należą" do modułu</li>
+                  <li>publiczne elementy modułu należy wyeksportować</li>
+                </ul>
+              </div>
+            </div>
+            --
+            <div class="r-hstack">
+              <img src="img/angular-project-structure-ide.png" alt="Angular Project Structure in IDE" class="backlight white bigtile">
+              <img src="img/angular-app-composition.svg" alt="Angular Application Composition" class="backlight bigtile">
+            </div>
+
+            - Struktura katalogów może odzwierciedlać strukturę modułów.
+            - Przydaje się moduł *general* lub *shared*.
+            --
+            ### Komponenty "standalone"
+
+            - Moduły są opcjonalne począwszy od Angulara 14.
+            - Komponenty, dyrektywy oraz "pipes" można zadeklarować jako `standalone`.
+            - Komponenty mogą od teraz importować moduły.
+            - Komponenty (dyrektywy, "pipes") są self-contained.
+            ---
+            ### Komponent
+            --
+            - Komponent jest podstawową jednostką budowania warstwy wizualnej aplikacji.
+            - Komponent może być wykorzystywany wielokrotnie.
+            - Komponent komunikuje się ze światem "zewnętrznym" w ściśle określony sposób.
+            --
+            ```text
+            ng generate component user-mgmt/user-list
+            ```
+
+            <div class="r-hstack">
+              <img src="img/new-user-list-component.png" alt="User list component" class="backlight white midtile">
+              <img src="img/new-user-list-component-declared.png" alt="User list component declaration" class="backlight white midtile">
+            </div>
+
+            <ul>
+              <li><code class="bcol0">html</code> - szablon - część wizualna, ang. <em>template</em> (opcja)</li>
+              <li><code class="bcol1">scss</code> - prywatny arkusz styli (opcja)</li>
+              <li><code class="bcol2">component.ts</code> - kod/kontroler komponentu</li>
+              <li><code class="bcol3">spec.ts</code> - testy jednostkowe komponentu (opcja)</li>
+            </ul>
+            --
+            Definicja wyglądu komponentu w HTML:
+
+            ```typescript
+            @Component({
+              selector: 'app-user-list',
+              template: `<p>Some fancy component...</p>`,
+              styleUrls: ['./user-list.component.scss']
+            })
+            export class UserListComponent implements OnInit {
+            ```
+
+            lub z użyciem zewnętrznego pliku:<!-- .element class="fragment" data-fragment-index="1"-->
+
+            ```typescript
+            @Component({
+              selector: 'app-user-list',
+              templateUrl: './user-list.component.html',
+              styleUrls: ['./user-list.component.scss']
+            })
+            export class UserListComponent implements OnInit {
+            ```
+            <!-- .element class="fragment" data-fragment-index="1"-->
+            --
+            `user-list.component.html`
+
+            ```html [|10|11-12]
+            <section class='container-fluid'>
+              <table class='table table-striped'>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let user of users'>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            ```
+            ---
+            ### Model DOM
+            --
+            DOM (*Document Object Model*) jest to model obiektowy reprezentujący dokument HTML wyświetlany przez przeglądarkę.<!-- .element class=" rounded bcol3"-->
+
+            <div class="r-hstack">
+              <p class="fragment bcol0 rounded">Przeglądarka buduje DOM w pamięci za każdym razem, gdy wyświetla HTML.</p>
+              <p class="fragment bcol1 rounded">Każdy skrypt JavaScript (a więc także i każda aplikacja Angular) wchodzi w interakcję z DOM.</p>
+            </div>
+            --
+            <p class="bcol2">Postawowe API elementów DOM:</p>
+            <table>
+              <tr>
+                <td><strong>atrybut</strong></td>
+                <td>dodatkowa wartość definiująca tag (w dokumencie HTML)</td>
+              </tr>
+              <tr>
+                <td><strong>właściwość</strong></td>
+                <td>(<em>property</em>), właściwość obiektu DOM (zwykła właściwość obiektu w JS)</td>
+              </tr>
+              <tr>
+                <td><strong>metoda</strong></td>
+                <td>funkcja obiektu DOM, którą można wywołać</td>
+              </tr>
+              <tr>
+                <td><strong>zdarzenie</strong></td>
+                <td>(<em>event</em>) - informacja o zaistnieniu pewnego faktu, np <em>click</em>, <em>focus</em>, <em>blur</em></td>
+              </tr>
+            </table>
+            ---
+            ### Data binding - wiązanie danych
+            --
+            *Data binding* są to mechanizmy pozwalające na integrację modelu z widokiem.
+            --
+            <table>
+              <tr>
+                <td><code>{{interpolation}}</code></td>
+                <td>wyliczy wyrażenie wewnątrz <code>{{}}</code> oraz wstawi wartość</td>
+              </tr>
+              <tr>
+                <td><code>[property_binding]</code></td>
+                <td>Angular będzie aktualizował wartość właściwości na podstawie wyrażenia</td>
+              </tr>
+              <tr>
+                <td><code>(event_binding)</code></td>
+                <td>wywołana zostanie funkcja w reakcji na zaistnienie zdarzenia</td>
+              </tr>
+              <tr>
+                <td><code>[(two_way_binding)]</code></td>
+                <td>synchronizuje model z widokiem "w obie strony"</td>
+              </tr>
+            </table>
+            ---
+            Detekcja zmian
+
+            ![Change detection](img/angular/ng-change-detection.excalidraw.png)
+            --
+            Cykl życia komponentu
+
+            ![Cykl życia komponentu](img/angular/ng-lifecycle-hooks.excalidraw.png)
+            ---
+            ### Dyrektywy
+
+            *Dyrektywy* to elementy rozszerzające funkcjonalność HTML, które można deklarować za pomocą Angular.
+
+            <div class="rounded bcol0 fragment">
+              <p>Istnieją trzy rodzaje dyrektyw:</p>
+              <ul>
+                <li>Komponenty (już je znamy)</li>
+                <li>Dyrektywy atrybutowe</li>
+                <li>Dyrektywy strukturalne</li>
+              </ul>
+            </div>
+            --
+            ### Dyrektywy atrybutowe
+
+            - `ngModel` - wiążą pola edycyjne z modelem
+            - `ngClass` - pozwalają dynamicznie modyfikować klasy CSS
+            - `ngStyle` - pozwalają dynamicznie modyfikować style CSS
+            --
+            ### Dyrektywy atrybutowe
+
+            ```typescript
+            divClasses = {};
+            ...
+            this.divClasses: {
+              'valid': this.isValid(),
+              'highlighted': this.isHighlighted()
+            }
+            ```
+
+            ```html
+            <div [ngClass]='divClasses'>...</div>
+            ```
+
+            W prostszych przypadkach...
+
+            ```html
+            <div [class.valid]='isValid()'>...</div>
+            ```
+            --
+            ### Dyrektywy strukturalne
+
+            `*ngIf` - dodaje/usuwa element z DOM:<!-- .element class="align-left"-->
+
+            ```html
+            <div *ngIf='isVisible'>...</div>
+            ```
+
+            `*ngFor` - iteruje po liście i dodaje element DOM dla każdego elementu listy:<!-- .element class="fragment align-left" data-fragment-index="2"-->
+
+            ```html
+            <div *ngFor='let user of users'>{{user.name}} ({{user.email}})</div>
+            ```
+            <!-- .element class="fragment" data-fragment-index="2"-->
+
+            `ngSwitch, *ngSwitchCase, *ngSwitchDefault` - odpowiednik instrukcji switch/case/default z innych języków programowania.<!-- .element class="fragment align-left" data-fragment-index="3"-->
+            ---
+            ### Filtry (`Pipes`)
+            --
+            *Pipe* transformuje wartość wyświetlaną w szablonie.
+
+            ```html
+            <p>{{ today | date:'dd.MM.yyyy' }}</p>
+            <p>{{ price | currency:'PLN' }}</p>
+            <p>{{ name | uppercase }}</p>
+            ```
+
+            Pipes można łączyć w łańcuch: `{{ value | pipe1 | pipe2 }}`<!-- .element class="fragment bcol0"-->
+            --
+            ### Wbudowane pipes
+
+            <table>
+              <tr><td><code>date</code></td><td>formatowanie daty i czasu</td></tr>
+              <tr><td><code>currency</code></td><td>formatowanie waluty</td></tr>
+              <tr><td><code>number</code></td><td>formatowanie liczb (miejsca dziesiętne)</td></tr>
+              <tr><td><code>uppercase</code> / <code>lowercase</code></td><td>zmiana wielkości liter</td></tr>
+              <tr><td><code>json</code></td><td>serializacja do JSON (do debugowania)</td></tr>
+              <tr><td><code>async</code></td><td>subskrypcja Observable lub Promise</td></tr>
+            </table>
+            --
+            ### `AsyncPipe`
+
+            Pipe `async` automatycznie subskrybuje Observable i anuluje subskrypcję przy niszczeniu komponentu.
+
+            ```typescript
+            // komponent
+            users$ = this.userService.getAllUsers();
+            ```
+
+            ```html
+           <!-- szablon -->
+            <tr *ngFor="let user of users$ | async">
+              <td>{{ user.name }}</td>
+            </tr>
+            ```
+
+            Brak ręcznego `subscribe()` i `unsubscribe()` — eliminuje wycieki pamięci.<!-- .element class="fragment bcol1"-->
+            ---
+            ### Komunikacja międzykomponentowa
+            --
+            Angular pozwala na stosowanie *data bindings* we własnych komponentach.
+
+            Dla danych wejściowych:<!-- .element class="fragment" data-fragment-index="1"-->
+
+            ```html
+            <app-user-details [user]='user'></app-user-details>
+            ```
+            <!-- .element class="fragment" data-fragment-index="1"-->
+
+            ```typescript
+            export class UserDetailsComponent
+            {
+               ...
+               @Input() user: User;
+               ...
+            }
+            ```
+            <!-- .element class="fragment" data-fragment-index="1"-->
+            --
+            Dla danych wyjściowych:
+
+            ```html
+            <app-user-details (onChanged)='onChanged($event)'></app-user-details>
+            ```
+
+            ```typescript
+            export class UserDetailsComponent
+            {
+               ...
+               @Output() onChanged = new EventEmitter<User>();
+               ...
+               this.onChanged.emit(user);
+               ...
+            }
+            ```
+            --
+            ### Required inputs
+
+            - Nowość począwszy od Angulara 16
+            - `@Input({required=true})`
+            - Wiązanie musi być określone, inaczej nastąpi błąd kompilacji.
+            --
+            ### Input tranforms
+
+            - Nowość począwszy od Angulara 16
+            - `@Input({transform: booleanAttribute})`
+            - Funkcja transformująca wartość.
+            ---
+            ### Signals (Angular 16+)
+            --
+            *Signals* to nowy prymityw reaktywny wprowadzający precyzyjną, opartą na grafie zależności detekcję zmian — krok ku odejściu od `Zone.js`.<!-- .element class="rounded bcol2"-->
+
+            - `signal(value)` — reaktywna wartość powiadamiająca o zmianie<!-- .element class="fragment"-->
+            - `computed(() => ...)` — wartość wyliczana automatycznie z innych sygnałów<!-- .element class="fragment"-->
+            - `effect(() => ...)` — efekt uboczny reagujący na zmiany sygnałów<!-- .element class="fragment"-->
+            --
+            ```typescript [|2-3|5|7-9]
+            export class CounterComponent {
+              count   = signal(0);
+              doubled = computed(() => this.count() * 2);
+
+              increment() { this.count.update(v => v + 1); }
+
+              constructor() {
+                effect(() => console.log('count:', this.count()));
+              }
+            }
+            ```
+
+            ```html
+            <p>Licznik: {{ count() }}</p>
+            <p>Podwójny: {{ doubled() }}</p>
+            <button (click)="increment()">+1</button>
+            ```
+            --
+            ### Signals a Zone.js
+
+            <div class="r-hstack" style="gap: 1em; align-items: stretch;">
+              <div class="bcol4 rounded" style="padding: 0.8em; flex: 1;">
+                <p><strong>Zone.js (tradycyjny)</strong></p>
+                <ul>
+                  <li>monkey-patchuje globalne API (<code>setTimeout</code>, <code>fetch</code>, <code>Promise</code>…)</li>
+                  <li>po każdej operacji async: detekcja zmian <em>całego</em> drzewa komponentów</li>
+                  <li>działa automatycznie, ale nieefektywnie przy dużych aplikacjach</li>
+                  <li>ok. 100 KB dodatkowego bundle'a</li>
+                </ul>
+              </div>
+              <div class="bcol1 rounded" style="padding: 0.8em; flex: 1;">
+                <p><strong>Signals (nowy)</strong></p>
+                <ul>
+                  <li>zmiany propagowane przez graf zależności (śledzenie w czasie kompilacji)</li>
+                  <li>aktualizowany <em>tylko</em> widok, który faktycznie zależy od zmienionego sygnału</li>
+                  <li>deterministyczna i "leniwa" detekcja zmian</li>
+                  <li>mniejszy bundle, lepsza wydajność przy skalowalnych aplikacjach</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="fragment bcol0 rounded" style="margin-top: 0.5em;">
+              Signals to <strong>nie</strong> gotowe zastąpienie Zone.js — Angular 18 wprowadza tryb eksperymentalny:
+              <code>provideExperimentalZonelessChangeDetection()</code>. Zone.js nadal jest domyślny.
+            </p>
+            --
+            ### Reaktywność w popularnych frameworkach
+
+            <table>
+              <thead>
+                <tr><th>Framework</th><th>Sygnał / stan</th><th>Wartość wyliczana</th><th>Efekt uboczny</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Angular</strong></td>
+                  <td><code>signal()</code></td>
+                  <td><code>computed()</code></td>
+                  <td><code>effect()</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Vue 3</strong></td>
+                  <td><code>ref()</code> / <code>reactive()</code></td>
+                  <td><code>computed()</code></td>
+                  <td><code>watchEffect()</code></td>
+                </tr>
+                <tr>
+                  <td><strong>React</strong></td>
+                  <td><code>useState()</code></td>
+                  <td><code>useMemo()</code></td>
+                  <td><code>useEffect()</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Solid.js</strong></td>
+                  <td><code>createSignal()</code></td>
+                  <td><code>createMemo()</code></td>
+                  <td><code>createEffect()</code></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="fragment bcol2 rounded">Signals to nie wynalazek Angular — Vue 3 i Solid.js stosują je od lat.
+              Kluczowa różnica: React re-renderuje <em>cały</em> komponent przy każdej zmianie stanu; frameworki sygnałowe aktualizują tylko zależne fragmenty DOM.</p>
+            --
+            ### Signal-based inputs / outputs (Angular 17+)
+
+            ```typescript [|2-3|5]
+            export class UserCardComponent {
+              user  = input.required<User>();      // zamiast @Input({required: true})
+              label = input('', {alias: 'title'});  // alias i wartość domyślna
+
+              changed = output<User>();             // zamiast @Output() + EventEmitter
+            }
+            ```
+
+            Pełna integracja z `computed()` — reaktywność bez dekoratorów.<!-- .element class="fragment bcol1"-->
+            ---
+            ### Routing
+            --
+            Jak działa przeglądarka?<!-- .element class="rounded bcol1"-->
+
+            - Obsługa pola adresowego URL
+            - Hiperlinki i przekierowania
+            - Historia przeglądania
+
+            Router jest modułem Angulara, który implementuje podstawowe funkcje przeglądarki (URL, historia) w aplikacjach typu Single-Page.<!-- .element class="fragment rounded bcol0"-->
+            --
+            <div class="r-hstack">
+              <img src="img/routing-setup-in-app.png" alt="Routing setup" class="backlight white">
+              <div style="width: 1em;"></div>
+              <div>
+                <ul>
+                  <li>Router to opcjonalny moduł Angulara</li>
+                  <li>Jedna instancja routera dla aplikcji</li>
+                  <li>Router inicjujemy tzw. tablicą przejść (ang. <em>routes</em>)</li>
+                </ul>
+              </div>
+            </div>
+            --
+            <div class="r-hstack">
+              <div class="r-vstack">
+                <img src="img/routing-reorganized.png" alt="Routing reorganized" class="backlight white">
+                <img src="img/router-outlet-src.png" alt="Router outlet source" class="backlight white">
+              </div>
+              <div style="width: 2em;"></div>
+              <div>
+                <p><code>router-outlet</code> określa miejsce, w którym Router będzie "wklejał" nasz komponent.</p>
+                <img src="img/router-outlet.png" alt="Router outlet" class="backlight white">
+              </div>
+            </div>
+            --
+            Więcej informacji na [https://angular.io/guide/router](https://angular.io/guide/router).
+            ---
+            ### Formularze
+            --
+            <table>
+              <thead>
+                <tr><th></th><th>Template-driven</th><th>Reactive</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Definicja struktury</td><td>Szablon HTML</td><td>Kod TypeScript</td></tr>
+                <tr><td>Testowanie</td><td>Wymaga DOM</td><td>Łatwe (czyste TS)</td></tr>
+                <tr><td>Walidacja</td><td>Dyrektywy HTML</td><td>Funkcje <code>Validators</code></td></tr>
+                <tr><td>Dynamiczne pola</td><td>Trudne</td><td>Naturalne</td></tr>
+              </tbody>
+            </table>
+
+            Preferuj **Reactive Forms** dla złożonych i&nbsp;testowalnych formularzy.<!-- .element class="fragment bcol0"-->
+            --
+            ### Reactive Forms — kod
+
+            ```typescript [|2|4-8|10-13]
+            export class UserFormComponent {
+              private fb = inject(FormBuilder);
+
+              form = this.fb.group({
+                name:  ['', [Validators.required, Validators.minLength(3)]],
+                email: ['', [Validators.required, Validators.email]],
+                age:   [null, Validators.min(0)]
+              });
+
+              onSubmit() {
+                if (this.form.valid) {
+                  this.userService.saveUser(this.form.value as User);
+                }
+              }
+            }
+            ```
+            --
+            ### Reactive Forms — szablon
+
+            ```html
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <input formControlName="name" placeholder="Imię i nazwisko">
+              <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+                Pole wymagane (min. 3 znaki)
+              </div>
+              <input formControlName="email" type="email" placeholder="Email">
+              <button type="submit" [disabled]="form.invalid">Zapisz</button>
+            </form>
+            ```
+            ---
+            ### Serwis
+            --
+            Serwis to współdzielony kod aplikacji:
+
+            - może posiadać stan
+            - posiada zasięg (*scope*) oraz cykl życia
+            - podlega mechanizmowi DI (*dependency injection*)
+            --
+            ```typescript [|4|6-12|14-16|18-25|27-29|31-35]
+            @Injectable()
+            export class UserService {
+
+              users: User[] = [];
+
+              constructor() {
+                this.users = [
+                  {id: 1, name: 'John Doe', email: 'john.doe@email.com'},
+                  {id: 2, name: 'Max Rockatansky', email: 'mad.max@email.com'},
+                  {id: 3, name: 'Chuck Peddle', email: 'chuck@mos.com'}
+                ];
+              }
+
+              getAllUsers() {
+                return this.users;
+              }
+
+              saveUser(user: User) {
+                const found = this.findUser(user.id);
+                if (found) {
+                  Object.assign(found, user);
+                } else {
+                  this.users.push(user);
+                }
+              }
+
+              findUser(id: number) {
+                return this.users.find((user: User) => user.id === id);
+              }
+
+              getNextId() {
+                return this.users
+                  .map((elem: User) => elem.id)
+                  .reduce((prev, curr) => prev > curr ? prev : curr, 0) + 1;
+              }
+            }
+            ```
+            ---
+            ### RxJS i Observable
+            --
+            `HttpClient` (i wiele innych części Angulara) zwraca **Observable** z biblioteki **RxJS**.<!-- .element class="rounded bcol1"-->
+
+            - `Observable` — strumień danych (zero lub więcej wartości w czasie)<!-- .element class="fragment"-->
+            - Observable jest *leniwy* — nic się nie dzieje bez `subscribe()`<!-- .element class="fragment"-->
+            - `Subscription` — aktywna subskrypcja; należy ją anulować (`unsubscribe()`), aby uniknąć wycieków pamięci<!-- .element class="fragment"-->
+            - Operatory (`map`, `filter`, `switchMap`…) transformują strumień<!-- .element class="fragment"-->
+            --
+            ```typescript [|1|3-7|9-11]
+            const users$ = this.userService.getAllUsers(); // Observable — nic się nie dzieje
+
+            const sub = users$.subscribe({
+              next:     users => this.users = users,
+              error:    err   => console.error(err),
+              complete: ()    => console.log('done')
+            });
+
+            ngOnDestroy() {
+              sub.unsubscribe(); // obowiązkowe!
+            }
+            ```
+
+            Preferuj `AsyncPipe` w szablonie — zarządza subskrypcją automatycznie.<!-- .element class="fragment bcol0"-->
+            --
+            ### Popularne operatory RxJS
+
+            <table>
+              <tr><td><code>map</code></td><td>transformacja emitowanej wartości</td></tr>
+              <tr><td><code>filter</code></td><td>pomijanie wartości niespełniających warunku</td></tr>
+              <tr><td><code>switchMap</code></td><td>zamiana strumienia na inny (np. kolejne żądanie HTTP po kliknięciu)</td></tr>
+              <tr><td><code>catchError</code></td><td>przechwycenie i obsługa błędu w strumieniu</td></tr>
+              <tr><td><code>takeUntilDestroyed</code></td><td>automatyczne <code>unsubscribe()</code> przy niszczeniu komponentu (Angular 16+)</td></tr>
+            </table>
+            ---
+            ### HttpClient
+
+            ```typescript [|6|9-11|13-15|17-19|21-23]
+            @Injectable({
+              providedIn: 'root'
+            })
+            export class UserService {
+
+              constructor(private readonly http: HttpClient) {
+              }
+
+              getAllUsers(): Observable<Array<User>> {
+                return this.http.get<Array<User>>('services/rest/users');
+              }
+
+              findUser(id: number): Observable<User> {
+                return this.http.get<User>(`services/rest/users/${id}`);
+              }
+
+              saveUser(user: User) {
+                return this.http.post<User>('services/rest/users', user);
+              }
+
+              deleteUser(id: number): Observable<HttpResponse<any>> {
+                return this.http.delete(`services/rest/users/${id}`, { observe: 'body' });
+              }
+            }
+            ```
+            ---
+            ### Architektura Smart-Dumb
+
+            ![Smart-Dumb](img/angular/ng-architecture.excalidraw.png)
+            ---
+            ### Bibliografia
+
+            <div class="more-text">
+              <ul>
+                <li>
+                  <a href="https://angular.io/docs">https://angular.io/docs</a>, a w szczególności:
+                  <ul>
+                    <li><a href="https://angular.io/guide/router">https://angular.io/guide/router</a></li>
+                    <li><a href="https://angular.io/guide/template-syntax">https://angular.io/guide/template-syntax</a></li>
+                    <li><a href="https://angular.io/guide/component-interaction">https://angular.io/guide/component-interaction</a></li>
+                    <li><a href="https://angular.io/guide/http">https://angular.io/guide/http</a></li>
+                  </ul>
+                </li>
+                <li><a href="https://blog.thoughtram.io/">https://blog.thoughtram.io/</a>, a w szczególności:
+                  <ul>
+                    <li><a href="https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html">https://blog.thoughtram.io/angular/2015/08/11/angular-2-template-syntax-demystified-part-1.html</a></li>
+                    <li><a href="https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html">https://blog.thoughtram.io/angular/2016/10/13/two-way-data-binding-in-angular-2.html</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            ---
+            ### Przykładowa aplikacja
+
+            [https://github.com/pwr-piisw/ng-bookstore](https://github.com/pwr-piisw/ng-bookstore)
+          </script>
+        </section>
+      </div>
+      <div
+          id="cgLogo"
+          style="background: url(img/cg-logo.svg); position: absolute; bottom: 20px; left: 20px; width: 170px; height: 38px;">
+      </div>
+    </div>
+
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <!-- <script src="plugin/chalkboard/plugin.js"></script> -->
+    <script src="plugin/zoom/zoom.js"></script>
+
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            width: 1200,
+            hash: true,
+            navigationMode: 'linear',
+            slideNumber: 'c/t',
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom]
+        });
+    </script>
+  </body>
+</html>

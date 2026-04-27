@@ -5,7 +5,10 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(git config *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(grep -n -B1 -A3 \"^      <section>$\\\\|^        <h3>\" 08_typescript.html)",
+      "Bash(grep -n \"</script>\\\\|^---$\\\\|^--$\" 09_angular-md.html)",
+      "Bash(grep *)"
     ]
   }
 }
