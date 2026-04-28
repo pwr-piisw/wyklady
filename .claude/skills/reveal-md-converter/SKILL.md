@@ -67,6 +67,43 @@ Map source structure as follows:
 - The closing `<script src="dist/reveal.js">`, plugin scripts, and the `Reveal.initialize({...})` block. Even if the existing config differs from `cbm-deck.html` (different `width`, plugin list, etc.), keep the source's config — do not rewrite it.
 - Any decorative absolute-positioned elements outside `.reveal` (e.g. `#cgLogo` in the lecture decks). Keep them where they sit in the body.
 
+### Light-theme code-block override
+
+The bundled highlight themes (`monokai.css`, `zenburn.css`) are both dark. When the slide theme is light (`dist/theme/white.css`, `simple.css`, `beige.css`, `solarized.css`, `serif.css`), dark code blocks clash with the surrounding page. Inject the following `<style>` block into the `<head>` **immediately after** the highlight stylesheet `<link>` so the override wins by source order. Do **not** apply it for dark slide themes (`night.css`, `black.css`, `moon.css`, `blood.css`, `league.css`, `dracula.css`, `sky.css` — anything where a dark code block is appropriate).
+
+```html
+<style>
+  .reveal pre { box-shadow: none; background: #fff; }
+  .reveal pre code,
+  .reveal pre code.hljs { background: #fff; color: #24292e; }
+  .reveal pre code .hljs-comment,
+  .reveal pre code .hljs-quote,
+  .reveal pre code .hljs-deletion,
+  .reveal pre code .hljs-meta { color: #6a737d; }
+  .reveal pre code .hljs-string,
+  .reveal pre code .hljs-title,
+  .reveal pre code .hljs-section,
+  .reveal pre code .hljs-emphasis,
+  .reveal pre code .hljs-type,
+  .reveal pre code .hljs-built_in,
+  .reveal pre code .hljs-builtin-name,
+  .reveal pre code .hljs-selector-attr,
+  .reveal pre code .hljs-selector-pseudo,
+  .reveal pre code .hljs-addition,
+  .reveal pre code .hljs-variable,
+  .reveal pre code .hljs-template-tag,
+  .reveal pre code .hljs-template-variable { color: #22863a; }
+  .reveal pre code .hljs-attribute,
+  .reveal pre code .hljs-symbol,
+  .reveal pre code .hljs-regexp,
+  .reveal pre code .hljs-link { color: #6f42c1; }
+  .reveal pre code .hljs-code { color: #005cc5; }
+  .reveal pre code .hljs-class .hljs-title { color: #24292e; }
+</style>
+```
+
+Drop the block in verbatim — it remaps the monokai/zenburn tokens that read poorly on white (strings, comments, attributes, `hljs-code`) to GitHub-light equivalents while leaving keyword pink alone (already readable on white). Mention in the report that the override was added so the user can move it to `css/custom.css` if they want it project-wide.
+
 ### Convert to Markdown
 
 Convert these HTML constructs to Markdown when they appear as the entire content of a slide or a clean inline run:
@@ -211,7 +248,7 @@ Note: the second top-level slide had nested sections, so its outer `<h3>` become
 3. **Plan the slide structure.** Walk the `<section>` tree and decide where each slide lands. Count: top-level slides, vertical sub-slides, slides that will keep raw HTML.
 4. **Build the Markdown template** as a single string, slide by slide, applying the conversion and class-preservation rules above.
 5. **Audit code fences for `</script>`.** Before writing the file, search the template for the literal token `</script>`. If any code listing contains one, escape it to `&lt;/script&gt;` (or `__SCRIPT_END__`). Other `<…>` tags can stay literal — only `</script>` truncates the deck. This check is mandatory.
-6. **Write the output file** as `<source-stem>-md.html`. Preserve the source's `<head>`, decorative absolute-positioned elements, and the `Reveal.initialize` block. Replace only the `<div class="reveal"><div class="slides">...</div></div>` body.
+6. **Write the output file** as `<source-stem>-md.html`. Preserve the source's `<head>`, decorative absolute-positioned elements, and the `Reveal.initialize` block. Replace only the `<div class="reveal"><div class="slides">...</div></div>` body. If the source's slide theme is light (e.g. `white.css`), inject the light-theme code-block `<style>` override immediately after the highlight stylesheet — see "Light-theme code-block override" above.
 7. **Report** to the user: output path, slide counts (top-level, vertical, raw-HTML), and any constructs you intentionally kept as raw HTML so they can review.
 
 ## Edge cases

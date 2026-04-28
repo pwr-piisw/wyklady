@@ -20,6 +20,9 @@ The skill that maintains this log lives at [`.claude/skills/meta-changelog/SKILL
 
 <!-- Newest first. Group by date heading. Each entry: indented bullet linking to the file. -->
 
+### 2026-04-28
+- [12:02 — Auto-inject light-theme code-block override in reveal-md-converter](2026-04-28-1202-reveal-md-converter-light-theme-code-override.md)
+
 ### 2026-04-27
 - [19:24 — Flip reveal-md-converter HTML escaping rule: prefer literal tags](2026-04-27-1924-reveal-md-converter-prefer-literal-tags.md)
 
