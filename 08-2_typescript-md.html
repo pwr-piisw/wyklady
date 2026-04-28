@@ -20,6 +20,34 @@
 
   <!-- Theme used for syntax highlighted code -->
   <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+  <style>
+    .reveal pre { box-shadow: none; background: #fff; }
+    .reveal pre code,
+    .reveal pre code.hljs { background: #fff; color: #24292e; }
+    .reveal pre code .hljs-comment,
+    .reveal pre code .hljs-quote,
+    .reveal pre code .hljs-deletion,
+    .reveal pre code .hljs-meta { color: #6a737d; }
+    .reveal pre code .hljs-string,
+    .reveal pre code .hljs-title,
+    .reveal pre code .hljs-section,
+    .reveal pre code .hljs-emphasis,
+    .reveal pre code .hljs-type,
+    .reveal pre code .hljs-built_in,
+    .reveal pre code .hljs-builtin-name,
+    .reveal pre code .hljs-selector-attr,
+    .reveal pre code .hljs-selector-pseudo,
+    .reveal pre code .hljs-addition,
+    .reveal pre code .hljs-variable,
+    .reveal pre code .hljs-template-tag,
+    .reveal pre code .hljs-template-variable { color: #22863a; }
+    .reveal pre code .hljs-attribute,
+    .reveal pre code .hljs-symbol,
+    .reveal pre code .hljs-regexp,
+    .reveal pre code .hljs-link { color: #6f42c1; }
+    .reveal pre code .hljs-code { color: #005cc5; }
+    .reveal pre code .hljs-class .hljs-title { color: #24292e; }
+  </style>
 </head>
 <body>
     <div class="reveal">
@@ -137,7 +165,7 @@
             [1,2,3,4,5].filter((value) => value < 4); // [1,2,3]
             ```
 
-            Notacja fat arrow zmienia sposób wyliczania zmiennej `this`!<!-- .element class="fragment"-->
+            Notacja fat arrow zmienia sposób wyliczania zmiennej `this`!
             ---
             ## Specyfikacja sygnatury funkcji
 
@@ -224,7 +252,7 @@
             };
             ```
 
-            Parametry konstruktora z modyfikatorem dostępu (`public`, `private`, `readonly`) są automatycznie promowane do pól klasy — *parameter properties*.<!-- .element class="fragment more-text"-->
+            Parametry konstruktora z modyfikatorem dostępu (`public`, `private`, `readonly`) są automatycznie promowane do pól klasy — *parameter properties*.<!-- .element class="more-text"-->
             --
             ## Modyfikatory dostępu
 
@@ -470,7 +498,7 @@
             const b = identity('foo');       // T inferred = 'foo'
             ```
 
-            Bez generyków musielibyśmy użyć `any` — i stracić informację o typie zwracanym.<!-- .element class="fragment more-text"-->
+            Bez generyków musielibyśmy użyć `any` — i stracić informację o typie zwracanym.<!-- .element class="more-text"-->
             --
             ### Generyczne struktury danych
 
@@ -600,7 +628,7 @@
             }
             ```
 
-            **Zasada:** używaj `unknown` na granicach systemu (parsowanie JSON, `fetch`), `any` tylko jako ostatnia deska ratunku.<!-- .element class="fragment more-text"-->
+            **Zasada:** używaj `unknown` na granicach systemu (parsowanie JSON, `fetch`), `any` tylko jako ostatnia deska ratunku.<!-- .element class="more-text"-->
             --
             ### Optional chaining `?.`
 
@@ -654,7 +682,7 @@
             config.port.toFixed(2); // błąd: port może być string!
             ```
 
-            Adnotacja `: Config` **walidowała** kształt, ale jednocześnie **rozszerzyła** typy pól do `string | number`.<!-- .element class="fragment more-text"-->
+            Adnotacja `: Config` **walidowała** kształt, ale jednocześnie **rozszerzyła** typy pól do `string | number`.<!-- .element class="more-text"-->
             --
             ### Rozwiązanie: `satisfies`
 
@@ -668,9 +696,9 @@
             config.host.toUpperCase(); // OK — TS wie, że to string
             ```
 
-            **`satisfies` waliduje, że wartość pasuje do typu, ale zachowuje precyzyjny typ wyrażenia.**<!-- .element class="fragment more-text"-->
+            **`satisfies` waliduje, że wartość pasuje do typu, ale zachowuje precyzyjny typ wyrażenia.**<!-- .element class="more-text"-->
 
-            Idealne dla obiektów konfiguracyjnych, route'ów, mapowań — wszędzie tam, gdzie chcesz obu rzeczy naraz.<!-- .element class="fragment more-text"-->
+            Idealne dla obiektów konfiguracyjnych, route'ów, mapowań — wszędzie tam, gdzie chcesz obu rzeczy naraz.<!-- .element class="more-text"-->
             --
             ### `as const` — literały zamiast szerokich typów
 
@@ -703,7 +731,7 @@
             const e3: Endpoint = 'GET /courses';       // błąd: brak /api/
             ```
 
-            Stosowane m.in. w typowaniu route'ów, kluczy CSS, zdarzeń DOM (`on${EventName}`).<!-- .element class="fragment more-text"-->
+            Stosowane m.in. w typowaniu route'ów, kluczy CSS, zdarzeń DOM (`on${EventName}`).<!-- .element class="more-text"-->
             ---
             ## Destrukturyzacja
             --
@@ -749,21 +777,6 @@
             ## Type guards
             ## Smart casting
             --
-            ### "Usuwanie" wartości pustej
-
-            ```typescript
-            const safeLength = (value: string | undefined): number => {
-              if (value) {
-                return value.length;
-              } else {
-                return 0;
-              }
-            }
-
-            console.log(safeLength("foo")); // 3
-            console.log(safeLength(undefined)); // 0
-            ```
-            --
             ### Discriminated unions
 
             Unia typów + wspólne pole-dyskryminator (`kind`) pozwala TS-owi automatycznie zawęzić typ w gałęzi `if`/`switch`.
@@ -807,14 +820,13 @@
             --
             ### Wyczerpujące sprawdzanie (*exhaustiveness*)
 
-            Trick z `never` — kompilator wymusza obsłużenie wszystkich wariantów unii.
+            Trick z `never` — kompilator wymusza obsłużenie wszystkich wariantów unii.<!-- .element class="most-text"-->
 
             ```typescript
             type Shape =
               | { kind: 'circle'; radius: number }
               | { kind: 'rectangle'; width: number; height: number }
               | { kind: 'triangle'; base: number; height: number };
-
             function area(shape: Shape): number {
               switch (shape.kind) {
                 case 'circle':    return Math.PI * shape.radius ** 2;
@@ -827,7 +839,7 @@
             }
             ```
 
-            Dodanie nowego wariantu do unii **automatycznie** wskaże miejsca w kodzie, które trzeba zaktualizować.<!-- .element class="fragment more-text"-->
+            Dodanie nowego wariantu do unii **automatycznie** wskaże miejsca w kodzie, które trzeba zaktualizować.<!-- .element class="most-text"-->
             --
             ### Type guards
 
@@ -862,7 +874,7 @@
             import { CourseApi, type Course } from './course-api';
             ```
 
-            **Po co?** Eliminacja cyklicznych zależności runtime, mniejsze bundle, jasna intencja.<!-- .element class="fragment more-text"-->
+            **Po co?** Eliminacja cyklicznych zależności runtime, mniejsze bundle, jasna intencja.<!-- .element class="more-text"-->
             ---
             ## TypeScript w naszym stosie
 
